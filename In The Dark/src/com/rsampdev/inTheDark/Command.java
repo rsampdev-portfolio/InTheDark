@@ -2,7 +2,7 @@ package com.rsampdev.inTheDark;
 
 enum Command {
 
-	HELP("help"), QUIT("quit");
+	HELP("help"), QUIT("quit"), EXPLORE("explore"), STATS("stats");
 
 	private String value;
 

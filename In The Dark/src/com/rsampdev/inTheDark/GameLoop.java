@@ -14,11 +14,14 @@ class GameLoop {
 		Scanner terminal = new Scanner(System.in);
 		String input = "";
 
+		Player player = new Player();
+		Game game = new Game(player);
+
 		boolean running = true;
 
 		while (running) {
 
-			input = terminal.nextLine();
+			input = game.run(terminal);
 
 			if (input.equals(Command.QUIT.getValue())) {
 				running = false;
@@ -37,11 +40,11 @@ class GameLoop {
 	}
 
 	static void help() {
-
+		System.err.println("HELP!\n");
 	}
 
 	static void quit() {
-
+		System.err.println("QUIT!\n");
 	}
 
 }

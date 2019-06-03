@@ -2,8 +2,8 @@ package com.rsampdev.inTheDark;
 
 class Player {
 
-	int health;
-	int experience;
+	int health = 100;
+	int experience = 0;
 
 	void attack() {
 
@@ -15,6 +15,11 @@ class Player {
 
 	void retreat() {
 
+	}
+
+	String getStats() {
+		String stats = "You have " + health + " HP and " + experience + " XP";
+		return stats;
 	}
 
 }

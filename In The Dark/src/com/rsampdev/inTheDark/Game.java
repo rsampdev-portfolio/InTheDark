@@ -1,9 +1,11 @@
 package com.rsampdev.inTheDark;
 
+import java.util.Random;
 import java.util.Scanner;
 
 class Game {
 
+	private Random dice = new Random();
 	private Player player;
 
 	Game(Player player) {
@@ -20,7 +22,7 @@ class Game {
 		input = terminal.nextLine().toLowerCase().trim();
 
 		if (input.equals(Command.EXPLORE.getValue())) {
-			explore();
+			explore(terminal);
 		} else if (input.equals(Command.STATS.getValue())) {
 			stats();
 		} else {
@@ -30,12 +32,48 @@ class Game {
 		return commandListener;
 	}
 
-	void explore() {
-		System.err.println("EXPLORING!\n");
+	void explore(Scanner terminal) {
+		int number = dice.nextInt(6);
+
+		String input = "";
+
+		if (number <= 2) {
+
+			System.out.println("You have encountered nothing. But the tunnel continues onward...");
+
+		} else if (number <= 3) {
+
+			while (!input.equals("left") && !input.equals("right")) {
+				System.out.println("You have come to an intersection, do you go left of right?");
+				input = terminal.nextLine().toLowerCase().trim();
+			}
+
+			explore(terminal);
+
+		} else if (number == 4) {
+
+			System.out.println("You have found an item.");
+
+			// Items...
+
+		} else if (number == 5) {
+
+			System.out.println("You have encountered an enemy.");
+
+			// Enemies and monsters
+
+		} else if (number == 6) {
+
+			System.out.println("Another path...");
+
+			// Another path...
+
+		}
+
 	}
 
 	void stats() {
-		System.err.println(player.getStats() + "\n");
+		System.out.println(player.getStats() + "\n");
 	}
 
 }

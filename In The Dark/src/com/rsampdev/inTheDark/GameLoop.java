@@ -40,11 +40,11 @@ class GameLoop {
 	}
 
 	static void help() {
-		System.err.println("HELP!\n");
+		System.out.println("HELP!\n");
 	}
 
 	static void quit() {
-		System.err.println("QUIT!\n");
+		System.out.println("QUIT!\n");
 	}
 
 }

@@ -37,11 +37,13 @@ class Game {
 
 		String input = "";
 
-		if (number <= 2) {
+		if (number <= 1) {
 
 			System.out.println("You have encountered nothing. But the tunnel continues onward...");
 
-		} else if (number == 3) {
+		}
+
+		if (number == 2) {
 
 			while (!input.equals("left") && !input.equals("right")) {
 				System.out.println("You have come to an intersection, do you go left of right?");
@@ -50,19 +52,25 @@ class Game {
 
 			explore(terminal);
 
-		} else if (number == 4) {
+		}
+
+		if (number == 3) {
 
 			System.out.println("You have found an item.");
 
 			// Items...
 
-		} else if (number == 5) {
+		}
+
+		if (number == 4) {
 
 			System.out.println("You have encountered an enemy.");
 
 			// Enemies and monsters
 
-		} else if (number == 6) {
+		}
+
+		if (number == 5) {
 
 			System.out.println("Another path...");
 

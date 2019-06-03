@@ -12,6 +12,10 @@ class Game {
 		this.player = player;
 	}
 
+	void prepare() {
+		Item.prepare();
+	}
+
 	String run(Scanner terminal) {
 		String commandListener = "";
 		String input = "";
@@ -56,9 +60,20 @@ class Game {
 
 		if (number == 3) {
 
-			System.out.println("You have found an item.");
+			Item item = Item.getRandomItem();
+			player.addItem(item);
 
-			// Items...
+			System.out.println("\nYou have found a(n) " + item.getName() + "\n");
+
+			while (!input.equals("yes") && !input.equals("no")) {
+				System.out.println("Do you want to use the " + item.getName() + " now?\n");
+
+				input = terminal.nextLine().toLowerCase().trim();
+
+				if (input.equals("yes")) {
+					player.useItem(item.getName());
+				}
+			}
 
 		}
 

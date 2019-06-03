@@ -6,18 +6,21 @@ class GameLoop {
 
 	public static void main(String[] args) {
 
-		GameLoop.gameLoop();
+		Player player = new Player();
+
+		Game game = new Game(player);
+
+		GameLoop.gameLoop(game);
 
 	}
 
-	static void gameLoop() {
+	static void gameLoop(Game game) {
 		Scanner terminal = new Scanner(System.in);
 		String input = "";
 
-		Player player = new Player();
-		Game game = new Game(player);
-
 		boolean running = true;
+
+		game.prepare();
 
 		while (running) {
 

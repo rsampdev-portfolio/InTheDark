@@ -41,7 +41,7 @@ class Game {
 
 			System.out.println("You have encountered nothing. But the tunnel continues onward...");
 
-		} else if (number <= 3) {
+		} else if (number == 3) {
 
 			while (!input.equals("left") && !input.equals("right")) {
 				System.out.println("You have come to an intersection, do you go left of right?");

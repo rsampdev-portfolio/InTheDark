@@ -1,6 +1,6 @@
 package com.rsampdev.inTheDark;
 
-class Entity {
+abstract class Entity {
 
 	private int health = 0;
 	private String name = "Entity";
@@ -33,5 +33,7 @@ class Entity {
 	void attack(Entity entity) {
 		entity.setHealth(entity.getHealth() - getWeapon().getDamage());
 	}
+	
+	abstract String getStats();
 
 }

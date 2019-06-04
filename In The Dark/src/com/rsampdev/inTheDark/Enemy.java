@@ -52,4 +52,10 @@ class Enemy extends Entity {
 		return randomEnemy;
 	}
 
+	@Override
+	String getStats() {
+		String stats = "The " + getName() + " has " + getHealth() + " HP and is fighting with " + getWeapon().getDescription();
+		return stats;
+	}
+
 }

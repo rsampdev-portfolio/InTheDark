@@ -14,6 +14,7 @@ class Game {
 
 	void prepare() {
 		Item.prepare();
+		Enemy.prepare();
 	}
 
 	String run(Scanner terminal) {
@@ -28,7 +29,7 @@ class Game {
 		if (input.equals(Command.EXPLORE.getValue())) {
 			explore(terminal);
 		} else if (input.equals(Command.STATS.getValue())) {
-			stats();
+			stats(player);
 		} else {
 			commandListener = input;
 		}
@@ -53,8 +54,6 @@ class Game {
 
 		if (number == 4) {
 			fight(terminal);
-
-			// Enemies and monsters
 		}
 
 		if (number == 5) {
@@ -69,7 +68,7 @@ class Game {
 		String input = "";
 
 		while (!input.equals("left") && !input.equals("right")) {
-			System.out.println("You have come to an intersection, do you go left of right?");
+			System.out.println("\nYou have come to an intersection, do you go left of right?");
 			input = terminal.nextLine().toLowerCase().trim();
 		}
 
@@ -83,10 +82,10 @@ class Game {
 		player.addItem(item);
 
 		System.out.println("\nYou have found a(n) " + item.getName() + "\n");
-		System.out.println("ENTER: yes or no");
 
 		while (!input.equals(Command.YES.getValue()) && !input.equals(Command.NO.getValue())) {
 			System.out.println("Do you want to use the " + item.getName() + " now?\n");
+			System.out.println("ENTER: " + Command.YES.getValue() + " or " + Command.NO.getValue() + "\n");
 
 			input = terminal.nextLine().toLowerCase().trim();
 
@@ -97,11 +96,68 @@ class Game {
 	}
 
 	private void fight(Scanner terminal) {
-		System.out.println("You have encountered an enemy.");
+		String input = "";
+
+		Enemy enemy = Enemy.getRandomEnemy();
+
+		System.out.println("\nYou have encountered a(n) " + enemy.getName() + " wielding " + enemy.getWeapon().getDescription() + "\n");
+
+		while (!input.equals(Command.YES.getValue()) && !input.equals(Command.NO.getValue())) {
+			System.out.println("Do you want to fight the " + enemy.getName() + "?");
+			System.out.println("ENTER: " + Command.YES.getValue() + " or " + Command.NO.getValue() + "\n");
+
+			input = terminal.nextLine().toLowerCase().trim();
+		}
+
+		if (input.equals(Command.YES.getValue())) {
+			input = "";
+
+			boolean continueFight = true;
+
+			while (continueFight) {
+				input = "";
+
+				player.attack(enemy);
+				enemy.attack(player);
+
+				stats(player);
+				stats(enemy);
+
+				System.out.println("\nYou have dealt " + player.getWeapon().getDamage() + " to the " + enemy.getName());
+				System.out.println("The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " to you\n");
+
+				while (!input.equals(Command.YES.getValue()) && !input.equals(Command.NO.getValue())) {
+					if (player.getHealth() <= 0 || enemy.getHealth() <= 0) {
+						continueFight = false;
+
+						if (player.getHealth() <= 0) {
+							System.out.println("\nYou have died.");
+							input = Command.QUIT.getValue();
+						} else if (enemy.getHealth() <= 0) {
+							System.out.println("\nYou have killed the " + enemy.getName());
+							stats(player);
+						}
+
+						break;
+					}
+
+					System.out.println("Do you want to continue the fight with the " + enemy.getName() + "?");
+					System.out.println("ENTER: " + Command.YES.getValue() + " or " + Command.NO.getValue() + "\n");
+
+					input = terminal.nextLine().toLowerCase().trim();
+
+					if (input.equals(Command.NO.getValue())) {
+						continueFight = false;
+					}
+				}
+			}
+		} else {
+			// chance of escape
+		}
 	}
 
-	private void stats() {
-		System.out.println(player.getStats() + "\n");
+	private void stats(Entity entity) {
+		System.out.println(entity.getStats() + "\n");
 	}
 
 }

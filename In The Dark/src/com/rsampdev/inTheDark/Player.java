@@ -43,9 +43,9 @@ class Player extends Entity {
 		}
 	}
 
+	@Override
 	String getStats() {
-		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP and are fighting with "
-				+ getWeapon().getDescription();
+		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with " + getWeapon().getDescription();
 		return stats;
 	}
 

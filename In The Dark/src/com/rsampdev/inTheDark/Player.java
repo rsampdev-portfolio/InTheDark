@@ -2,28 +2,26 @@ package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
 
-class Player {
+class Player extends Entity {
 
-	private int health = 100;
 	private int experience = 0;
 	private ArrayList<Item> inventory = new ArrayList<>();
 
-	// void attack() {}
+	void attack(Entity entity) {
+		entity.setHealth(entity.getHealth() - getWeapon().getDamage());
+	}
 
 	// void use() {}
 
 	// void retreat() {}
 
-	int getHealth() {
-		return health;
-	}
-
-	void setHealth(int health) {
-		this.health = health;
+	Player() {
+		this.setHealth(100);
+		this.setWeapon(Weapon.FIST);
 	}
 
 	int getExperience() {
-		return experience;
+		return this.experience;
 	}
 
 	void setExperience(int experience) {
@@ -50,7 +48,8 @@ class Player {
 	}
 
 	String getStats() {
-		String stats = "You have " + getHealth() + " HP and " + getExperience() + " XP";
+		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP and are fighting with "
+				+ getWeapon().getDescription();
 		return stats;
 	}
 

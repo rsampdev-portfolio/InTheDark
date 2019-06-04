@@ -4,14 +4,14 @@ enum Command {
 
 	HELP("help"), QUIT("quit"), YES("yes"), NO("no"), EXPLORE("explore"), STATS("stats");
 
-	private String value;
+	private String command;
 
-	private Command(String value) {
-		this.value = value;
+	private Command(String command) {
+		this.command = command;
 	}
 
-	String getValue() {
-		return this.value;
+	String getCommand() {
+		return this.command;
 	}
 
 }

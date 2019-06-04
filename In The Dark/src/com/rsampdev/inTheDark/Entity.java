@@ -33,7 +33,7 @@ abstract class Entity {
 	void attack(Entity entity) {
 		entity.setHealth(entity.getHealth() - getWeapon().getDamage());
 	}
-	
+
 	abstract String getStats();
 
 }

@@ -26,13 +26,12 @@ class GameLoop {
 
 			input = game.run(terminal);
 
-			if (input.equals(Command.QUIT.getValue())) {
-				running = false;
-				quit();
+			if (input.equals(Command.QUIT.getCommand())) {
+				running = quit();
 				continue;
 			}
 
-			if (input.equals(Command.HELP.getValue())) {
+			if (input.equals(Command.HELP.getCommand())) {
 				help();
 				continue;
 			}
@@ -46,8 +45,9 @@ class GameLoop {
 		System.out.println("HELP!\n");
 	}
 
-	static void quit() {
+	static boolean quit() {
 		System.out.println("QUIT!\n");
+		return false;
 	}
 
 }

@@ -25,7 +25,31 @@ class Player extends Entity {
 	}
 
 	void addItem(Item item) {
-		this.inventory.add(item);
+		ArrayList<Item> toAddInventory = new ArrayList<>();
+
+		if (inventory.size() < 1) {
+
+			this.inventory.add(item);
+
+		} else {
+
+			for (Item tempItem : inventory) {
+
+				if (item.getName().equals(tempItem.getName())) {
+					tempItem.increment(1);
+					break;
+				}
+
+				if (tempItem.equals(inventory.get(inventory.size() - 1))) {
+					toAddInventory.add(item);
+				}
+
+			}
+
+			for (Item itemToAdd : toAddInventory) {
+				this.inventory.add(itemToAdd);
+			}
+		}
 	}
 
 	void useItem(String name) {
@@ -38,9 +62,33 @@ class Player extends Entity {
 			}
 		}
 
-		if (tempItem != null && tempItem.getUses() < 1) {
+		if (tempItem != null && tempItem.getStack() < 1) {
 			inventory.remove(tempItem);
 		}
+	}
+
+	String getInventory() {
+		String inventory = "INVENTORY:";
+
+		ArrayList<Item> removables = new ArrayList<>();
+
+		for (Item item : this.inventory) {
+
+			if (item.getStack() < 1) {
+				removables.add(item);
+				continue;
+			}
+
+			if (item.getStack() == 1) {
+				inventory = inventory + "\n" + item.getStack() + " " + item.getName();
+			}
+
+			if (item.getStack() > 1) {
+				inventory = inventory + "\n" + item.getStack() + " " + item.getName() + "s";
+			}
+		}
+
+		return inventory;
 	}
 
 	@Override

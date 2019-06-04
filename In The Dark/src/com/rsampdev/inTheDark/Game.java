@@ -22,12 +22,14 @@ class Game {
 		String input = "";
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, stats, help or quit\n");
+		System.out.println("ENTER: explore, inventory, stats, help or quit\n");
 
 		input = terminal.nextLine().toLowerCase().trim();
 
 		if (input.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
+		} else if (input.equals(Command.INVENTORY.getCommand())) {
+			inventory(player);
 		} else if (input.equals(Command.STATS.getCommand())) {
 			stats(player);
 		} else {
@@ -154,6 +156,10 @@ class Game {
 		} else {
 			// chance of escape
 		}
+	}
+
+	private void inventory(Player player) {
+		System.out.println(player.getInventory() + "\n");
 	}
 
 	private void stats(Entity entity) {

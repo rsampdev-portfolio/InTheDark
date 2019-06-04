@@ -9,28 +9,28 @@ interface Action {
 
 class Item {
 
-	int uses;
-	String name;
-	Action usage;
+	private int stack;
+	private String name;
+	private Action usage;
 
 	static ArrayList<Item> ITEMS = new ArrayList<Item>();
 
-	private Item(String name, int uses, Action usage) {
+	private Item(String name, int stack, Action usage) {
 		this.name = name;
-		this.uses = uses;
+		this.stack = stack;
 		this.usage = usage;
 	}
 
 	private Item(Item item) {
 		this.name = item.name;
-		this.uses = item.uses;
+		this.stack = item.stack;
 		this.usage = item.usage;
 	}
 
 	Player use(Player player) {
-		if (uses >= 1) {
+		if (stack >= 1) {
 			usage.act(player);
-			uses--;
+			stack--;
 		}
 
 		return player;
@@ -40,8 +40,12 @@ class Item {
 		return name;
 	}
 
-	int getUses() {
-		return uses;
+	int getStack() {
+		return stack;
+	}
+
+	void increment(int by) {
+		this.stack += by;
 	}
 
 	private static Item createHealthPotion() {

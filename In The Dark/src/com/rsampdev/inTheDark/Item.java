@@ -27,15 +27,6 @@ class Item {
 		this.usage = item.usage;
 	}
 
-	Player use(Player player) {
-		if (stack >= 1) {
-			usage.act(player);
-			stack--;
-		}
-
-		return player;
-	}
-
 	String getName() {
 		return name;
 	}
@@ -46,6 +37,17 @@ class Item {
 
 	void increment(int by) {
 		this.stack += by;
+	}
+
+	void decrement(int by) {
+		this.stack -= by;
+	}
+
+	void use(Player player) {
+		if (stack >= 1) {
+			usage.act(player);
+			decrement(1);
+		}
 	}
 
 	private static Item createHealthPotion() {

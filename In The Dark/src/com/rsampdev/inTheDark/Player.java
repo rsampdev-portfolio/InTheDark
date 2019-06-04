@@ -28,13 +28,9 @@ class Player extends Entity {
 		ArrayList<Item> toAddInventory = new ArrayList<>();
 
 		if (inventory.size() < 1) {
-
 			this.inventory.add(item);
-
 		} else {
-
 			for (Item tempItem : inventory) {
-
 				if (item.getName().equals(tempItem.getName())) {
 					tempItem.increment(1);
 					break;
@@ -43,7 +39,6 @@ class Player extends Entity {
 				if (tempItem.equals(inventory.get(inventory.size() - 1))) {
 					toAddInventory.add(item);
 				}
-
 			}
 
 			for (Item itemToAdd : toAddInventory) {
@@ -67,13 +62,16 @@ class Player extends Entity {
 		}
 	}
 
-	String getInventory() {
-		String inventory = "INVENTORY:";
+	ArrayList<Item> getInventoryList() {
+		return this.inventory;
+	}
+
+	String getInventoryString() {
+		String inventory = "\nINVENTORY:";
 
 		ArrayList<Item> removables = new ArrayList<>();
 
 		for (Item item : this.inventory) {
-
 			if (item.getStack() < 1) {
 				removables.add(item);
 				continue;

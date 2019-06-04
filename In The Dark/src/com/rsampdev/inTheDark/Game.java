@@ -22,14 +22,16 @@ class Game {
 		String input = "";
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, inventory, stats, help or quit\n");
+		System.out.println("ENTER: explore, inventory, use, stats, help or quit\n");
 
 		input = terminal.nextLine().toLowerCase().trim();
 
 		if (input.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
 		} else if (input.equals(Command.INVENTORY.getCommand())) {
-			inventory(player);
+			inventory();
+		} else if (input.equals(Command.USE.getCommand())) {
+			useItem(terminal);
 		} else if (input.equals(Command.STATS.getCommand())) {
 			stats(player);
 		} else {
@@ -43,7 +45,7 @@ class Game {
 		int number = dice.nextInt(6);
 
 		if (number <= 1) {
-			System.out.println("You have encountered nothing. But the tunnel continues onward...");
+			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
 		}
 
 		if (number == 2) {
@@ -59,11 +61,32 @@ class Game {
 		}
 
 		if (number == 5) {
-			System.out.println("Another path...");
+			System.out.println("\nAnother path...");
 
 			// Another path...
 		}
+	}
 
+	private void inventory() {
+		System.out.println(this.player.getInventoryString() + "\n");
+	}
+
+	private void useItem(Scanner terminal) {
+		System.out.println("\nENTER: the name of the item in your inventory you want to use\n");
+
+		String input = "";
+
+		input = terminal.nextLine().trim();
+
+		for (Item item : player.getInventoryList()) {
+			if (item.getName().equals(input)) {
+				item.use(player);
+			}
+		}
+	}
+
+	private void stats(Entity entity) {
+		System.out.println(entity.getStats() + "\n");
 	}
 
 	private void intersection(Scanner terminal) {
@@ -156,14 +179,6 @@ class Game {
 		} else {
 			// chance of escape
 		}
-	}
-
-	private void inventory(Player player) {
-		System.out.println(player.getInventory() + "\n");
-	}
-
-	private void stats(Entity entity) {
-		System.out.println(entity.getStats() + "\n");
 	}
 
 }

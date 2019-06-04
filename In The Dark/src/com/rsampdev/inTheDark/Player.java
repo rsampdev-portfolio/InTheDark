@@ -7,10 +7,6 @@ class Player extends Entity {
 	private int experience = 0;
 	private ArrayList<Item> inventory = new ArrayList<>();
 
-	void attack(Entity entity) {
-		entity.setHealth(entity.getHealth() - getWeapon().getDamage());
-	}
-
 	// void use() {}
 
 	// void retreat() {}

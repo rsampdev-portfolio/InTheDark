@@ -125,7 +125,7 @@ class Game {
 
 		Enemy enemy = Enemy.getRandomEnemy();
 
-		System.out.println("\nYou have encountered a(n) " + enemy.getName() + " wielding " + enemy.getWeapon().getDescription() + "\n");
+		System.out.println("\nYou have encountered a(n) " + enemy.getName() + " wielding a(n) " + enemy.getWeapon().getDescription() + "\n");
 
 		while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
 			System.out.println("Do you want to fight the " + enemy.getName() + "?");

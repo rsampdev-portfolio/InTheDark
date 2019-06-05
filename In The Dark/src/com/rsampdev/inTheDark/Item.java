@@ -1,6 +1,7 @@
 package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 interface Action {
@@ -101,6 +102,14 @@ class Item {
 		}
 
 		return randomItem;
+	}
+
+	static class SortItemsByName implements Comparator<Item> {
+
+		public int compare(Item a, Item b) {
+			return a.getName().compareTo(b.getName());
+		}
+
 	}
 
 }

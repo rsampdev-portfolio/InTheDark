@@ -1,6 +1,7 @@
 package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 class Player extends Entity {
 
@@ -60,6 +61,8 @@ class Player extends Entity {
 
 	String getInventoryString() {
 		String inventory = "\nINVENTORY:";
+
+		Collections.sort(this.inventory, new Item.SortItemsByName());
 
 		ArrayList<Item> removables = new ArrayList<>();
 

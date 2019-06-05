@@ -142,8 +142,15 @@ class Game {
 			while (continueFight) {
 				input = "";
 
-				player.attack(enemy);
-				enemy.attack(player);
+				int number = dice.nextInt(2);
+
+				if (number == 0) {
+					player.attack(enemy);
+					enemy.attack(player);
+				} else if (number == 1) {
+					enemy.attack(player);
+					player.attack(enemy);
+				}
 
 				stats(player);
 				stats(enemy);
@@ -160,6 +167,8 @@ class Game {
 							input = Command.QUIT.getCommand();
 						} else if (enemy.getHealth() <= 0) {
 							System.out.println("\nYou have killed the " + enemy.getName());
+							player.addExperience(enemy.getExperience());
+							System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName());
 							stats(player);
 						}
 

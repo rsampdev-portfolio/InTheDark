@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 class Player extends Entity {
 
-	private int experience = 0;
 	private ArrayList<Item> inventory = new ArrayList<>();
 
 	// void use() {}
@@ -13,15 +12,8 @@ class Player extends Entity {
 
 	Player() {
 		this.setHealth(100);
+		this.setExperience(0);
 		this.setWeapon(Weapon.FIST);
-	}
-
-	int getExperience() {
-		return this.experience;
-	}
-
-	void setExperience(int experience) {
-		this.experience = experience;
 	}
 
 	void addItem(Item item) {
@@ -91,7 +83,7 @@ class Player extends Entity {
 
 	@Override
 	String getStats() {
-		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with " + getWeapon().getDescription();
+		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getStats();
 		return stats;
 	}
 

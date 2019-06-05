@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
-interface Action {
-	abstract Player act(Player player);
-}
-
 class Item {
 
 	private int stack;
@@ -102,6 +98,10 @@ class Item {
 		}
 
 		return randomItem;
+	}
+
+	interface Action {
+		abstract Player act(Player player);
 	}
 
 	static class SortItemsByName implements Comparator<Item> {

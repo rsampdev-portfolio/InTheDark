@@ -1,12 +1,11 @@
 package com.rsampdev.inTheDark;
 
-import java.util.Random;
 import java.util.Scanner;
 
 class Game {
 
-	private Random dice = new Random();
 	private Player player;
+	private static String COMMAND_LISTENER = "";
 
 	Game(Player player) {
 		this.player = player;
@@ -18,7 +17,6 @@ class Game {
 	}
 
 	String run(Scanner terminal) {
-		String commandListener = "";
 		String input = "";
 
 		System.out.println("\nWhat do you want to do?");
@@ -33,16 +31,16 @@ class Game {
 		} else if (input.equals(Command.USE.getCommand())) {
 			useItem(terminal);
 		} else if (input.equals(Command.STATS.getCommand())) {
-			stats(player);
+			statsStartWithNewLine(player);
 		} else {
-			commandListener = input;
+			COMMAND_LISTENER = input;
 		}
 
-		return commandListener;
+		return COMMAND_LISTENER;
 	}
 
 	private void explore(Scanner terminal) {
-		int roll = dice.nextInt(6);
+		int roll = Tools.DICE.nextInt(6);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
@@ -66,7 +64,7 @@ class Game {
 	}
 
 	private void inventory() {
-		System.out.println(this.player.getInventoryString() + "\n");
+		System.out.println(this.player.getInventoryString());
 	}
 
 	private void useItem(Scanner terminal) {
@@ -95,15 +93,11 @@ class Game {
 		System.out.println("\n" + entity.getStats());
 	}
 
-	private void statsStartAndEndWithNewLine(Entity entity) {
-		System.out.println("\n" + entity.getStats() + "\n");
-	}
-
 	private void intersection(Scanner terminal) {
 		String input = "";
 
 		while (!input.equals("left") && !input.equals("right")) {
-			System.out.println("\nYou have come to an intersection, do you go left of right?");
+			System.out.println("\nYou have come to an intersection, do you go left of right?\n");
 			input = terminal.nextLine().toLowerCase().trim();
 		}
 
@@ -178,7 +172,7 @@ class Game {
 			while (continueFight) {
 				input = "";
 
-				int number = dice.nextInt(2);
+				int number = Tools.DICE.nextInt(2);
 
 				if (number == 0) {
 					player.attack(enemy);
@@ -200,7 +194,7 @@ class Game {
 					System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
 
 					if (player.getHealth() <= 0) {
-						System.out.println("\n" + "You have died. Game Over." + "\n");
+						System.out.println("You have died. Game Over.");
 						input = Command.QUIT.getCommand();
 						continueFight = false;
 						break;
@@ -222,8 +216,8 @@ class Game {
 						continueFight = false;
 						break;
 					} else if (player.getHealth() <= 0) {
-						System.out.println("\n" + "You have died. Game Over." + "\n");
-						input = Command.QUIT.getCommand();
+						System.out.println("You have died. Game Over.");
+						COMMAND_LISTENER = Command.QUIT.getCommand();
 						continueFight = false;
 						break;
 					}

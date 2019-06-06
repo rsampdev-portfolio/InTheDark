@@ -2,10 +2,10 @@ package com.rsampdev.inTheDark;
 
 abstract class Entity {
 
-	private int health;
 	private String name;
 	private Weapon weapon;
-	private int experience;
+	private double health;
+	private double experience;
 
 	String getName() {
 		return name;
@@ -15,23 +15,23 @@ abstract class Entity {
 		this.name = name;
 	}
 
-	int getHealth() {
+	double getHealth() {
 		return health;
 	}
 
-	void setHealth(int health) {
+	void setHealth(double health) {
 		this.health = health;
 	}
 
-	int getExperience() {
+	double getExperience() {
 		return this.experience;
 	}
 
-	void setExperience(int experience) {
+	void setExperience(double experience) {
 		this.experience = experience;
 	}
 
-	void addExperience(int experience) {
+	void addExperience(double experience) {
 		this.experience += experience;
 	}
 

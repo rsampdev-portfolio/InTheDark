@@ -3,7 +3,6 @@ package com.rsampdev.inTheDark;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 enum Weapon {
 
@@ -15,7 +14,6 @@ enum Weapon {
 	private String description;
 
 	private static final List<Weapon> WEAPONS = Collections.unmodifiableList(Arrays.asList(values()));
-	private static final Random RANDOM = new Random();
 	private static final int SIZE = WEAPONS.size();
 
 	private Weapon(int id, int damage, String description) {
@@ -36,7 +34,7 @@ enum Weapon {
 	}
 
 	static Weapon getRandomWeapon() {
-		return WEAPONS.get(2 + RANDOM.nextInt(SIZE - 2));
+		return WEAPONS.get(2 + Tools.DICE.nextInt(SIZE - 2));
 	}
 
 	String getStats() {

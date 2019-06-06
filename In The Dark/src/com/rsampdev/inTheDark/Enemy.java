@@ -1,7 +1,6 @@
 package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 class Enemy extends Entity {
 
@@ -35,9 +34,7 @@ class Enemy extends Entity {
 	}
 
 	static Enemy getRandomEnemy() {
-		Random random = new Random();
-
-		int number = random.nextInt(Enemy.ENEMIES.size());
+		int number = Tools.DICE.nextInt(ENEMIES.size());
 		int index = 0;
 
 		Enemy randomEnemy = null;

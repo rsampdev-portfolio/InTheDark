@@ -2,7 +2,6 @@ package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Random;
 
 class Item {
 
@@ -81,9 +80,7 @@ class Item {
 	}
 
 	static Item getRandomItem() {
-		Random random = new Random();
-
-		int number = random.nextInt(Item.ITEMS.size());
+		int number = Tools.DICE.nextInt(Item.ITEMS.size());
 		int index = 0;
 
 		Item randomItem = null;

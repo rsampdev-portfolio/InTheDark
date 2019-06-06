@@ -5,7 +5,7 @@ import java.util.Scanner;
 class Game {
 
 	private Player player;
-	private static String COMMAND_LISTENER = "";
+	private static String COMMAND_LISTENER;
 
 	Game(Player player) {
 		this.player = player;

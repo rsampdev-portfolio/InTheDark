@@ -24,6 +24,8 @@ class Game {
 
 		input = terminal.nextLine().toLowerCase().trim();
 
+		COMMAND_LISTENER = "";
+
 		if (input.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
 		} else if (input.equals(Command.INVENTORY.getCommand())) {
@@ -165,75 +167,88 @@ class Game {
 		}
 
 		if (input.equals(Command.YES.getCommand())) {
+			startCombat(terminal, enemy);
+		} else {
+			System.out.println("\n" + "You attempt to escape the " + enemy.getName());
+
+			int roll = Tools.DICE.nextInt(4);
+
+			if (roll <= 2) {
+				System.out.println("\n" + "You have successfully escaped from the " + enemy.getName());
+			} else if (roll == 3) {
+				System.out.println("\n" + "You have failed to escape from the " + enemy.getName());
+				startCombat(terminal, enemy);
+			}
+		}
+	}
+
+	private void startCombat(Scanner terminal, Enemy enemy) {
+		String input = "";
+
+		boolean continueFight = true;
+
+		while (continueFight) {
 			input = "";
 
-			boolean continueFight = true;
+			int roll = Tools.DICE.nextInt(2);
 
-			while (continueFight) {
-				input = "";
+			if (roll == 0) {
+				player.attack(enemy);
+				System.out.println("\n" + "You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
 
-				int number = Tools.DICE.nextInt(2);
-
-				if (number == 0) {
-					player.attack(enemy);
-					System.out.println("\n" + "You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
-
-					if (enemy.getHealth() <= 0) {
-						System.out.println("You have killed the " + enemy.getName() + "\n");
-						player.addExperience(enemy.getExperience());
-						System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
-						stats(player);
-						continueFight = false;
-						break;
-					} else {
-						enemy.attack(player);
-						System.out.println("The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
-					}
-				} else if (number == 1) {
+				if (enemy.getHealth() <= 0) {
+					System.out.println("You have killed the " + enemy.getName() + "\n");
+					player.addExperience(enemy.getExperience());
+					System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
+					stats(player);
+					continueFight = false;
+					break;
+				} else {
 					enemy.attack(player);
-					System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
-
-					if (player.getHealth() <= 0) {
-						System.out.println("You have died. Game Over.");
-						input = Command.QUIT.getCommand();
-						continueFight = false;
-						break;
-					} else {
-						player.attack(enemy);
-						System.out.println("You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
-					}
+					System.out.println("The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
 				}
+			} else if (roll == 1) {
+				enemy.attack(player);
+				System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
 
-				statsEndWithNewLine(player);
-				statsEndWithNewLine(enemy);
-
-				while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
-					if (enemy.getHealth() <= 0) {
-						System.out.println("You have killed the " + enemy.getName() + "\n");
-						player.addExperience(enemy.getExperience());
-						System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
-						stats(player);
-						continueFight = false;
-						break;
-					} else if (player.getHealth() <= 0) {
-						System.out.println("You have died. Game Over.");
-						COMMAND_LISTENER = Command.QUIT.getCommand();
-						continueFight = false;
-						break;
-					}
-
-					System.out.println("Do you want to continue the fight with the " + enemy.getName() + "?");
-					System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
-
-					input = terminal.nextLine().toLowerCase().trim();
-
-					if (input.equals(Command.NO.getCommand())) {
-						continueFight = false;
-					}
+				if (player.getHealth() <= 0) {
+					System.out.println("You have died. Game Over.");
+					input = Command.QUIT.getCommand();
+					continueFight = false;
+					break;
+				} else {
+					player.attack(enemy);
+					System.out.println("You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
 				}
 			}
-		} else {
-			// chance of escape
+
+			statsEndWithNewLine(player);
+			statsEndWithNewLine(enemy);
+
+			while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+				if (enemy.getHealth() <= 0) {
+					System.out.println("You have killed the " + enemy.getName() + "\n");
+					player.addExperience(enemy.getExperience());
+					System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
+					stats(player);
+					continueFight = false;
+					break;
+				} else if (player.getHealth() <= 0) {
+					System.out.println("You have died. Game Over.");
+					COMMAND_LISTENER = Command.QUIT.getCommand();
+					continueFight = false;
+					break;
+				}
+
+				System.out.println("Do you want to continue the fight with the " + enemy.getName() + "?");
+				System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+
+				input = terminal.nextLine().toLowerCase().trim();
+
+				if (input.equals(Command.NO.getCommand())) {
+					continueFight = false;
+				}
+			}
 		}
 	}
 

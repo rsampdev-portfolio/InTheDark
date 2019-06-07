@@ -248,7 +248,17 @@ class Game {
 				input = terminal.nextLine().toLowerCase().trim();
 
 				if (input.equals(Command.NO.getCommand())) {
-					continueFight = false;
+					System.out.println("\n" + "You attempt to escape the " + enemy.getName());
+
+					int secondRoll = Tools.DICE.nextInt(4);
+
+					if (secondRoll <= 2) {
+						System.out.println("\n" + "You have successfully escaped from the " + enemy.getName());
+						continueFight = false;
+					} else if (secondRoll == 3) {
+						System.out.println("\n" + "You have failed to escape from the " + enemy.getName());
+						startCombat(terminal, enemy);
+					}
 				}
 			}
 		}

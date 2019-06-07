@@ -5,6 +5,7 @@ import java.util.Collections;
 
 class Player extends Entity {
 
+	private Level level;
 	private ArrayList<Item> inventory = new ArrayList<>();
 
 	// void use() {}
@@ -15,6 +16,11 @@ class Player extends Entity {
 		this.setHealth(100);
 		this.setExperience(0);
 		this.setWeapon(Weapon.FIST);
+		this.level = Level.getLevel(getExperience());
+	}
+
+	Level getLevel() {
+		return this.level;
 	}
 
 	void addItem(Item item) {
@@ -84,9 +90,24 @@ class Player extends Entity {
 		return inventory;
 	}
 
+	private void updateLevel() {
+		this.level = Level.getLevel(getExperience());
+	}
+
+	void update() {
+		updateLevel();
+	}
+
+	@Override
+	void attack(Entity entity) {
+		super.attack(entity);
+		update();
+	}
+
 	@Override
 	String getStats() {
-		String stats = "You have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getStats();
+		update();
+		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getStats();
 		return stats;
 	}
 

@@ -222,6 +222,8 @@ class Game {
 				}
 			}
 
+			player.update();
+
 			statsEndWithNewLine(player);
 			statsEndWithNewLine(enemy);
 

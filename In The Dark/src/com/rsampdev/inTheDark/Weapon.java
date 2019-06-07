@@ -10,13 +10,13 @@ enum Weapon {
 	STEEL_SWORD(5, 40, "Steel Sword");
 
 	private int id;
-	private int damage;
+	private double damage;
 	private String description;
 
 	private static final List<Weapon> WEAPONS = Collections.unmodifiableList(Arrays.asList(values()));
 	private static final int SIZE = WEAPONS.size();
 
-	private Weapon(int id, int damage, String description) {
+	private Weapon(int id, double damage, String description) {
 		this.damage = damage;
 		this.description = description;
 	}
@@ -25,7 +25,7 @@ enum Weapon {
 		return this.id;
 	}
 
-	int getDamage() {
+	double getDamage() {
 		return this.damage;
 	}
 

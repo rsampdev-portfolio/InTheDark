@@ -194,7 +194,7 @@ class Game {
 
 			if (roll == 0) {
 				player.attack(enemy);
-				System.out.println("\n" + "You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
+				System.out.println("\n" + "You have dealt " + player.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
 
 				if (enemy.getHealth() <= 0) {
 					System.out.println("You have killed the " + enemy.getName() + "\n");
@@ -218,7 +218,7 @@ class Game {
 					break;
 				} else {
 					player.attack(enemy);
-					System.out.println("You have dealt " + player.getWeapon().getDamage() + " damage to the " + enemy.getName() + "\n");
+					System.out.println("You have dealt " + player.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
 				}
 			}
 

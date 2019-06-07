@@ -98,9 +98,13 @@ class Player extends Entity {
 		updateLevel();
 	}
 
+	double getAttackDamage() {
+		return getWeapon().getDamage() * getLevel().getDamageMultiplier();
+	}
+
 	@Override
 	void attack(Entity entity) {
-		super.attack(entity);
+		entity.setHealth(entity.getHealth() - getAttackDamage());
 		update();
 	}
 

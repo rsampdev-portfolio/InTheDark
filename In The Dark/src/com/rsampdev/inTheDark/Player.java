@@ -16,11 +16,15 @@ class Player extends Entity {
 		this.setHealth(100);
 		this.setExperience(0);
 		this.setWeapon(Weapon.FIST);
-		this.level = Level.getLevel(getExperience());
+		this.setLevel();
 	}
 
 	Level getLevel() {
 		return this.level;
+	}
+
+	void setLevel() {
+		this.level = Level.getLevel(getExperience());
 	}
 
 	void addItem(Item item) {
@@ -91,13 +95,14 @@ class Player extends Entity {
 	}
 
 	private void updateLevel() {
-		this.level = Level.getLevel(getExperience());
+		this.setLevel();
 	}
 
 	void update() {
 		updateLevel();
 	}
 
+	@Override
 	double getAttackDamage() {
 		return getWeapon().getDamage() * getLevel().getDamageMultiplier();
 	}

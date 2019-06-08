@@ -43,9 +43,9 @@ abstract class Entity {
 		this.weapon = weapon;
 	}
 
-	void attack(Entity entity) {
-		entity.setHealth(entity.getHealth() - getWeapon().getDamage());
-	}
+	abstract void attack(Entity entity);
+
+	abstract double getAttackDamage();
 
 	abstract String getStats();
 

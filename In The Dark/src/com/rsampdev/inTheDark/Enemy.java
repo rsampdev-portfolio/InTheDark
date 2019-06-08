@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 class Enemy extends Entity {
 
+	private double damageMultiplier;
 	static ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>();
 
 	private Enemy(String name, int health, int experience, Weapon weapon) {
@@ -18,6 +19,19 @@ class Enemy extends Entity {
 		setHealth(enemy.getHealth());
 		setWeapon(enemy.getWeapon());
 		setExperience(enemy.getExperience());
+	}
+
+	private double getDamageMultiplier() {
+		return this.damageMultiplier;
+	}
+
+	private void setDamageMultiplier(double damageMultiplier) {
+		this.damageMultiplier = damageMultiplier;
+	}
+
+	void modifyForGameLevel(GameLevel level) {
+		setHealth(getHealth() * level.getHealthMultiplier());
+		setDamageMultiplier(level.getDamageMultiplier());
 	}
 
 	private static Enemy createUndeadShambler() {
@@ -49,6 +63,16 @@ class Enemy extends Entity {
 		}
 
 		return randomEnemy;
+	}
+
+	@Override
+	double getAttackDamage() {
+		return getWeapon().getDamage() * getDamageMultiplier();
+	}
+
+	@Override
+	void attack(Entity entity) {
+		entity.setHealth(entity.getHealth() - getAttackDamage());
 	}
 
 	@Override

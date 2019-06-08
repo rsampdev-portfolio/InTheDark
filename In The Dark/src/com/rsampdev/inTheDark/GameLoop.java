@@ -42,7 +42,11 @@ class GameLoop {
 	}
 
 	static void help() {
-		System.out.println("HELP!");
+		System.out.println("\nHELP:");
+		System.out.println("use: use an item");
+		System.out.println("stats: display your stats");
+		System.out.println("explore: explore deeper into the cave");
+		System.out.println("inventory: display the items in your inventory");
 	}
 
 	static boolean quit() {

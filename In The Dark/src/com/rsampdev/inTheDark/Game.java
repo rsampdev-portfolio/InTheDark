@@ -5,6 +5,7 @@ import java.util.Scanner;
 class Game {
 
 	private Player player;
+	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
 	private static String COMMAND_LISTENER = "";
 
 	Game(Player player) {
@@ -42,7 +43,7 @@ class Game {
 	}
 
 	private void explore(Scanner terminal) {
-		int roll = Tools.DICE.nextInt(6);
+		int roll = Tools.DICE.nextInt(7);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
@@ -62,6 +63,10 @@ class Game {
 
 		if (roll == 5) {
 			combat(terminal);
+		}
+
+		if (roll == 6) {
+			// go deeper...
 		}
 	}
 
@@ -156,6 +161,7 @@ class Game {
 		String input = "";
 
 		Enemy enemy = Enemy.getRandomEnemy();
+		enemy.modifyForGameLevel(gameLevel);
 
 		System.out.println("\nYou have encountered a(n) " + enemy.getName() + " wielding a(n) " + enemy.getWeapon().getDescription() + "\n");
 
@@ -205,11 +211,11 @@ class Game {
 					break;
 				} else {
 					enemy.attack(player);
-					System.out.println("The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
+					System.out.println("The " + enemy.getName() + " has dealt " + enemy.getAttackDamage() + " damage to you" + "\n");
 				}
 			} else if (roll == 1) {
 				enemy.attack(player);
-				System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getWeapon().getDamage() + " damage to you" + "\n");
+				System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getAttackDamage() + " damage to you" + "\n");
 
 				if (player.getHealth() <= 0) {
 					System.out.println("You have died. Game Over.");

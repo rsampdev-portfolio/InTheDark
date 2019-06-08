@@ -66,7 +66,7 @@ class Game {
 		}
 
 		if (roll == 6) {
-			// go deeper...
+			ascend(terminal);
 		}
 	}
 
@@ -174,7 +174,7 @@ class Game {
 
 		if (input.equals(Command.YES.getCommand())) {
 			startCombat(terminal, enemy);
-		} else {
+		} else if (input.equals(Command.NO.getCommand())) {
 			System.out.println("\n" + "You attempt to escape the " + enemy.getName());
 
 			int roll = Tools.DICE.nextInt(4);
@@ -267,6 +267,26 @@ class Game {
 					}
 				}
 			}
+		}
+	}
+
+	private void ascend(Scanner terminal) {
+		String input = "";
+
+		while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+			System.out.println("\n" + "You have found an entrance to a higher level");
+			System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
+			System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+
+			input = terminal.nextLine().toLowerCase().trim();
+		}
+
+		if (input.equals(Command.YES.getCommand())) {
+			gameLevel = GameLevel.nextLevel(gameLevel);
+
+			System.out.println("\n" + "You're now one step closer to the surface...");
+		} else if (input.equals(Command.NO.getCommand())) {
+			System.out.println("\n" + "You ignore the entrance, continuing on your way...");
 		}
 	}
 

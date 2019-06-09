@@ -19,6 +19,13 @@ class Player extends Entity {
 		this.setLevel();
 	}
 
+	Player(int weaponID, double health, double experience, ArrayList<Item> inventory) {
+		// weapon
+		// health,
+		// experience
+		// inventory
+	}
+
 	Level getLevel() {
 		return this.level;
 	}

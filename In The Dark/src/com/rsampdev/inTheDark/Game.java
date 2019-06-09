@@ -17,6 +17,14 @@ class Game {
 		Enemy.prepare();
 	}
 
+	Player getPlayer() {
+		return this.player;
+	}
+
+	GameLevel getGameLevel() {
+		return this.gameLevel;
+	}
+
 	String run(Scanner terminal) {
 		String input = "";
 

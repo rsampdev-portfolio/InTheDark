@@ -17,8 +17,9 @@ enum Weapon {
 	private static final int SIZE = WEAPONS.size();
 
 	private Weapon(int id, double damage, String description) {
-		this.damage = damage;
 		this.description = description;
+		this.damage = damage;
+		this.id = id;
 	}
 
 	int getID() {

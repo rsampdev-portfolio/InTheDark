@@ -74,6 +74,20 @@ class Item {
 		return item;
 	}
 
+	static Item getItem(String itemName) {
+		Item item = null;
+
+		if (itemName.equals("Health Potion")) {
+			item = createHealthPotion();
+		}
+
+		if (itemName.equals("Health Elixir")) {
+			item = createHealthElixir();
+		}
+
+		return item;
+	}
+
 	static void prepare() {
 		Item.ITEMS.add(Item.createHealthPotion());
 		Item.ITEMS.add(Item.createHealthElixir());

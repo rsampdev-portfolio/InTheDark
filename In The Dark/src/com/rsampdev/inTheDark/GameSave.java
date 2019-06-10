@@ -25,16 +25,29 @@ class GameSave {
 			save = save.concat(item.getName() + ",");
 		}
 
-		save = save.concat("|");
-
 		return save;
 	}
 
-	static Game parseSaveString() {
-		int weaponID = -1;
-		double health = -1;
-		double experience = -1;
-		ArrayList<Item> inventory = null;
+	static Game parseSaveString(String saveString) {
+		String[] saveData = saveString.split("|");
+
+		int weaponID = Integer.parseInt(saveData[1]);
+
+		double health = Double.parseDouble(saveData[2]);
+
+		double experience = Double.parseDouble(saveData[3]);
+
+		String[] inventoryData = saveData[4].split(",");
+
+		ArrayList<Item> inventory = new ArrayList<Item>();
+
+		for (String itemName : inventoryData) {
+			Item item = Item.getItem(itemName);
+
+			if (item != null) {
+				inventory.add(item);
+			}
+		}
 
 		Player player = new Player(weaponID, health, experience, inventory);
 

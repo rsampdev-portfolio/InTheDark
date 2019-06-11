@@ -34,6 +34,10 @@ enum Weapon {
 		return this.description;
 	}
 
+	static Weapon getWeapon(int id) {
+		return WEAPONS.get(id);
+	}
+
 	static Weapon getRandomWeapon() {
 		return WEAPONS.get(2 + Tools.DICE.nextInt(SIZE - 2));
 	}

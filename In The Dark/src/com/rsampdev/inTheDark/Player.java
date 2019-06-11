@@ -20,10 +20,11 @@ class Player extends Entity {
 	}
 
 	Player(int weaponID, double health, double experience, ArrayList<Item> inventory) {
-		// weapon
-		// health,
-		// experience
-		// inventory
+		this.setWeapon(Weapon.getWeapon(weaponID));
+		this.setHealth(health);
+		this.setExperience(experience);
+		this.setLevel();
+		this.setInventoryList(inventory);
 	}
 
 	Level getLevel() {
@@ -32,6 +33,16 @@ class Player extends Entity {
 
 	void setLevel() {
 		this.level = Level.getLevel(getExperience());
+	}
+
+	private void setInventoryList(ArrayList<Item> inventory) {
+		for (Item item : inventory) {
+			this.addItem(item);
+		}
+	}
+
+	ArrayList<Item> getInventoryList() {
+		return this.inventory;
 	}
 
 	void addItem(Item item) {
@@ -70,10 +81,6 @@ class Player extends Entity {
 		if (tempItem != null && tempItem.getStack() < 1) {
 			inventory.remove(tempItem);
 		}
-	}
-
-	ArrayList<Item> getInventoryList() {
-		return this.inventory;
 	}
 
 	String getInventoryString() {
@@ -123,7 +130,7 @@ class Player extends Entity {
 	@Override
 	String getStats() {
 		update();
-		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getStats();
+		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
 		return stats;
 	}
 

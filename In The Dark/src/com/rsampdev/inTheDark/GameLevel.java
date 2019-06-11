@@ -32,6 +32,10 @@ enum GameLevel {
 		return this.damageMultiplier;
 	}
 
+	static GameLevel getLevel(int gameLevelID) {
+		return GAME_LEVELS.get(gameLevelID);
+	}
+
 	static GameLevel nextLevel(GameLevel level) {
 		GameLevel gameLevel = level;
 

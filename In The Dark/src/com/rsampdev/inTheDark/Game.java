@@ -12,6 +12,11 @@ class Game {
 		this.player = player;
 	}
 
+	Game(Player player, int gameLevelID) {
+		this.player = player;
+		this.gameLevel = GameLevel.getLevel(gameLevelID);
+	}
+
 	void prepare() {
 		Item.prepare();
 		Enemy.prepare();
@@ -29,7 +34,7 @@ class Game {
 		String input = "";
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, inventory, use, stats, help or quit\n");
+		System.out.println("ENTER: explore, inventory, use, stats, help, save or quit\n");
 
 		input = terminal.nextLine().toLowerCase().trim();
 

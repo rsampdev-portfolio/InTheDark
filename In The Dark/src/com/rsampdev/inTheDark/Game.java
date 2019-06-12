@@ -34,7 +34,7 @@ class Game {
 		String input = "";
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, inventory, use, stats, help, save or quit\n");
+		System.out.println("ENTER: explore, inventory, use, stats, level, help, save or quit\n");
 
 		input = terminal.nextLine().toLowerCase().trim();
 
@@ -46,6 +46,8 @@ class Game {
 			inventory();
 		} else if (input.equals(Command.USE.getCommand())) {
 			useItem(terminal);
+		} else if (input.equals(Command.LEVEL.getCommand())) {
+			level();
 		} else if (input.equals(Command.STATS.getCommand())) {
 			statsStartWithNewLine(player);
 		} else {
@@ -99,6 +101,22 @@ class Game {
 				item.use(player);
 			}
 		}
+	}
+
+	private void level() {
+		int levelID = this.player.getLevel().getID();
+
+		String levelData = "You are Lvl. " + levelID + ", with " + this.player.getExperience() + " XP";
+
+		if (levelID < Level.NUMBER_OF_LEVELS - 1) {
+			Level nextLevel = Level.getLevelFromID(levelID + 1);
+			double levelXPGap = nextLevel.getLowerExperienceBound() - player.getExperience();
+			levelData = levelData.concat(", and are " + levelXPGap + " XP from Lvl. " + nextLevel.getID());
+		} else {
+			levelData = levelData.concat(", and are max level");
+		}
+		
+		System.out.println("\n" + levelData);
 	}
 
 	private void stats(Entity entity) {

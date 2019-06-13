@@ -50,7 +50,7 @@ class Item {
 		Action action = new Action() {
 			@Override
 			public Player act(Player player) {
-				player.setHealth(player.getHealth() + 10);
+				player.setHealth(player.getHealth() + 5);
 				return player;
 			}
 		};
@@ -59,8 +59,36 @@ class Item {
 
 		return item;
 	}
+	
+	private static Item createMegaHealthPotion() {
+		Action action = new Action() {
+			@Override
+			public Player act(Player player) {
+				player.setHealth(player.getHealth() + 25);
+				return player;
+			}
+		};
+
+		Item item = new Item("Mega Health Potion", 1, action);
+
+		return item;
+	}
 
 	private static Item createHealthElixir() {
+		Action action = new Action() {
+			@Override
+			public Player act(Player player) {
+				player.setHealth(player.getHealth() + 50);
+				return player;
+			}
+		};
+
+		Item item = new Item("Health Elixir", 1, action);
+
+		return item;
+	}
+
+	private static Item createMegaHealthElixir() {
 		Action action = new Action() {
 			@Override
 			public Player act(Player player) {
@@ -69,9 +97,16 @@ class Item {
 			}
 		};
 
-		Item item = new Item("Health Elixir", 1, action);
+		Item item = new Item("Mega Health Elixir", 1, action);
 
 		return item;
+	}
+
+	static void prepare() {
+		Item.ITEMS.add(Item.createHealthPotion());
+		Item.ITEMS.add(Item.createMegaHealthPotion());
+		Item.ITEMS.add(Item.createHealthElixir());
+		Item.ITEMS.add(Item.createMegaHealthElixir());
 	}
 
 	static Item getItem(String itemName) {
@@ -86,11 +121,6 @@ class Item {
 		}
 
 		return item;
-	}
-
-	static void prepare() {
-		Item.ITEMS.add(Item.createHealthPotion());
-		Item.ITEMS.add(Item.createHealthElixir());
 	}
 
 	static Item getRandomItem() {

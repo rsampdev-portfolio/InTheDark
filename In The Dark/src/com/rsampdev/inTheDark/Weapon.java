@@ -7,7 +7,7 @@ import java.util.List;
 enum Weapon {
 
 	NONE(0, 0, "literally nothing"), FIST(1, 5, "Fist"), WOODEN_SWORD(2, 10, "Wooden Sword"), STONE_SWORD(3, 20, "Stone Sword"), IRON_SWORD(4, 30, "Iron Sword"),
-	STEEL_SWORD(5, 40, "Steel Sword");
+	STEEL_SWORD(5, 40, "Steel Sword"), WOODEN_CLUB(6, 20, "Wooden Club"), IRON_REINFORCED_CLUB(7, 30, "Iron Reinforced Club");
 
 	private int id;
 	private double damage;

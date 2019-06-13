@@ -39,12 +39,22 @@ class Enemy extends Entity {
 	}
 
 	private static Enemy createCaveGremlin() {
-		return new Enemy("Cave Gremlin", 15, 100, Weapon.STONE_SWORD);
+		return new Enemy("Cave Gremlin", 15, 75, Weapon.STONE_SWORD);
+	}
+
+	private static Enemy createCaveOrc() {
+		return new Enemy("Cave Orc", 20, 100, Weapon.IRON_REINFORCED_CLUB);
+	}
+
+	private static Enemy createCaveTroll() {
+		return new Enemy("Cave Troll", 40, 125, Weapon.WOODEN_CLUB);
 	}
 
 	static void prepare() {
 		Enemy.ENEMIES.add(Enemy.createUndeadShambler());
 		Enemy.ENEMIES.add(Enemy.createCaveGremlin());
+		Enemy.ENEMIES.add(Enemy.createCaveOrc());
+		Enemy.ENEMIES.add(Enemy.createCaveTroll());
 	}
 
 	static Enemy getRandomEnemy() {

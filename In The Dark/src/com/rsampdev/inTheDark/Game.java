@@ -40,6 +40,8 @@ class Game {
 
 		COMMAND_LISTENER = "";
 
+		player.update();
+
 		if (input.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
 		} else if (input.equals(Command.INVENTORY.getCommand())) {
@@ -115,7 +117,7 @@ class Game {
 		} else {
 			levelData = levelData.concat(", and are max level");
 		}
-		
+
 		System.out.println("\n" + levelData);
 	}
 

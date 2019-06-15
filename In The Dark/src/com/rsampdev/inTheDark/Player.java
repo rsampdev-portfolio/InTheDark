@@ -7,24 +7,25 @@ class Player extends Entity {
 
 	private Level level;
 	private ArrayList<Item> inventory = new ArrayList<>();
+	private ArrayList<Effect> effects = new ArrayList<>();
 
 	// void use() {}
 
 	// void retreat() {}
 
 	Player() {
-		this.setHealth(100);
-		this.setExperience(0);
-		this.setWeapon(Weapon.FIST);
-		this.setLevel();
+		setHealth(100);
+		setExperience(0);
+		setWeapon(Weapon.FIST);
+		setLevel();
 	}
 
 	Player(int weaponID, double health, double experience, ArrayList<Item> inventory) {
-		this.setWeapon(Weapon.getWeapon(weaponID));
-		this.setHealth(health);
-		this.setExperience(experience);
-		this.setLevel();
-		this.setInventoryList(inventory);
+		setWeapon(Weapon.getWeapon(weaponID));
+		setHealth(health);
+		setExperience(experience);
+		setLevel();
+		setInventoryList(inventory);
 	}
 
 	Level getLevel() {
@@ -112,7 +113,14 @@ class Player extends Entity {
 		this.setLevel();
 	}
 
+	private void updateEffects() {
+		for (Effect effect : effects) {
+			effect.effect.act(this);
+		}
+	}
+
 	void update() {
+		updateEffects();
 		updateLevel();
 	}
 

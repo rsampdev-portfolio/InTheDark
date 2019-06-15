@@ -49,9 +49,8 @@ class Item {
 	private static Item createHealthPotion() {
 		Action action = new Action() {
 			@Override
-			public Player act(Player player) {
+			public void act(Player player) {
 				player.setHealth(player.getHealth() + 5);
-				return player;
 			}
 		};
 
@@ -59,13 +58,12 @@ class Item {
 
 		return item;
 	}
-	
+
 	private static Item createMegaHealthPotion() {
 		Action action = new Action() {
 			@Override
-			public Player act(Player player) {
+			public void act(Player player) {
 				player.setHealth(player.getHealth() + 25);
-				return player;
 			}
 		};
 
@@ -77,9 +75,8 @@ class Item {
 	private static Item createHealthElixir() {
 		Action action = new Action() {
 			@Override
-			public Player act(Player player) {
+			public void act(Player player) {
 				player.setHealth(player.getHealth() + 50);
-				return player;
 			}
 		};
 
@@ -91,9 +88,8 @@ class Item {
 	private static Item createMegaHealthElixir() {
 		Action action = new Action() {
 			@Override
-			public Player act(Player player) {
+			public void act(Player player) {
 				player.setHealth(player.getHealth() + 100);
-				return player;
 			}
 		};
 
@@ -116,8 +112,16 @@ class Item {
 			item = createHealthPotion();
 		}
 
+		if (itemName.equals("Mega Health Potion")) {
+			item = createMegaHealthPotion();
+		}
+
 		if (itemName.equals("Health Elixir")) {
 			item = createHealthElixir();
+		}
+
+		if (itemName.equals("Mega Health Elixir")) {
+			item = createMegaHealthElixir();
 		}
 
 		return item;
@@ -139,10 +143,6 @@ class Item {
 		}
 
 		return randomItem;
-	}
-
-	interface Action {
-		abstract Player act(Player player);
 	}
 
 	static class SortItemsByName implements Comparator<Item> {

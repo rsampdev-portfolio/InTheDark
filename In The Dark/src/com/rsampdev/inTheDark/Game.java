@@ -33,24 +33,26 @@ class Game {
 	String run(Scanner terminal) {
 		String input = "";
 
+		player.update();
+		
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("ENTER: explore, inventory, use, stats, level, help, save or quit\n");
 
-		input = terminal.nextLine().toLowerCase().trim();
+		input = terminal.nextLine().trim();
 
 		COMMAND_LISTENER = "";
+		
+		String command = input.split(" ")[0].toLowerCase().trim();
 
-		player.update();
-
-		if (input.equals(Command.EXPLORE.getCommand())) {
+		if (command.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
-		} else if (input.equals(Command.INVENTORY.getCommand())) {
+		} else if (command.equals(Command.INVENTORY.getCommand())) {
 			inventory();
-		} else if (input.equals(Command.USE.getCommand())) {
+		} else if (command.equals(Command.USE.getCommand())) {
 			useItem(terminal);
-		} else if (input.equals(Command.LEVEL.getCommand())) {
+		} else if (command.equals(Command.LEVEL.getCommand())) {
 			level();
-		} else if (input.equals(Command.STATS.getCommand())) {
+		} else if (command.equals(Command.STATS.getCommand())) {
 			statsStartWithNewLine(player);
 		} else {
 			COMMAND_LISTENER = input;

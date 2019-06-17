@@ -73,7 +73,7 @@ class Player extends Entity {
 		Item tempItem = null;
 
 		for (Item item : inventory) {
-			if (item.getName() == name) {
+			if (item.getName().equals(name)) {
 				tempItem = item;
 				item.use(this);
 			}

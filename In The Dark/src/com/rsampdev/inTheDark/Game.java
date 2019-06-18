@@ -38,21 +38,17 @@ class Game {
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("ENTER: explore, inventory, use, stats, level, help, save or quit\n");
 
-		input = terminal.nextLine().trim();
+		input = terminal.nextLine().toLowerCase().trim();
 
-		COMMAND_LISTENER = "";
-		
-		String command = input.split(" ")[0].toLowerCase().trim();
-
-		if (command.equals(Command.EXPLORE.getCommand())) {
+		if (input.equals(Command.EXPLORE.getCommand())) {
 			explore(terminal);
-		} else if (command.equals(Command.INVENTORY.getCommand())) {
+		} else if (input.equals(Command.INVENTORY.getCommand())) {
 			inventory();
-		} else if (command.equals(Command.USE.getCommand())) {
+		} else if (input.equals(Command.USE.getCommand())) {
 			useItem(terminal);
-		} else if (command.equals(Command.LEVEL.getCommand())) {
+		} else if (input.equals(Command.LEVEL.getCommand())) {
 			level();
-		} else if (command.equals(Command.STATS.getCommand())) {
+		} else if (input.equals(Command.STATS.getCommand())) {
 			statsStartWithNewLine(player);
 		} else {
 			COMMAND_LISTENER = input;
@@ -94,15 +90,19 @@ class Game {
 	}
 
 	private void useItem(Scanner terminal) {
-		System.out.println("\nENTER: the name of the item in your inventory you want to use\n");
+		System.out.println("\nENTER: the name of the item in your inventory you want to use or cancel");
+		inventory();
+		System.out.println();
 
 		String input = "";
 
 		input = terminal.nextLine().trim();
-
-		for (Item item : player.getInventoryList()) {
-			if (item.getName().equals(input)) {
-				item.use(player);
+		
+		if (!input.equals(Command.CANCEL.getCommand())) {
+			for (Item item : player.getInventoryList()) {
+				if (item.getName().toLowerCase().equals(input.toLowerCase())) {
+					item.use(player);
+				}
 			}
 		}
 	}

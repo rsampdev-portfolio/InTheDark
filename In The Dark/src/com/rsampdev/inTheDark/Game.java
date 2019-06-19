@@ -6,15 +6,16 @@ class Game {
 
 	private Player player;
 	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
+	
 	private static String COMMAND_LISTENER = "";
 
 	Game(Player player) {
 		this.player = player;
 	}
 
-	Game(Player player, int gameLevelID) {
-		this.player = player;
+	Game(int gameLevelID, Player player) {
 		this.gameLevel = GameLevel.getLevel(gameLevelID);
+		this.player = player;
 	}
 
 	void prepare() {
@@ -35,7 +36,7 @@ class Game {
 		String input = "";
 
 		player.update();
-		
+
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("ENTER: explore, inventory, use, stats, level, help, save or quit\n");
 
@@ -98,7 +99,7 @@ class Game {
 		String input = "";
 
 		input = terminal.nextLine().trim();
-		
+
 		if (!input.equals(Command.CANCEL.getCommand())) {
 			for (Item item : player.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(input.toLowerCase())) {
@@ -175,11 +176,9 @@ class Game {
 		if (player.getWeapon() == weapon) {
 			explore(terminal);
 		} else {
-
 			System.out.println("\nYou have found a(n) " + weapon.getStats() + "\n");
 
 			while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
-
 				System.out.println("Your current weapon is a(n) " + player.getWeapon().getStats() + "\n");
 				System.out.println("Do you want to pick up the " + weapon.getStats() + "\n");
 				System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");

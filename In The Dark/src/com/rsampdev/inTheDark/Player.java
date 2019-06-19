@@ -22,10 +22,10 @@ class Player extends Entity {
 
 	Player(int weaponID, double health, double experience, ArrayList<Item> inventory) {
 		setWeapon(Weapon.getWeapon(weaponID));
-		setHealth(health);
-		setExperience(experience);
-		setLevel();
 		setInventoryList(inventory);
+		setExperience(experience);
+		setHealth(health);
+		setLevel();
 	}
 
 	Level getLevel() {
@@ -138,7 +138,8 @@ class Player extends Entity {
 	@Override
 	String getStats() {
 		update();
-		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
+		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) "
+				+ getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
 		return stats;
 	}
 

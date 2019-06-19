@@ -31,7 +31,6 @@ class GameLoop {
 		game.prepare();
 
 		while (running) {
-
 			input = game.run(terminal);
 
 			if (input.equals(Command.QUIT.getCommand())) {
@@ -48,15 +47,12 @@ class GameLoop {
 				save(game);
 				continue;
 			}
-
 		}
 
 		terminal.close();
 	}
 
 	static Game load() throws Exception {
-		// Test: 1:3:69:420:Health Potion,Health Elixir,Health Potion,
-
 		File file = new File(ABSOLUTE_PATH);
 
 		String saveString = "";

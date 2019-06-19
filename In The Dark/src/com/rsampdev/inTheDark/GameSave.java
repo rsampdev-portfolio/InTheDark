@@ -26,7 +26,7 @@ class GameSave {
 		String[] saveData = saveString.split(":");
 
 		Game game = null;
-		
+
 		int gameLevelID = Integer.parseInt(saveData[0]);
 
 		if (saveData.length == 5) {
@@ -50,7 +50,7 @@ class GameSave {
 
 			Player player = new Player(weaponID, health, experience, inventory);
 
-			game = new Game(player, gameLevelID);
+			game = new Game(gameLevelID, player);
 		}
 
 		return game;

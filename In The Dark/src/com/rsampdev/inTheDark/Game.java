@@ -20,6 +20,7 @@ class Game {
 	void prepare() {
 		Item.prepare();
 		Enemy.prepare();
+		Effect.prepare();
 	}
 
 	Player getPlayer() {

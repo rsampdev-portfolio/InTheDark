@@ -1,5 +1,8 @@
 package com.rsampdev.inTheDark;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 class Game {
@@ -8,14 +11,19 @@ class Game {
 	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
 	
 	private static String COMMAND_LISTENER = "";
+	private static String FILE_NAME = "InTheDarkSaveGame.txt";
+	private static String DIRECTORY = System.getProperty("user.home");
+	private static String ABSOLUTE_PATH = DIRECTORY + File.separator + FILE_NAME;
 
 	Game(Player player) {
 		this.player = player;
+		prepare();
 	}
 
 	Game(int gameLevelID, Player player) {
 		this.gameLevel = GameLevel.getLevel(gameLevelID);
 		this.player = player;
+		prepare();
 	}
 
 	void prepare() {
@@ -30,6 +38,35 @@ class Game {
 
 	GameLevel getGameLevel() {
 		return this.gameLevel;
+	}
+	
+	static Game load() throws Exception {
+		File file = new File(ABSOLUTE_PATH);
+		FileReader fileReader = new FileReader(file);
+		
+		String saveString = "";
+		int data = fileReader.read();
+
+		while (data != -1) {
+			char symbol = (char) data;
+			saveString = saveString.concat(symbol + "");
+			data = fileReader.read();
+		}
+
+		fileReader.close();
+
+		Game game = GameSave.parseSaveString(saveString);
+
+		return game;
+	}
+
+	void save() throws Exception {
+		System.out.println("\nSaving game...\n");
+		String saveString = GameSave.generateSaveString(this);
+		FileWriter fileWriter = new FileWriter(new File(ABSOLUTE_PATH));
+		fileWriter.write(saveString);
+		fileWriter.close();
+		System.out.println("Game saved");
 	}
 
 	String run(Scanner terminal) {

@@ -1,18 +1,11 @@
 package com.rsampdev.inTheDark;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.Scanner;
 
 class GameLoop {
 
-	private static String DIRECTORY = System.getProperty("user.home");
-	private static String FILE_NAME = "InTheDarkSaveGame.txt";
-	private static String ABSOLUTE_PATH = DIRECTORY + File.separator + FILE_NAME;
-
 	public static void main(String[] args) throws Exception {
-		Game game = load();
+		Game game = Game.load();
 
 		if (game == null) {
 			Player player = new Player();
@@ -28,8 +21,6 @@ class GameLoop {
 
 		boolean running = true;
 
-		game.prepare();
-
 		while (running) {
 			input = game.run(terminal);
 
@@ -44,45 +35,14 @@ class GameLoop {
 			}
 
 			if (input.equals(Command.SAVE.getCommand())) {
-				save(game);
+				game.save();
 				continue;
 			}
 		}
 
 		terminal.close();
 	}
-
-	static Game load() throws Exception {
-		File file = new File(ABSOLUTE_PATH);
-
-		String saveString = "";
-
-		FileReader fileReader = new FileReader(file);
-
-		int data = fileReader.read();
-
-		while (data != -1) {
-			char symbol = (char) data;
-			saveString = saveString.concat(symbol + "");
-			data = fileReader.read();
-		}
-
-		fileReader.close();
-
-		Game game = GameSave.parseSaveString(saveString);
-
-		return game;
-	}
-
-	static void save(Game game) throws Exception {
-		System.out.println("\nSaving game...\n");
-		String saveString = GameSave.generateSaveString(game);
-		FileWriter fileWriter = new FileWriter(new File(ABSOLUTE_PATH));
-		fileWriter.write(saveString);
-		fileWriter.close();
-		System.out.println("Game saved");
-	}
-
+	
 	static void help() {
 		System.out.println("\nHELP:");
 		System.out.println("use: use an item");

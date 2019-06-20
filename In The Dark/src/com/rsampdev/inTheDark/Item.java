@@ -50,7 +50,7 @@ class Item {
 		Action action = new Action() {
 			@Override
 			public void act(Player player) {
-				player.setHealth(player.getHealth() + 5);
+				player.setHealth(player.getHealth() + 15);
 			}
 		};
 
@@ -63,7 +63,7 @@ class Item {
 		Action action = new Action() {
 			@Override
 			public void act(Player player) {
-				player.setHealth(player.getHealth() + 25);
+				player.setHealth(player.getHealth() + 30);
 			}
 		};
 

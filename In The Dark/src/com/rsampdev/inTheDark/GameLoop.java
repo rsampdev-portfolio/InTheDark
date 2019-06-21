@@ -42,7 +42,7 @@ class GameLoop {
 
 		terminal.close();
 	}
-	
+
 	static void help() {
 		System.out.println("\nHELP:");
 		System.out.println("use: use an item");

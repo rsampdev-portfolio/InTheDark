@@ -93,7 +93,7 @@ class Effect {
 	}
 
 	static Effect getRandomEffect() {
-		int number = Tools.DICE.nextInt(Item.ITEMS.size());
+		int number = Tools.DICE.nextInt(EFFECTS.size());
 		int index = 0;
 
 		Effect randomEffect = null;

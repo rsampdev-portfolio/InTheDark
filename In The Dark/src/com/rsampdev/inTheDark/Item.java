@@ -1,26 +1,44 @@
 package com.rsampdev.inTheDark;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-class Item {
+enum Item {
+
+	HEALTH_POTION("Health Potion", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.setHealth(player.getHealth() + 15);
+		}
+	}), MEGA_HEALTH_POTION("Mega Health Potion", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.setHealth(player.getHealth() + 30);
+		}
+	}), HEALTH_ELIXIR("Health Elixir", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.setHealth(player.getHealth() + 50);
+		}
+	}), MEGA_HEALTH_ELIXIR("Mega Health Elixir", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.setHealth(player.getHealth() + 100);
+		}
+	});
 
 	private int stack;
 	private String name;
 	private Action usage;
 
-	static ArrayList<Item> ITEMS = new ArrayList<Item>();
+	private static final List<Item> ITEMS = Collections.unmodifiableList(Arrays.asList(values()));
 
 	private Item(String name, int stack, Action usage) {
-		this.name = name;
 		this.stack = stack;
 		this.usage = usage;
-	}
-
-	private Item(Item item) {
-		this.name = item.name;
-		this.stack = item.stack;
-		this.usage = item.usage;
+		this.name = name;
 	}
 
 	String getName() {
@@ -46,82 +64,13 @@ class Item {
 		}
 	}
 
-	private static Item createHealthPotion() {
-		Action action = new Action() {
-			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() + 15);
-			}
-		};
-
-		Item item = new Item("Health Potion", 1, action);
-
-		return item;
-	}
-
-	private static Item createMegaHealthPotion() {
-		Action action = new Action() {
-			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() + 30);
-			}
-		};
-
-		Item item = new Item("Mega Health Potion", 1, action);
-
-		return item;
-	}
-
-	private static Item createHealthElixir() {
-		Action action = new Action() {
-			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() + 50);
-			}
-		};
-
-		Item item = new Item("Health Elixir", 1, action);
-
-		return item;
-	}
-
-	private static Item createMegaHealthElixir() {
-		Action action = new Action() {
-			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() + 100);
-			}
-		};
-
-		Item item = new Item("Mega Health Elixir", 1, action);
-
-		return item;
-	}
-
-	static void prepare() {
-		Item.ITEMS.add(Item.createHealthPotion());
-		Item.ITEMS.add(Item.createMegaHealthPotion());
-		Item.ITEMS.add(Item.createHealthElixir());
-		Item.ITEMS.add(Item.createMegaHealthElixir());
-	}
-
 	static Item getItem(String itemName) {
 		Item item = null;
 
-		if (itemName.equals("Health Potion")) {
-			item = createHealthPotion();
-		}
-
-		if (itemName.equals("Mega Health Potion")) {
-			item = createMegaHealthPotion();
-		}
-
-		if (itemName.equals("Health Elixir")) {
-			item = createHealthElixir();
-		}
-
-		if (itemName.equals("Mega Health Elixir")) {
-			item = createMegaHealthElixir();
+		for (Item tempItem : ITEMS) {
+			if (tempItem.name.equals(itemName)) {
+				item = tempItem;
+			}
 		}
 
 		return item;
@@ -135,7 +84,7 @@ class Item {
 
 		for (Item item : ITEMS) {
 			if (index == number) {
-				randomItem = new Item(item);
+				randomItem = item;
 				break;
 			} else {
 				index++;

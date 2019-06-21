@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class Enemy extends Entity {
 
 	private double damageMultiplier;
-	
+
 	static ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>();
 
 	private Enemy(String name, int health, int experience, Weapon weapon) {

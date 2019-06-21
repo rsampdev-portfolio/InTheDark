@@ -9,7 +9,7 @@ class Game {
 
 	private Player player;
 	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
-	
+
 	private static String COMMAND_LISTENER = "";
 	private static String FILE_NAME = "InTheDarkSaveGame.txt";
 	private static String DIRECTORY = System.getProperty("user.home");
@@ -27,7 +27,6 @@ class Game {
 	}
 
 	void prepare() {
-		Item.prepare();
 		Enemy.prepare();
 		Effect.prepare();
 	}
@@ -39,11 +38,11 @@ class Game {
 	GameLevel getGameLevel() {
 		return this.gameLevel;
 	}
-	
+
 	static Game load() throws Exception {
 		File file = new File(ABSOLUTE_PATH);
 		FileReader fileReader = new FileReader(file);
-		
+
 		String saveString = "";
 		int data = fileReader.read();
 

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class Player extends Entity {
-	
+
 	private Level level;
 	private ArrayList<Item> inventory = new ArrayList<>();
 	private ArrayList<Effect> effects = new ArrayList<>();
-	
+
 	private static double MAX_FOOD = 100.0;
 	private static double MAX_DRINK = 100.0;
-	
+
 	private double food = MAX_FOOD;
-	private double drink =  MAX_DRINK;
+	private double drink = MAX_DRINK;
 
 	Player() {
 		setHealth(100);
@@ -47,13 +47,13 @@ class Player extends Entity {
 	ArrayList<Item> getInventoryList() {
 		return this.inventory;
 	}
-	
+
 	void eat() {
-		
+
 	}
-	
+
 	void drink() {
-		
+
 	}
 
 	void addItem(Item item) {

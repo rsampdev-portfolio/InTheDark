@@ -6,24 +6,18 @@ import java.util.List;
 
 enum Weapon {
 
-	NONE(0, 0, "literally nothing"), FIST(1, 5, "Fist"), WOODEN_SWORD(2, 10, "Wooden Sword"), STONE_SWORD(3, 20, "Stone Sword"), IRON_SWORD(4, 30, "Iron Sword"),
-	STEEL_SWORD(5, 40, "Steel Sword"), WOODEN_CLUB(6, 20, "Wooden Club"), IRON_REINFORCED_CLUB(7, 30, "Iron Reinforced Club");
+	NONE(0, "literally nothing"), FIST(5, "Fist"), WOODEN_SWORD(10, "Wooden Sword"), STONE_SWORD(20, "Stone Sword"), IRON_SWORD(30, "Iron Sword"), STEEL_SWORD(40, "Steel Sword"),
+	WOODEN_CLUB(20, "Wooden Club"), IRON_REINFORCED_CLUB(30, "Iron Reinforced Club");
 
-	private int id;
 	private double damage;
 	private String description;
 
 	private static final List<Weapon> WEAPONS = Collections.unmodifiableList(Arrays.asList(values()));
 	private static final int SIZE = WEAPONS.size();
 
-	private Weapon(int id, double damage, String description) {
+	private Weapon(double damage, String description) {
 		this.description = description;
 		this.damage = damage;
-		this.id = id;
-	}
-
-	int getID() {
-		return this.id;
 	}
 
 	double getDamage() {
@@ -34,8 +28,8 @@ enum Weapon {
 		return this.description;
 	}
 
-	static Weapon getWeapon(int id) {
-		return WEAPONS.get(id);
+	static Weapon getWeapon(int ordinal) {
+		return WEAPONS.get(ordinal);
 	}
 
 	static Weapon getRandomWeapon() {

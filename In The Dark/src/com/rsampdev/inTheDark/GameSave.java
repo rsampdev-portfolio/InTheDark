@@ -7,9 +7,9 @@ class GameSave {
 	static String generateSaveString(Game game) {
 		Player player = game.getPlayer();
 
-		String save = game.getGameLevel().getID() + ":";
+		String save = game.getGameLevel().ordinal() + ":";
 
-		save = save.concat(player.getWeapon().getID() + ":");
+		save = save.concat(player.getWeapon().ordinal() + ":");
 
 		save = save.concat(player.getHealth() + ":");
 

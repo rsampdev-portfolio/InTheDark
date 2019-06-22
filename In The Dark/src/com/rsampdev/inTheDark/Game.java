@@ -146,14 +146,14 @@ class Game {
 	}
 
 	private void level() {
-		int levelID = this.player.getLevel().getID();
+		int ordinal = this.player.getLevel().ordinal();
 
-		String levelData = "You are Lvl. " + levelID + ", with " + this.player.getExperience() + " XP";
+		String levelData = "You are Lvl. " + ordinal + ", with " + this.player.getExperience() + " XP";
 
-		if (levelID < Level.NUMBER_OF_LEVELS - 1) {
-			Level nextLevel = Level.getLevelFromID(levelID + 1);
+		if (ordinal < Level.NUMBER_OF_LEVELS - 1) {
+			Level nextLevel = Level.getLevelFromOrdinal(ordinal + 1);
 			double levelXPGap = nextLevel.getLowerExperienceBound() - player.getExperience();
-			levelData = levelData.concat(", and are " + levelXPGap + " XP from Lvl. " + nextLevel.getID());
+			levelData = levelData.concat(", and are " + levelXPGap + " XP from Lvl. " + nextLevel.ordinal());
 		} else {
 			levelData = levelData.concat(", and are max level");
 		}

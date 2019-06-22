@@ -148,7 +148,7 @@ class Player extends Entity {
 	@Override
 	String getStats() {
 		update();
-		String stats = "You are Lvl. " + getLevel().getID() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) "
+		String stats = "You are Lvl. " + getLevel().ordinal() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) "
 				+ getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
 		return stats;
 	}

@@ -26,17 +26,10 @@ class GameLoop {
 
 			if (input.equals(Command.quit.name())) {
 				running = quit();
-				continue;
-			}
-
-			if (input.equals(Command.help.name())) {
+			} else if (input.equals(Command.help.name())) {
 				help();
-				continue;
-			}
-
-			if (input.equals(Command.save.name())) {
+			} else if (input.equals(Command.save.name())) {
 				game.save();
-				continue;
 			}
 		}
 

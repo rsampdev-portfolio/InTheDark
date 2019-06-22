@@ -88,9 +88,9 @@ class Game {
 			level();
 		} else if (input.equals(Command.stats.name())) {
 			statsStartWithNewLine(player);
-		} else {
-			COMMAND_LISTENER = input;
 		}
+
+		COMMAND_LISTENER = input;
 
 		return COMMAND_LISTENER;
 	}

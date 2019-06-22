@@ -347,7 +347,7 @@ class Game {
 		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 			System.out.println("\n" + "You have found an entrance to a higher level");
 			System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
-			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.yes.name() + "\n");
+			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 			input = terminal.nextLine().toLowerCase().trim();
 		}

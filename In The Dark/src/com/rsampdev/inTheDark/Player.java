@@ -48,12 +48,26 @@ class Player extends Entity {
 		return this.inventory;
 	}
 
-	void eat() {
+	void eat(double food) {
+		if (this.food <= MAX_FOOD) {
+			this.food += food;
 
+			if (this.food > MAX_FOOD) {
+				this.setHealth(getHealth() + (this.food - MAX_FOOD));
+				this.food = MAX_FOOD;
+			}
+		}
 	}
 
-	void drink() {
+	void drink(double drink) {
+		if (this.drink <= MAX_DRINK) {
+			this.drink += drink;
 
+			if (this.drink > MAX_DRINK) {
+				this.setHealth(getHealth() + (this.drink - MAX_DRINK));
+				this.drink = MAX_DRINK;
+			}
+		}
 	}
 
 	void addItem(Item item) {

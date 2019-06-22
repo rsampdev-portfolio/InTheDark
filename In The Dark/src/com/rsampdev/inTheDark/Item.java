@@ -7,6 +7,36 @@ import java.util.List;
 
 enum Item {
 
+	// Foods
+
+	UNIDENTIFIED_MEAT("Unidentified Meat", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(20);
+		}
+	}), STEAK("Steak", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(50);
+		}
+	}),
+
+	// Drinks
+
+	UNFILTERED_WATER("Unfiltered Water", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.drink(5);
+		}
+	}), CLEAN_WATER("Clean Water", 1, new Action() {
+		@Override
+		public void act(Player player) {
+			player.drink(15);
+		}
+	}),
+
+	// Potions
+
 	HEALTH_POTION("Health Potion", 1, new Action() {
 		@Override
 		public void act(Player player) {
@@ -26,7 +56,7 @@ enum Item {
 		@Override
 		public void act(Player player) {
 			player.setHealth(player.getHealth() + 100);
-		}
+		};
 	});
 
 	private int stack;
@@ -42,11 +72,11 @@ enum Item {
 	}
 
 	String getName() {
-		return name;
+		return this.name;
 	}
 
 	int getStack() {
-		return stack;
+		return this.stack;
 	}
 
 	void increment(int by) {

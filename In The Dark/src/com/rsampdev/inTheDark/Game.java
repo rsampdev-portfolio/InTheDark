@@ -78,15 +78,15 @@ class Game {
 
 		input = terminal.nextLine().toLowerCase().trim();
 
-		if (input.equals(Command.EXPLORE.getCommand())) {
+		if (input.equals(Command.explore.name())) {
 			explore(terminal);
-		} else if (input.equals(Command.INVENTORY.getCommand())) {
+		} else if (input.equals(Command.inventory.name())) {
 			inventory();
-		} else if (input.equals(Command.USE.getCommand())) {
+		} else if (input.equals(Command.use.name())) {
 			useItem(terminal);
-		} else if (input.equals(Command.LEVEL.getCommand())) {
+		} else if (input.equals(Command.level.name())) {
 			level();
-		} else if (input.equals(Command.STATS.getCommand())) {
+		} else if (input.equals(Command.stats.name())) {
 			statsStartWithNewLine(player);
 		} else {
 			COMMAND_LISTENER = input;
@@ -136,7 +136,7 @@ class Game {
 
 		input = terminal.nextLine().trim();
 
-		if (!input.equals(Command.CANCEL.getCommand())) {
+		if (!input.equals(Command.cancel.name())) {
 			for (Item item : player.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(input.toLowerCase())) {
 					item.use(player);
@@ -192,13 +192,13 @@ class Game {
 
 		System.out.println("\nYou have found a(n) " + item.getName() + "\n");
 
-		while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 			System.out.println("Do you want to use the " + item.getName() + " now?\n");
-			System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 			input = terminal.nextLine().toLowerCase().trim();
 
-			if (input.equals(Command.YES.getCommand())) {
+			if (input.equals(Command.yes.name())) {
 				player.useItem(item.getName());
 			}
 		}
@@ -214,14 +214,14 @@ class Game {
 		} else {
 			System.out.println("\nYou have found a(n) " + weapon.getStats() + "\n");
 
-			while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+			while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 				System.out.println("Your current weapon is a(n) " + player.getWeapon().getStats() + "\n");
 				System.out.println("Do you want to pick up the " + weapon.getStats() + "\n");
-				System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 				input = terminal.nextLine().toLowerCase().trim();
 
-				if (input.equals(Command.YES.getCommand())) {
+				if (input.equals(Command.yes.name())) {
 					player.setWeapon(weapon);
 				}
 			}
@@ -236,16 +236,16 @@ class Game {
 
 		System.out.println("\nYou have encountered a(n) " + enemy.getName() + " wielding a(n) " + enemy.getWeapon().getDescription() + "\n");
 
-		while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 			System.out.println("Do you want to fight the " + enemy.getName() + "?");
-			System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 			input = terminal.nextLine().toLowerCase().trim();
 		}
 
-		if (input.equals(Command.YES.getCommand())) {
+		if (input.equals(Command.yes.name())) {
 			startCombat(terminal, enemy);
-		} else if (input.equals(Command.NO.getCommand())) {
+		} else if (input.equals(Command.no.name())) {
 			System.out.println("\n" + "You attempt to escape the " + enemy.getName());
 
 			int roll = Tools.DICE.nextInt(4);
@@ -290,7 +290,7 @@ class Game {
 
 				if (player.getHealth() <= 0) {
 					System.out.println("You have died. Game Over.");
-					input = Command.QUIT.getCommand();
+					input = Command.quit.name();
 					continueFight = false;
 					break;
 				} else {
@@ -304,7 +304,7 @@ class Game {
 			statsEndWithNewLine(player);
 			statsEndWithNewLine(enemy);
 
-			while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+			while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 				if (enemy.getHealth() <= 0) {
 					System.out.println("You have killed the " + enemy.getName() + "\n");
 					player.addExperience(enemy.getExperience());
@@ -314,17 +314,17 @@ class Game {
 					break;
 				} else if (player.getHealth() <= 0) {
 					System.out.println("You have died. Game Over.");
-					COMMAND_LISTENER = Command.QUIT.getCommand();
+					COMMAND_LISTENER = Command.quit.name();
 					continueFight = false;
 					break;
 				}
 
 				System.out.println("Do you want to continue the fight with the " + enemy.getName() + "?");
-				System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 				input = terminal.nextLine().toLowerCase().trim();
 
-				if (input.equals(Command.NO.getCommand())) {
+				if (input.equals(Command.no.name())) {
 					System.out.println("\n" + "You attempt to escape the " + enemy.getName());
 
 					int secondRoll = Tools.DICE.nextInt(4);
@@ -344,19 +344,19 @@ class Game {
 	private void ascend(Scanner terminal) {
 		String input = "";
 
-		while (!input.equals(Command.YES.getCommand()) && !input.equals(Command.NO.getCommand())) {
+		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
 			System.out.println("\n" + "You have found an entrance to a higher level");
 			System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
-			System.out.println("ENTER: " + Command.YES.getCommand() + " or " + Command.NO.getCommand() + "\n");
+			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.yes.name() + "\n");
 
 			input = terminal.nextLine().toLowerCase().trim();
 		}
 
-		if (input.equals(Command.YES.getCommand())) {
+		if (input.equals(Command.yes.name())) {
 			gameLevel = GameLevel.nextLevel(gameLevel);
 
 			System.out.println("\n" + "You're now one step closer to the surface...");
-		} else if (input.equals(Command.NO.getCommand())) {
+		} else if (input.equals(Command.no.name())) {
 			System.out.println("\n" + "You ignore the entrance, continuing on your way...");
 		}
 	}

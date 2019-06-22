@@ -24,17 +24,17 @@ class GameLoop {
 		while (running) {
 			input = game.run(terminal);
 
-			if (input.equals(Command.QUIT.getCommand())) {
+			if (input.equals(Command.quit.name())) {
 				running = quit();
 				continue;
 			}
 
-			if (input.equals(Command.HELP.getCommand())) {
+			if (input.equals(Command.help.name())) {
 				help();
 				continue;
 			}
 
-			if (input.equals(Command.SAVE.getCommand())) {
+			if (input.equals(Command.save.name())) {
 				game.save();
 				continue;
 			}

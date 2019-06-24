@@ -1,10 +1,60 @@
 package com.rsampdev.inTheDark;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 class GameSave {
 
-	static String generateSaveString(Game game) {
+	private static final String FILE_NAME = "InTheDarkSaveGame.txt";
+	private static final String DIRECTORY = System.getProperty("user.home");
+	private static final String ABSOLUTE_PATH = DIRECTORY + File.separator + FILE_NAME;
+
+	static Game load() throws Exception {
+		File file = new File(ABSOLUTE_PATH);
+
+		FileReader fileReader = new FileReader(file);
+
+		String saveString = "";
+
+		int data = fileReader.read();
+
+		while (data != -1) {
+			char symbol = (char) data;
+
+			saveString = saveString.concat(symbol + "");
+
+			data = fileReader.read();
+		}
+
+		fileReader.close();
+
+		Game game = GameSave.parseSaveString(saveString);
+
+		if (game == null) {
+			Player player = new Player();
+			game = new Game(player);
+		}
+		
+		return game;
+	}
+
+	static void save(Game game) throws Exception {
+		System.out.println("\nSaving game...\n");
+
+		String saveString = GameSave.generateSaveString(game);
+
+		FileWriter fileWriter = new FileWriter(new File(ABSOLUTE_PATH));
+
+		fileWriter.write(saveString);
+
+		fileWriter.close();
+
+		System.out.println("Game saved");
+	}
+
+	private static String generateSaveString(Game game) {
 		Player player = game.getPlayer();
 
 		String save = game.getGameLevel().ordinal() + ":";
@@ -22,7 +72,7 @@ class GameSave {
 		return save;
 	}
 
-	static Game parseSaveString(String saveString) {
+	private static Game parseSaveString(String saveString) {
 		String[] saveData = saveString.split(":");
 
 		Game game = null;

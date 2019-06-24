@@ -6,14 +6,13 @@ import java.util.Collections;
 class Player extends Entity {
 
 	private Level level;
-	private ArrayList<Item> inventory = new ArrayList<>();
-	private ArrayList<Effect> effects = new ArrayList<>();
-
-	private static double MAX_FOOD = 100.0;
-	private static double MAX_DRINK = 100.0;
-
 	private double food = MAX_FOOD;
 	private double drink = MAX_DRINK;
+	private ArrayList<Item> inventory = new ArrayList<>();
+	private ArrayList<Effect> effects = new ArrayList<>();
+	
+	private static final double MAX_FOOD = 100.0;
+	private static final double MAX_DRINK = 100.0;
 
 	Player() {
 		setHealth(100);

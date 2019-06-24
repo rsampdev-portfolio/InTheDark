@@ -5,12 +5,7 @@ import java.util.Scanner;
 class GameLoop {
 
 	public static void main(String[] args) throws Exception {
-		Game game = Game.load();
-
-		if (game == null) {
-			Player player = new Player();
-			game = new Game(player);
-		}
+		Game game = GameSave.load();
 
 		GameLoop.gameLoop(game);
 	}
@@ -24,12 +19,12 @@ class GameLoop {
 		while (running) {
 			input = game.run(terminal);
 
-			if (input.equals(Command.quit.name())) {
-				running = quit();
-			} else if (input.equals(Command.help.name())) {
+			if (input.equals(Command.help.name())) {
 				help();
 			} else if (input.equals(Command.save.name())) {
-				game.save();
+				GameSave.save(game);
+			} else if (input.equals(Command.quit.name())) {
+				running = quit(terminal, game);
 			}
 		}
 
@@ -46,8 +41,36 @@ class GameLoop {
 		System.out.println("inventory: display the items in your inventory");
 	}
 
-	static boolean quit() {
-		return false;
+	static boolean quit(Scanner terminal, Game game) throws Exception {
+		boolean doNotQuitGame = true;
+
+		String input = "";
+
+		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
+			System.out.println("\nDo you want to save your game before quitting?");
+			System.out.println("ENTER: yes or no\n");
+
+			input = terminal.nextLine().toLowerCase().trim();
+
+			if (input.equals(Command.yes.name())) {
+				GameSave.save(game);
+			}
+		}
+
+		input = "";
+
+		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
+			System.out.println("\nAre you sure you want to quit your game?");
+			System.out.println("ENTER: yes or no\n");
+
+			input = terminal.nextLine().toLowerCase().trim();
+
+			if (input.equals(Command.yes.name())) {
+				doNotQuitGame = false;
+			}
+		}
+
+		return doNotQuitGame;
 	}
 
 }

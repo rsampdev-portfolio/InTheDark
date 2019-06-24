@@ -9,7 +9,7 @@ enum Item {
 
 	// Foods
 
-	UNIDENTIFIED_MEAT("Unidentified Meat", 1, new Action() {
+	UNIDENTIFIED_MEAT("Can of Unidentified Meat", 1, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(20);
@@ -23,12 +23,12 @@ enum Item {
 
 	// Drinks
 
-	UNFILTERED_WATER("Unfiltered Water", 1, new Action() {
+	UNFILTERED_WATER("Jar of Unfiltered Water", 1, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(5);
 		}
-	}), CLEAN_WATER("Clean Water", 1, new Action() {
+	}), CLEAN_WATER("Bottle of Clean Water", 1, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(15);

@@ -12,18 +12,17 @@ class GameLoop {
 
 	static void gameLoop(Game game) throws Exception {
 		Scanner terminal = new Scanner(System.in);
-		String input = "";
 
 		boolean running = true;
 
 		while (running) {
-			input = game.run(terminal);
+			Tools.LISTENER = game.run(terminal);
 
-			if (input.equals(Command.help.name())) {
+			if (Tools.LISTENER.equals(Command.help.name())) {
 				help();
-			} else if (input.equals(Command.save.name())) {
+			} else if (Tools.LISTENER.equals(Command.save.name())) {
 				GameSave.save(game);
-			} else if (input.equals(Command.quit.name())) {
+			} else if (Tools.LISTENER.equals(Command.quit.name())) {
 				running = quit(terminal, game);
 			}
 		}
@@ -44,28 +43,26 @@ class GameLoop {
 	static boolean quit(Scanner terminal, Game game) throws Exception {
 		boolean doNotQuitGame = true;
 
-		String input = "";
-
-		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
+		while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 			System.out.println("\nDo you want to save your game before quitting?");
 			System.out.println("ENTER: yes or no\n");
 
-			input = terminal.nextLine().toLowerCase().trim();
+			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-			if (input.equals(Command.yes.name())) {
+			if (Tools.LISTENER.equals(Command.yes.name())) {
 				GameSave.save(game);
 			}
 		}
 
-		input = "";
+		Tools.LISTENER = "";
 
-		while (!input.equals(Command.yes.name()) && !input.equals(Command.no.name())) {
+		while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 			System.out.println("\nAre you sure you want to quit your game?");
 			System.out.println("ENTER: yes or no\n");
 
-			input = terminal.nextLine().toLowerCase().trim();
+			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-			if (input.equals(Command.yes.name())) {
+			if (Tools.LISTENER.equals(Command.yes.name())) {
 				doNotQuitGame = false;
 			}
 		}

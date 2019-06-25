@@ -36,7 +36,7 @@ class GameSave {
 			Player player = new Player();
 			game = new Game(player);
 		}
-		
+
 		return game;
 	}
 
@@ -57,19 +57,21 @@ class GameSave {
 	private static String generateSaveString(Game game) {
 		Player player = game.getPlayer();
 
-		String save = game.getGameLevel().ordinal() + ":";
+		StringBuilder save = new StringBuilder();
 
-		save = save.concat(player.getWeapon().ordinal() + ":");
+		save.append(game.getGameLevel().ordinal() + ":");
 
-		save = save.concat(player.getHealth() + ":");
+		save.append(player.getWeapon().ordinal() + ":");
 
-		save = save.concat(player.getExperience() + ":");
+		save.append(player.getHealth() + ":");
+
+		save.append(player.getExperience() + ":");
 
 		for (Item item : player.getInventoryList()) {
-			save = save.concat(item.getName() + ",");
+			save = save.append(item.getName() + ",");
 		}
 
-		return save;
+		return save.toString();
 	}
 
 	private static Game parseSaveString(String saveString) {

@@ -23,12 +23,12 @@ enum Item {
 
 	// Drinks
 
-	UNFILTERED_WATER("Jar of Unfiltered Water", 1, new Action() {
+	UNFILTERED_WATER("Unfiltered Water Jar", 1, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(5);
 		}
-	}), CLEAN_WATER("Bottle of Clean Water", 1, new Action() {
+	}), CLEAN_WATER("Clean Water Bottle", 1, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(15);

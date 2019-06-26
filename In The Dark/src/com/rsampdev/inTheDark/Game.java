@@ -61,25 +61,15 @@ class Game {
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
-		}
-
-		if (roll == 2) {
+		} else if (roll == 2) {
 			intersection(terminal);
-		}
-
-		if (roll == 3) {
+		} else if (roll == 3) {
 			foundItem(terminal);
-		}
-
-		if (roll == 4) {
+		} else if (roll == 4) {
 			foundWeapon(terminal);
-		}
-
-		if (roll == 5) {
+		} else if (roll == 5) {
 			combat(terminal);
-		}
-
-		if (roll == 6) {
+		} else if (roll == 6) {
 			ascend(terminal);
 		}
 	}

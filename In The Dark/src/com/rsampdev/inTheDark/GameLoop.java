@@ -5,7 +5,7 @@ import java.util.Scanner;
 class GameLoop {
 
 	public static void main(String[] args) throws Exception {
-		Game game = GameSave.load();
+		Game game = SaveGame.load();
 
 		GameLoop.gameLoop(game);
 	}
@@ -21,7 +21,7 @@ class GameLoop {
 			if (Tools.LISTENER.equals(Command.help.name())) {
 				help();
 			} else if (Tools.LISTENER.equals(Command.save.name())) {
-				GameSave.save(game);
+				SaveGame.save(game);
 			} else if (Tools.LISTENER.equals(Command.quit.name())) {
 				running = quit(terminal, game);
 			}
@@ -50,7 +50,7 @@ class GameLoop {
 			Tools.LISTENER = Tools.getInputFrom(terminal);
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
-				GameSave.save(game);
+				SaveGame.save(game);
 			}
 		}
 

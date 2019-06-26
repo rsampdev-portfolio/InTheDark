@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-class GameSave {
+class SaveGame {
 
 	private static final String FILE_NAME = "InTheDarkSaveGame.txt";
 	private static final String DIRECTORY = System.getProperty("user.home");
@@ -30,7 +30,7 @@ class GameSave {
 
 		fileReader.close();
 
-		Game game = GameSave.parseSaveString(saveString);
+		Game game = SaveGame.parseSaveString(saveString);
 
 		if (game == null) {
 			Player player = new Player();
@@ -43,7 +43,7 @@ class GameSave {
 	static void save(Game game) throws Exception {
 		System.out.println("\nSaving game...\n");
 
-		String saveString = GameSave.generateSaveString(game);
+		String saveString = SaveGame.generateSaveString(game);
 
 		FileWriter fileWriter = new FileWriter(new File(ABSOLUTE_PATH));
 
@@ -67,6 +67,10 @@ class GameSave {
 
 		save.append(player.getExperience() + ":");
 
+		save.append(player.getFood() + ":");
+
+		save.append(player.getDrink() + ":");
+
 		for (Item item : player.getInventoryList()) {
 			save = save.append(item.getName() + ",");
 		}
@@ -81,14 +85,18 @@ class GameSave {
 
 		int gameLevelID = Integer.parseInt(saveData[0]);
 
-		if (saveData.length == 5) {
+		if (saveData.length == 7) {
 			int weaponID = Integer.parseInt(saveData[1]);
 
 			double health = Double.parseDouble(saveData[2]);
 
 			double experience = Double.parseDouble(saveData[3]);
 
-			String[] inventoryData = saveData[4].split(",");
+			double food = Double.parseDouble(saveData[4]);
+
+			double drink = Double.parseDouble(saveData[5]);
+
+			String[] inventoryData = saveData[6].split(",");
 
 			ArrayList<Item> inventory = new ArrayList<Item>();
 
@@ -100,7 +108,7 @@ class GameSave {
 				}
 			}
 
-			Player player = new Player(weaponID, health, experience, inventory);
+			Player player = new Player(weaponID, health, experience, food, drink, inventory);
 
 			game = new Game(gameLevelID, player);
 		}

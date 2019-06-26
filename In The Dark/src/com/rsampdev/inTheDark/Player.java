@@ -10,7 +10,7 @@ class Player extends Entity {
 	private double drink = MAX_DRINK;
 	private ArrayList<Item> inventory = new ArrayList<>();
 	private ArrayList<Effect> effects = new ArrayList<>();
-	
+
 	private static final double MAX_FOOD = 100.0;
 	private static final double MAX_DRINK = 100.0;
 
@@ -21,11 +21,13 @@ class Player extends Entity {
 		setLevel();
 	}
 
-	Player(int weaponID, double health, double experience, ArrayList<Item> inventory) {
+	Player(int weaponID, double health, double experience, double food, double drink, ArrayList<Item> inventory) {
 		setWeapon(Weapon.getWeapon(weaponID));
 		setInventoryList(inventory);
 		setExperience(experience);
 		setHealth(health);
+		setDrink(drink);
+		setFood(food);
 		setLevel();
 	}
 
@@ -35,6 +37,22 @@ class Player extends Entity {
 
 	void setLevel() {
 		this.level = Level.getLevel(getExperience());
+	}
+
+	double getFood() {
+		return food;
+	}
+
+	private void setFood(double food) {
+		this.food = food;
+	}
+
+	double getDrink() {
+		return drink;
+	}
+
+	private void setDrink(double drink) {
+		this.drink = drink;
 	}
 
 	private void setInventoryList(ArrayList<Item> inventory) {
@@ -161,8 +179,8 @@ class Player extends Entity {
 	@Override
 	String getStats() {
 		update();
-		String stats = "You are Lvl. " + getLevel().ordinal() + ", have " + getHealth() + " HP, " + getExperience() + " XP, and are fighting with a(n) "
-				+ getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
+		String stats = "You are Lvl. " + getLevel().ordinal() + ", have " + getHealth() + " HP, " + getExperience() + " XP, " + getFood() + "/" + MAX_FOOD + " food, " + getDrink()
+				+ "/" + MAX_DRINK + " drink, \nand are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
 		return stats;
 	}
 

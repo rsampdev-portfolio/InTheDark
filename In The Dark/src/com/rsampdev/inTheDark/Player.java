@@ -15,9 +15,9 @@ class Player extends Entity {
 	private static final double MAX_DRINK = 100.0;
 
 	Player() {
-		setHealth(100);
-		setExperience(0);
 		setWeapon(Weapon.FIST);
+		setExperience(0);
+		setHealth(100);
 		setLevel();
 	}
 
@@ -179,9 +179,17 @@ class Player extends Entity {
 	@Override
 	String getStats() {
 		update();
-		String stats = "You are Lvl. " + getLevel().ordinal() + ", have " + getHealth() + " HP, " + getExperience() + " XP, " + getFood() + "/" + MAX_FOOD + " food, " + getDrink()
-				+ "/" + MAX_DRINK + " drink, \nand are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage";
-		return stats;
+
+		StringBuilder stats = new StringBuilder();
+
+		stats.append("You are Lvl. " + getLevel().ordinal());
+		stats.append(", have " + getHealth() + " HP, ");
+		stats.append(getExperience() + " XP, ");
+		stats.append(getFood() + "/" + MAX_FOOD + " food, ");
+		stats.append(getDrink() + "/" + MAX_DRINK + " drink, ");
+		stats.append("\nand are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage");
+		
+		return stats.toString();
 	}
 
 }

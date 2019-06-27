@@ -83,8 +83,6 @@ class Game {
 		inventory();
 		System.out.println();
 
-		Tools.LISTENER = "";
-
 		Tools.LISTENER = terminal.nextLine().trim();
 
 		if (!Tools.LISTENER.equals(Command.cancel.name())) {
@@ -125,8 +123,6 @@ class Game {
 	}
 
 	private void intersection(Scanner terminal) {
-		Tools.LISTENER = "";
-
 		while (!Tools.LISTENER.equals("left") && !Tools.LISTENER.equals("right")) {
 			System.out.println("\nYou have come to an intersection, do you go left of right?\n");
 			Tools.LISTENER = Tools.getInputFrom(terminal);
@@ -136,8 +132,6 @@ class Game {
 	}
 
 	private void foundItem(Scanner terminal) {
-		Tools.LISTENER = "";
-
 		Item item = Item.getRandomItem();
 		player.addItem(item);
 
@@ -156,8 +150,6 @@ class Game {
 	}
 
 	private void foundWeapon(Scanner terminal) {
-		Tools.LISTENER = "";
-
 		Weapon weapon = Weapon.getRandomWeapon();
 
 		if (player.getWeapon() == weapon) {
@@ -180,8 +172,6 @@ class Game {
 	}
 
 	private void combat(Scanner terminal) {
-		Tools.LISTENER = "";
-
 		Enemy enemy = Enemy.getRandomEnemy();
 		enemy.modifyForGameLevel(gameLevel);
 
@@ -211,8 +201,6 @@ class Game {
 	}
 
 	private void startCombat(Scanner terminal, Enemy enemy) {
-		Tools.LISTENER = "";
-
 		boolean continueFight = true;
 
 		while (continueFight) {
@@ -293,22 +281,24 @@ class Game {
 	}
 
 	private void ascend(Scanner terminal) {
-		Tools.LISTENER = "";
+		if (this.gameLevel.ordinal() < GameLevel.GAME_LEVELS.get(GameLevel.GAME_LEVELS.size() - 1).ordinal()) {
+			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
+				System.out.println("\n" + "You have found an entrance to a higher level");
+				System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
+				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-		while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
-			System.out.println("\n" + "You have found an entrance to a higher level");
-			System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
-			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
+				Tools.LISTENER = Tools.getInputFrom(terminal);
+			}
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
-		}
+			if (Tools.LISTENER.equals(Command.yes.name())) {
+				gameLevel = GameLevel.nextLevel(gameLevel);
 
-		if (Tools.LISTENER.equals(Command.yes.name())) {
-			gameLevel = GameLevel.nextLevel(gameLevel);
-
-			System.out.println("\n" + "You're now one step closer to the surface...");
-		} else if (Tools.LISTENER.equals(Command.no.name())) {
-			System.out.println("\n" + "You ignore the entrance, continuing on your way...");
+				System.out.println("\n" + "You're now one step closer to the surface...");
+			} else if (Tools.LISTENER.equals(Command.no.name())) {
+				System.out.println("\n" + "You ignore the entrance, continuing on your way...");
+			}
+		} else {
+			explore(terminal);
 		}
 	}
 

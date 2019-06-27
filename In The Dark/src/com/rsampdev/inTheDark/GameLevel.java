@@ -12,7 +12,7 @@ enum GameLevel {
 	private double healthMultiplier;
 	private double damageMultiplier;
 
-	private static final List<GameLevel> GAME_LEVELS = Collections.unmodifiableList(Arrays.asList(values()));
+	static final List<GameLevel> GAME_LEVELS = Collections.unmodifiableList(Arrays.asList(values()));
 
 	private GameLevel(double healthMultiplier, double damageMultiplier) {
 		this.healthMultiplier = healthMultiplier;

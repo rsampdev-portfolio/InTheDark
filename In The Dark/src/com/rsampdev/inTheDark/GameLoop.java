@@ -34,6 +34,7 @@ class GameLoop {
 		System.out.println("\nHELP:");
 		System.out.println("use: use an item");
 		System.out.println("save: save the game");
+		System.out.println("cook: cook a food item");
 		System.out.println("stats: display your stats");
 		System.out.println("level: display leveling progress");
 		System.out.println("explore: explore deeper into the cave");

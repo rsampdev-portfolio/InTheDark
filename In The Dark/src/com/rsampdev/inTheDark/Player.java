@@ -87,6 +87,21 @@ class Player extends Entity {
 		}
 	}
 
+	Item cook(Item item) {
+		Item itemHolder = null;
+
+		for (Item tempItem : inventory) {
+			if (tempItem.getName().equals(item.getName())) {
+				tempItem.decrement(1);
+				itemHolder = Item.Cooker.cook(item);
+				addItem(itemHolder);
+				break;
+			}
+		}
+
+		return itemHolder;
+	}
+
 	void addItem(Item item) {
 		ArrayList<Item> toAddInventory = new ArrayList<>();
 
@@ -126,7 +141,7 @@ class Player extends Entity {
 	}
 
 	String getInventoryString() {
-		String inventory = "\nINVENTORY:";
+		StringBuilder inventory = new StringBuilder("\nINVENTORY:");
 
 		Collections.sort(this.inventory, new Item.SortItemsByName());
 
@@ -139,15 +154,57 @@ class Player extends Entity {
 			}
 
 			if (item.getStack() == 1) {
-				inventory = inventory + "\n" + item.getStack() + " " + item.getName();
+				inventory.append("\n" + item.getStack() + " " + item.getName());
 			}
 
 			if (item.getStack() > 1) {
-				inventory = inventory + "\n" + item.getStack() + " " + item.getName() + "s";
+				inventory.append("\n" + item.getStack() + " " + item.getName() + "s");
 			}
 		}
 
-		return inventory;
+		return inventory.toString();
+	}
+
+	String getCookableInventoryString() {
+		StringBuilder inventory = new StringBuilder("\nCOOKABLE ITEMS IN INVENTORY:");
+
+		Collections.sort(this.inventory, new Item.SortItemsByName());
+
+		int check = 0;
+
+		for (Item item : this.inventory) {
+			if (item.getIsCookable()) {
+				check++;
+			}
+		}
+
+		if (check == 0) {
+			inventory.replace(0, inventory.length() - 1, "");
+			inventory.append("\nNO COOKABLE ITEMS IN INVENTORY!");
+		}
+
+		ArrayList<Item> removables = new ArrayList<>();
+
+		for (Item item : this.inventory) {
+			if (item.getStack() < 1) {
+				removables.add(item);
+				continue;
+			}
+
+			if (!item.getIsCookable()) {
+				continue;
+			}
+
+			if (item.getStack() == 1) {
+				inventory.append("\n" + item.getStack() + " " + item.getName());
+			}
+
+			if (item.getStack() > 1) {
+				inventory.append("\n" + item.getStack() + " " + item.getName() + "s");
+			}
+		}
+
+		return inventory.toString();
 	}
 
 	private void updateLevel() {
@@ -188,7 +245,7 @@ class Player extends Entity {
 		stats.append(getFood() + "/" + MAX_FOOD + " food, ");
 		stats.append(getDrink() + "/" + MAX_DRINK + " drink, ");
 		stats.append("\nand are fighting with a(n) " + getWeapon().getDescription() + " that will deal " + getAttackDamage() + " damage");
-		
+
 		return stats.toString();
 	}
 

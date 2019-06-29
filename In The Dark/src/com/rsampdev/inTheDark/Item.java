@@ -19,27 +19,27 @@ enum Item {
 		public void act(Player player) {
 			player.eat(10);
 		}
-	}), UNCOOKED_MUTTON("Uncooked Mutton", 1, true, new Action() {
+	}), RAW_MUTTON_CHOP("Raw Mutton Chop", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(15);
 		}
-	}), MUTTON("Mutton", 1, false, new Action() {
+	}), MUTTON("Mutton Chop", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(30);
 		}
-	}), UNCOOKED_PORKCHOP("Uncooked Porkchop", 1, true, new Action() {
+	}), RAW_PORK_CHOP("Raw Pork Chop", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(20);
 		}
-	}), PORKCHOP("Porkchop", 1, false, new Action() {
+	}), PORKCHOP("Pork Chop", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(40);
 		}
-	}), UNCOOKED_BEEF("Uncooked Beef", 1, true, new Action() {
+	}), RAW_BEEF("Raw Beef", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(25);
@@ -53,12 +53,12 @@ enum Item {
 
 	// Drinks
 
-	UNFILTERED_WATER("Unfiltered Water Jar", 1, true, new Action() {
+	UNFILTERED_WATER("Jar of Unfiltered Water", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(5);
 		}
-	}), CLEAN_WATER("Clean Water Bottle", 1, false, new Action() {
+	}), CLEAN_WATER("Bottle of Clean Water", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.drink(15);
@@ -111,6 +111,10 @@ enum Item {
 		return this.stack;
 	}
 
+	boolean getIsCookable() {
+		return this.isCookable;
+	}
+
 	void increment(int by) {
 		this.stack += by;
 	}
@@ -158,7 +162,7 @@ enum Item {
 
 	static class Cooker {
 
-		Item cook(Item item) {
+		static Item cook(Item item) {
 			Item tempItem = null;
 
 			if (item.isCookable) {
@@ -166,13 +170,13 @@ enum Item {
 				case UNFILTERED_WATER:
 					tempItem = Item.CLEAN_WATER;
 					break;
-				case UNCOOKED_MUTTON:
+				case RAW_MUTTON_CHOP:
 					tempItem = Item.MUTTON;
 					break;
-				case UNCOOKED_PORKCHOP:
+				case RAW_PORK_CHOP:
 					tempItem = Item.PORKCHOP;
 					break;
-				case UNCOOKED_BEEF:
+				case RAW_BEEF:
 					tempItem = Item.STEAK;
 					break;
 				default:
@@ -181,7 +185,6 @@ enum Item {
 			}
 
 			return tempItem;
-
 		}
 
 	}

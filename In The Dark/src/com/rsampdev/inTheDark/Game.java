@@ -37,7 +37,7 @@ class Game {
 		player.update();
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, inventory, use, stats, level, help, save or quit\n");
+		System.out.println("ENTER: explore, inventory, use, cook, stats, level, help, save or quit\n");
 
 		Tools.LISTENER = Tools.getInputFrom(terminal);
 
@@ -47,6 +47,8 @@ class Game {
 			inventory();
 		} else if (Tools.LISTENER.equals(Command.use.name())) {
 			useItem(terminal);
+		} else if (Tools.LISTENER.equals(Command.cook.name())) {
+			cookItem(terminal);
 		} else if (Tools.LISTENER.equals(Command.level.name())) {
 			level();
 		} else if (Tools.LISTENER.equals(Command.stats.name())) {
@@ -78,17 +80,56 @@ class Game {
 		System.out.println(this.player.getInventoryString());
 	}
 
+	private void cookableInventory() {
+		System.out.println(this.player.getCookableInventoryString());
+	}
+
 	private void useItem(Scanner terminal) {
-		System.out.println("\nENTER: the name of the item in your inventory you want to use or cancel");
-		inventory();
-		System.out.println();
+		while (!Tools.LISTENER.equals(Command.cancel.name())) {
+			System.out.println("\nENTER: the name of the item in your inventory you want to use or cancel");
+			inventory();
+			System.out.println();
 
-		Tools.LISTENER = terminal.nextLine().trim();
+			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-		if (!Tools.LISTENER.equals(Command.cancel.name())) {
 			for (Item item : player.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
+					Tools.LISTENER = Command.cancel.name();
 					item.use(player);
+				}
+			}
+		}
+	}
+
+	private void cookItem(Scanner terminal) {
+		while (!Tools.LISTENER.equals(Command.cancel.name())) {
+			System.out.println("\nENTER: the name of the food item in your inventory you want to cook or cancel");
+			cookableInventory();
+			System.out.println();
+
+			Tools.LISTENER = Tools.getInputFrom(terminal);
+
+			for (Item item : player.getInventoryList()) {
+				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
+					item = player.cook(item);
+
+					if (item != null) {
+						while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name()) && !Tools.LISTENER.equals(Command.cancel.name())) {
+
+							System.out.println("\nDo you want to eat the " + item.getName() + " now?");
+							System.out.println("ENTER: yes or no\n");
+
+							Tools.LISTENER = Tools.getInputFrom(terminal);
+
+							if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
+								Tools.LISTENER = Command.cancel.name();
+
+								if (Tools.LISTENER.equals(Command.yes.name())) {
+									item.use(player);
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -138,7 +179,7 @@ class Game {
 		System.out.println("\nYou have found a(n) " + item.getName() + "\n");
 
 		while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
-			System.out.println("Do you want to use the " + item.getName() + " now?\n");
+			System.out.println("Do you want to use or eat the " + item.getName() + " now?\n");
 			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 			Tools.LISTENER = Tools.getInputFrom(terminal);

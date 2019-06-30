@@ -8,6 +8,8 @@ class Player extends Entity {
 	private Level level;
 	private double food = MAX_FOOD;
 	private double drink = MAX_DRINK;
+	private double foodDeteriorationRate = 1.0;
+	private double drinkDeteriorationRate = 1.0;
 	private ArrayList<Item> inventory = new ArrayList<>();
 	private ArrayList<Effect> effects = new ArrayList<>();
 
@@ -55,6 +57,22 @@ class Player extends Entity {
 		this.drink = drink;
 	}
 
+	double getFoodDeteriorationRate() {
+		return foodDeteriorationRate;
+	}
+
+	void setFoodDeteriorationRate(double foodDeteriorationRate) {
+		this.foodDeteriorationRate = foodDeteriorationRate;
+	}
+
+	double getDrinkDeteriorationRate() {
+		return drinkDeteriorationRate;
+	}
+
+	void setDrinkDeteriorationRate(double drinkDeteriorationRate) {
+		this.drinkDeteriorationRate = drinkDeteriorationRate;
+	}
+
 	private void setInventoryList(ArrayList<Item> inventory) {
 		for (Item item : inventory) {
 			this.addItem(item);
@@ -87,41 +105,42 @@ class Player extends Entity {
 		}
 	}
 
-	Item cook(Item item) {
-		Item itemHolder = null;
+	void addItem(Item item) {
+		if (this.inventory.size() < 1) {
+			this.inventory.add(item);
+		} else {
+			boolean check = true;
 
-		for (Item tempItem : inventory) {
-			if (tempItem.getName().equals(item.getName())) {
-				tempItem.decrement(1);
-				itemHolder = Item.Cooker.cook(item);
-				addItem(itemHolder);
-				break;
+			for (Item tempItem : this.inventory) {
+				if (tempItem.getName().equals(item.getName())) {
+					tempItem.increment(1);
+					check = false;
+					break;
+				}
+			}
+
+			if (check) {
+				this.inventory.add(item);
 			}
 		}
 
-		return itemHolder;
+		Collections.sort(this.inventory, new Item.SortItemsByName());
 	}
-
-	void addItem(Item item) {
-		ArrayList<Item> toAddInventory = new ArrayList<>();
-
-		if (inventory.size() < 1) {
-			this.inventory.add(item);
-		} else {
-			for (Item tempItem : inventory) {
-				if (item.getName().equals(tempItem.getName())) {
-					tempItem.increment(1);
-					break;
-				}
-
-				if (tempItem.equals(inventory.get(inventory.size() - 1))) {
-					toAddInventory.add(item);
-				}
+	
+	void removeItem(Item item) {
+		int index = -1;
+		
+		for (Item tempItem : inventory) {
+			index++;
+			
+			if (tempItem.getName().equals(item.getName())) {
+				tempItem.decrement(1);
+				break;
 			}
-
-			for (Item itemToAdd : toAddInventory) {
-				this.inventory.add(itemToAdd);
-			}
+		}
+		
+		if (item.getStack() < 1) {
+			this.inventory.remove(index);
 		}
 	}
 
@@ -138,6 +157,11 @@ class Player extends Entity {
 		if (tempItem != null && tempItem.getStack() < 1) {
 			inventory.remove(tempItem);
 		}
+	}
+	
+	Item cook(Item item) {
+		Item cookedItem = Item.Cooker.cook(item);
+		return cookedItem;
 	}
 
 	String getInventoryString() {
@@ -217,8 +241,13 @@ class Player extends Entity {
 		}
 	}
 
-	void update() {
+	void turnUpdate() {
+		setDrink(getDrink() - drinkDeteriorationRate);
+		setFood(getFood() - foodDeteriorationRate);
 		updateEffects();
+	}
+
+	void continuousUpdate() {
 		updateLevel();
 	}
 
@@ -230,12 +259,12 @@ class Player extends Entity {
 	@Override
 	void attack(Entity entity) {
 		entity.setHealth(entity.getHealth() - getAttackDamage());
-		update();
+		continuousUpdate();
 	}
 
 	@Override
 	String getStats() {
-		update();
+		continuousUpdate();
 
 		StringBuilder stats = new StringBuilder();
 

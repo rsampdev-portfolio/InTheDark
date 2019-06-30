@@ -34,8 +34,6 @@ class Game {
 	String run(Scanner terminal) {
 		Tools.LISTENER = "";
 
-		player.update();
-
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("ENTER: explore, inventory, use, cook, stats, level, help, save or quit\n");
 
@@ -55,11 +53,13 @@ class Game {
 			statsStartWithNewLine(player);
 		}
 
+		player.turnUpdate();
+
 		return Tools.LISTENER;
 	}
 
 	private void explore(Scanner terminal) {
-		int roll = Tools.DICE.nextInt(7);
+		int roll = 3; // Tools.DICE.nextInt(7);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
@@ -109,25 +109,32 @@ class Game {
 
 			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-			for (Item item : player.getInventoryList()) {
-				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
-					item = player.cook(item);
+			Item item = null;
+			Item itemToRemove = null;
 
-					if (item != null) {
-						while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name()) && !Tools.LISTENER.equals(Command.cancel.name())) {
+			for (Item tempItem : player.getInventoryList()) {
+				if (tempItem.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
+					item = player.cook(tempItem);
+					itemToRemove = tempItem;
+				}
+			}
 
-							System.out.println("\nDo you want to eat the " + item.getName() + " now?");
-							System.out.println("ENTER: yes or no\n");
+			if (item != null && itemToRemove != null) {
+				player.addItem(item);
+				player.removeItem(itemToRemove);
+				
+				while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name()) && !Tools.LISTENER.equals(Command.cancel.name())) {
 
-							Tools.LISTENER = Tools.getInputFrom(terminal);
+					System.out.println("\nDo you want to eat the " + item.getName() + " now?");
+					System.out.println("ENTER: yes or no\n");
 
-							if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
-								Tools.LISTENER = Command.cancel.name();
+					Tools.LISTENER = Tools.getInputFrom(terminal);
 
-								if (Tools.LISTENER.equals(Command.yes.name())) {
-									item.use(player);
-								}
-							}
+					if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
+						Tools.LISTENER = Command.cancel.name();
+
+						if (Tools.LISTENER.equals(Command.yes.name())) {
+							item.use(player);
 						}
 					}
 				}
@@ -279,7 +286,7 @@ class Game {
 				}
 			}
 
-			player.update();
+			player.continuousUpdate();
 
 			statsEndWithNewLine(player);
 			statsEndWithNewLine(enemy);

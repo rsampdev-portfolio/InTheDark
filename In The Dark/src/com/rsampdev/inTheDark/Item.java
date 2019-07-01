@@ -9,7 +9,17 @@ enum Item {
 
 	// Foods
 
-	UNIDENTIFIED_MEAT("Can of Unidentified Meat", 1, true, new Action() {
+	EGG("Egg", 1, true, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(5);
+		}
+	}), BOILED_EGG("Boiled Egg", 1, false, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(5);
+		}
+	}), UNIDENTIFIED_MEAT("Can of Unidentified Meat", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(5);
@@ -24,7 +34,7 @@ enum Item {
 		public void act(Player player) {
 			player.eat(15);
 		}
-	}), MUTTON("Mutton Chop", 1, false, new Action() {
+	}), MUTTON_CHOP("Mutton Chop", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(30);
@@ -34,7 +44,7 @@ enum Item {
 		public void act(Player player) {
 			player.eat(20);
 		}
-	}), PORKCHOP("Pork Chop", 1, false, new Action() {
+	}), PORK_CHOP("Pork Chop", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(40);
@@ -167,14 +177,17 @@ enum Item {
 
 			if (item.isCookable) {
 				switch (item) {
+				case EGG:
+					tempItem = Item.BOILED_EGG;
+					break;
 				case UNFILTERED_WATER:
 					tempItem = Item.CLEAN_WATER;
 					break;
 				case RAW_MUTTON_CHOP:
-					tempItem = Item.MUTTON;
+					tempItem = Item.MUTTON_CHOP;
 					break;
 				case RAW_PORK_CHOP:
-					tempItem = Item.PORKCHOP;
+					tempItem = Item.PORK_CHOP;
 					break;
 				case RAW_BEEF:
 					tempItem = Item.STEAK;

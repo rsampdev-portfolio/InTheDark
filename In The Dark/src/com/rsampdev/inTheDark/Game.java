@@ -53,13 +53,18 @@ class Game {
 			statsStartWithNewLine(player);
 		}
 
-		player.turnUpdate();
+		boolean update = !(Tools.LISTENER.equals(Command.inventory.name()) || Tools.LISTENER.equals(Command.use.name()) || Tools.LISTENER.equals(Command.cook.name())
+				|| Tools.LISTENER.equals(Command.level.name()) || Tools.LISTENER.equals(Command.stats.name()));
+
+		if (update) {
+			player.turnUpdate();
+		}
 
 		return Tools.LISTENER;
 	}
 
 	private void explore(Scanner terminal) {
-		int roll = 3; // Tools.DICE.nextInt(7);
+		int roll = Tools.DICE.nextInt(7);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
@@ -109,33 +114,33 @@ class Game {
 
 			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-			Item item = null;
+			Item food = null;
 			Item itemToRemove = null;
 
 			for (Item tempItem : player.getInventoryList()) {
 				if (tempItem.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
-					item = player.cook(tempItem);
+					food = player.cook(tempItem);
 					itemToRemove = tempItem;
 				}
 			}
 
-			if (item != null && itemToRemove != null) {
-				player.addItem(item);
+			if (food != null && itemToRemove != null) {
+				player.addItem(food);
 				player.removeItem(itemToRemove);
-				
+
 				while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name()) && !Tools.LISTENER.equals(Command.cancel.name())) {
 
-					System.out.println("\nDo you want to eat the " + item.getName() + " now?");
+					System.out.println("\nDo you want to eat the " + food.getName() + " now?");
 					System.out.println("ENTER: yes or no\n");
 
 					Tools.LISTENER = Tools.getInputFrom(terminal);
 
 					if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
-						Tools.LISTENER = Command.cancel.name();
-
 						if (Tools.LISTENER.equals(Command.yes.name())) {
-							item.use(player);
+							player.useItem(food.getName());
 						}
+						
+						Tools.LISTENER = Command.cancel.name();
 					}
 				}
 			}

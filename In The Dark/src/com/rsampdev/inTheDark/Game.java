@@ -119,7 +119,7 @@ class Game {
 
 			for (Item tempItem : player.getInventoryList()) {
 				if (tempItem.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
-					food = player.cook(tempItem);
+					food = Item.Cooker.cook(tempItem);
 					itemToRemove = tempItem;
 				}
 			}
@@ -139,7 +139,7 @@ class Game {
 						if (Tools.LISTENER.equals(Command.yes.name())) {
 							player.useItem(food.getName());
 						}
-						
+
 						Tools.LISTENER = Command.cancel.name();
 					}
 				}

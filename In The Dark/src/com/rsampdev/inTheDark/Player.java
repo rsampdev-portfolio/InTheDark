@@ -126,19 +126,19 @@ class Player extends Entity {
 
 		Collections.sort(this.inventory, new Item.SortItemsByName());
 	}
-	
+
 	void removeItem(Item item) {
 		int index = -1;
-		
+
 		for (Item tempItem : inventory) {
 			index++;
-			
+
 			if (tempItem.getName().equals(item.getName())) {
 				tempItem.decrement(1);
 				break;
 			}
 		}
-		
+
 		if (item.getStack() < 1) {
 			this.inventory.remove(index);
 		}
@@ -157,11 +157,6 @@ class Player extends Entity {
 		if (tempItem != null && tempItem.getStack() < 1) {
 			inventory.remove(tempItem);
 		}
-	}
-	
-	Item cook(Item item) {
-		Item cookedItem = Item.Cooker.cook(item);
-		return cookedItem;
 	}
 
 	String getInventoryString() {

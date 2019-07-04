@@ -16,21 +16,21 @@ class SaveGame {
 
 		FileReader fileReader = new FileReader(file);
 
-		String saveString = "";
+		StringBuilder saveString = new StringBuilder();
 
 		int data = fileReader.read();
 
 		while (data != -1) {
 			char symbol = (char) data;
 
-			saveString = saveString.concat(symbol + "");
+			saveString.append(symbol + "");
 
 			data = fileReader.read();
 		}
 
 		fileReader.close();
 
-		Game game = SaveGame.parseSaveString(saveString);
+		Game game = SaveGame.parseSaveString(saveString.toString());
 
 		if (game == null) {
 			Player player = new Player();

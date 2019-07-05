@@ -46,7 +46,6 @@ class Effect {
 		}
 	}
 
-	// create effects methods
 	private static Effect createCaveIllness() {
 		Action action = new Action() {
 			@Override
@@ -56,6 +55,19 @@ class Effect {
 		};
 
 		Effect effect = new Effect("Cave Illness", 5, action);
+
+		return effect;
+	}
+	
+	private static Effect createUncookedFoodPoisoning() {
+		Action action = new Action() {
+			@Override
+			public void act(Player player) {
+				player.setHealth(player.getHealth() - (Tools.DICE.nextInt(2) + 1));
+			}
+		};
+
+		Effect effect = new Effect("Uncooked Food Poisoning", 10, action);
 
 		return effect;
 	}
@@ -76,6 +88,7 @@ class Effect {
 	static void prepare() {
 		Effect.EFFECTS.add(createCaveIllness());
 		Effect.EFFECTS.add(createHealthRegeneration());
+		Effect.EFFECTS.add(createUncookedFoodPoisoning());
 	}
 
 	static Effect getEffect(String effectName) {

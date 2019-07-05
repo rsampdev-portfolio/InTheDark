@@ -226,6 +226,22 @@ class Player extends Entity {
 		return inventory.toString();
 	}
 
+	String getEffectsString() {
+		StringBuilder effects = new StringBuilder("\nEFFECTS:");
+
+		Collections.sort(this.effects, new Effect.SortEffectByName());
+
+		if (!(this.effects.size() < 1))
+			for (Effect effect : this.effects) {
+				effects.append("\n" + effect.name + "\n");
+			}
+		else {
+			effects.append("\nNONE");
+		}
+
+		return effects.toString();
+	}
+
 	private void updateLevel() {
 		this.setLevel();
 	}

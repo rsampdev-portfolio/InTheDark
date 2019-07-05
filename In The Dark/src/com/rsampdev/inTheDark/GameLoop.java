@@ -38,6 +38,7 @@ class GameLoop {
 		System.out.println("stats: display your stats");
 		System.out.println("level: display leveling progress");
 		System.out.println("explore: explore deeper into the cave");
+		System.out.println("effects: display the list of user effects");
 		System.out.println("inventory: display the items in your inventory");
 	}
 

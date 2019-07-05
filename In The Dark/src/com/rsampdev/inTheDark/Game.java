@@ -43,6 +43,8 @@ class Game {
 			explore(terminal);
 		} else if (Tools.LISTENER.equals(Command.inventory.name())) {
 			inventory();
+		} else if (Tools.LISTENER.equals(Command.effects.name())) {
+			effects();
 		} else if (Tools.LISTENER.equals(Command.use.name())) {
 			useItem(terminal);
 		} else if (Tools.LISTENER.equals(Command.cook.name())) {
@@ -87,6 +89,10 @@ class Game {
 
 	private void cookableInventory() {
 		System.out.println(this.player.getCookableInventoryString());
+	}
+
+	private void effects() {
+		System.out.println(this.player.getEffectsString());
 	}
 
 	private void useItem(Scanner terminal) {

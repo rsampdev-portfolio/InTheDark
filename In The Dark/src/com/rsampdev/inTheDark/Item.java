@@ -9,10 +9,10 @@ enum Item {
 
 	// Foods
 
-	EGG("Egg", 1, true, new Action() {
+	EGG("Uncooked Egg", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
-			player.eat(5);
+			player.eat(2.5);
 		}
 	}), BOILED_EGG("Boiled Egg", 1, false, new Action() {
 		@Override

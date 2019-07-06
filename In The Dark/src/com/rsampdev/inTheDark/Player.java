@@ -226,6 +226,23 @@ class Player extends Entity {
 		return inventory.toString();
 	}
 
+	void addEffect(Effect effect) {
+		boolean check = true;
+
+		for (Effect tempEffect : effects) {
+			if (tempEffect.getName().equals(effect.getName())) {
+				tempEffect.increment(effect.getTurns());
+				check = false;
+				break;
+			}
+		}
+
+		if (check) {
+			this.effects.add(effect);
+		}
+
+	}
+
 	String getEffectsString() {
 		StringBuilder effects = new StringBuilder("\nEFFECTS:");
 
@@ -233,7 +250,7 @@ class Player extends Entity {
 
 		if (!(this.effects.size() < 1))
 			for (Effect effect : this.effects) {
-				effects.append("\n" + effect.name + "\n");
+				effects.append("\n" + effect.getName() + "\n");
 			}
 		else {
 			effects.append("\nNONE");
@@ -248,7 +265,7 @@ class Player extends Entity {
 
 	private void updateEffects() {
 		for (Effect effect : effects) {
-			effect.effect.act(this);
+			effect.effect(this);
 		}
 	}
 

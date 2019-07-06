@@ -13,16 +13,18 @@ enum Item {
 		@Override
 		public void act(Player player) {
 			player.eat(2.5);
+			player.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), BOILED_EGG("Boiled Egg", 1, false, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(5);
 		}
-	}), UNIDENTIFIED_MEAT("Can of Unidentified Meat", 1, true, new Action() {
+	}), UNIDENTIFIED_MEAT("Can of Unidentified Uncooked Meat", 1, true, new Action() {
 		@Override
 		public void act(Player player) {
 			player.eat(5);
+			player.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), UNIDENTIFIED_COOKED_MEAT("Can of Unidentified Cooked Meat", 1, false, new Action() {
 		@Override
@@ -33,6 +35,7 @@ enum Item {
 		@Override
 		public void act(Player player) {
 			player.eat(15);
+			player.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), MUTTON_CHOP("Mutton Chop", 1, false, new Action() {
 		@Override
@@ -43,6 +46,7 @@ enum Item {
 		@Override
 		public void act(Player player) {
 			player.eat(20);
+			player.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), PORK_CHOP("Pork Chop", 1, false, new Action() {
 		@Override
@@ -53,6 +57,7 @@ enum Item {
 		@Override
 		public void act(Player player) {
 			player.eat(25);
+			player.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), STEAK("Steak", 1, false, new Action() {
 		@Override

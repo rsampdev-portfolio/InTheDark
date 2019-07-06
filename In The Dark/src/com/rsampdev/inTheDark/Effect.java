@@ -5,9 +5,9 @@ import java.util.Comparator;
 
 class Effect {
 
-	int turns;
-	String name;
-	Action effect;
+	private int turns;
+	private String name;
+	private Action effect;
 
 	static ArrayList<Effect> EFFECTS = new ArrayList<Effect>();
 
@@ -46,7 +46,7 @@ class Effect {
 		}
 	}
 
-	private static Effect createCaveIllness() {
+	static Effect createCaveIllness() {
 		Action action = new Action() {
 			@Override
 			public void act(Player player) {
@@ -58,8 +58,8 @@ class Effect {
 
 		return effect;
 	}
-	
-	private static Effect createUncookedFoodPoisoning() {
+
+	static Effect createUncookedFoodPoisoning() {
 		Action action = new Action() {
 			@Override
 			public void act(Player player) {
@@ -72,7 +72,7 @@ class Effect {
 		return effect;
 	}
 
-	private static Effect createHealthRegeneration() {
+	static Effect createHealthRegeneration() {
 		Action action = new Action() {
 			@Override
 			public void act(Player player) {
@@ -89,20 +89,6 @@ class Effect {
 		Effect.EFFECTS.add(createCaveIllness());
 		Effect.EFFECTS.add(createHealthRegeneration());
 		Effect.EFFECTS.add(createUncookedFoodPoisoning());
-	}
-
-	static Effect getEffect(String effectName) {
-		Effect effect = null;
-
-		if (effectName.equals("Cave Illness")) {
-			effect = createCaveIllness();
-		}
-
-		if (effectName.equals("Health Regeneration")) {
-			effect = createHealthRegeneration();
-		}
-
-		return effect;
 	}
 
 	static Effect getRandomEffect() {

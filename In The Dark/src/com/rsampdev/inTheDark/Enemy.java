@@ -46,16 +46,21 @@ class Enemy extends Entity {
 	private static Enemy createCaveOrc() {
 		return new Enemy("Cave Orc", 20, 100, Weapon.IRON_REINFORCED_CLUB);
 	}
+	
+	private static Enemy createSkeletonWarrior() {
+		return new Enemy("Skeleton Warrior", 25, 125, Weapon.WOODEN_CLUB);
+	}
 
 	private static Enemy createCaveTroll() {
-		return new Enemy("Cave Troll", 40, 125, Weapon.WOODEN_CLUB);
+		return new Enemy("Cave Troll", 40, 200, Weapon.WOODEN_CLUB);
 	}
 
 	static void prepare() {
+		Enemy.ENEMIES.add(Enemy.createSkeletonWarrior());
 		Enemy.ENEMIES.add(Enemy.createUndeadShambler());
 		Enemy.ENEMIES.add(Enemy.createCaveGremlin());
-		Enemy.ENEMIES.add(Enemy.createCaveOrc());
 		Enemy.ENEMIES.add(Enemy.createCaveTroll());
+		Enemy.ENEMIES.add(Enemy.createCaveOrc());
 	}
 
 	static Enemy getRandomEnemy() {

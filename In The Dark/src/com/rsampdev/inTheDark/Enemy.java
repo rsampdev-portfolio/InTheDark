@@ -34,6 +34,10 @@ class Enemy extends Entity {
 		setHealth(getHealth() * level.getHealthMultiplier());
 		setDamageMultiplier(level.getDamageMultiplier());
 	}
+	
+	private static Enemy createSpider() {
+		return new Enemy("Spider", 10, 50, Weapon.FIST);
+	}
 
 	private static Enemy createUndeadShambler() {
 		return new Enemy("Undead Shambler", 10, 50, Weapon.FIST);
@@ -61,6 +65,7 @@ class Enemy extends Entity {
 		Enemy.ENEMIES.add(Enemy.createCaveGremlin());
 		Enemy.ENEMIES.add(Enemy.createCaveTroll());
 		Enemy.ENEMIES.add(Enemy.createCaveOrc());
+		Enemy.ENEMIES.add(Enemy.createSpider());
 	}
 
 	static Enemy getRandomEnemy() {

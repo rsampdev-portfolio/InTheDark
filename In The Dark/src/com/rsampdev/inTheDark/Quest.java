@@ -1,29 +1,50 @@
 package com.rsampdev.inTheDark;
 
-enum Quest {
+class Quest {
 
-	QUEST(null);
+	private String name;
+	private boolean completed;
+	private QuestEventCompleter[] eventsToComplete;
 
-	private int count;
-	private QuestEvent[] events;
-
-	private Quest(QuestEvent[] events) {
-		this.count = events.length;
-		this.events = events;
+	Quest(String name, QuestEventCompleter[] eventsToComplete) {
+		this.eventsToComplete = eventsToComplete;
+		this.name = name;
 	}
 
-	int getCount() {
-		return count;
+	String getName() {
+		return name;
 	}
 
-	QuestEvent[] getEvents() {
-		return events;
+	boolean isCompleted() {
+		return completed;
 	}
 
+	QuestEventCompleter[] getEventsToComplete() {
+		return eventsToComplete;
+	}
+
+	void checkForCompletion(QuestEvent event) {
+		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
+			if (questEventCompleter.event.equals(event)) {
+				questEventCompleter.complete();
+			}
+		}
+	}
+}
+
+class QuestEventCompleter {
+	boolean completed = false;
+	QuestEvent event;
+
+	QuestEventCompleter(QuestEvent event) {
+		this.event = event;
+	}
+
+	void complete() {
+		this.completed = true;
+	}
 }
 
 enum QuestEvent {
-
 	QUEST_EVENT;
-
 }

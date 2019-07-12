@@ -8,6 +8,7 @@ class Quest {
 
 	Quest(String name, QuestEventCompleter[] eventsToComplete) {
 		this.eventsToComplete = eventsToComplete;
+		this.completed = false;
 		this.name = name;
 	}
 
@@ -24,11 +25,22 @@ class Quest {
 	}
 
 	void checkForCompletion(QuestEvent event) {
+		boolean check = true;
+
 		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
 			if (questEventCompleter.event.equals(event)) {
 				questEventCompleter.complete();
 			}
+
+			if (questEventCompleter.completed == false) {
+				check = false;
+			}
 		}
+
+		if (check) {
+			this.completed = true;
+		}
+
 	}
 }
 

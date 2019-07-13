@@ -40,8 +40,8 @@ class Quest {
 		if (check) {
 			this.completed = true;
 		}
-
 	}
+	
 }
 
 class QuestEventCompleter {

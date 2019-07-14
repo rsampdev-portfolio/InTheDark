@@ -8,15 +8,17 @@ class Enemy extends Entity {
 
 	static ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>();
 
-	private Enemy(String name, int health, int experience, Weapon weapon) {
+	private Enemy(String name, int health, int experience, Weapon weapon, DeathAction deathAction) {
 		setName(name);
 		setHealth(health);
 		setWeapon(weapon);
+		setDeath(deathAction);
 		setExperience(experience);
 	}
 
 	private Enemy(Enemy enemy) {
 		setName(enemy.getName());
+		setDeath(enemy.getDeath());
 		setHealth(enemy.getHealth());
 		setWeapon(enemy.getWeapon());
 		setExperience(enemy.getExperience());
@@ -34,29 +36,59 @@ class Enemy extends Entity {
 		setHealth(getHealth() * level.getHealthMultiplier());
 		setDamageMultiplier(level.getDamageMultiplier());
 	}
-	
+
 	private static Enemy createSpider() {
-		return new Enemy("Spider", 10, 50, Weapon.FIST);
+		return new Enemy("Spider", 10, 50, Weapon.FIST, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.SPIDER_KILLED;
+			}
+		});
 	}
 
 	private static Enemy createUndeadShambler() {
-		return new Enemy("Undead Shambler", 10, 50, Weapon.FIST);
+		return new Enemy("Undead Shambler", 10, 50, Weapon.FIST, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.UNDEAD_SHAMBLER_KILLED;
+			}
+		});
 	}
 
 	private static Enemy createCaveGremlin() {
-		return new Enemy("Cave Gremlin", 15, 75, Weapon.STONE_SWORD);
+		return new Enemy("Cave Gremlin", 15, 75, Weapon.STONE_SWORD, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_GREMLIN_KILLED;
+			}
+		});
 	}
 
 	private static Enemy createCaveOrc() {
-		return new Enemy("Cave Orc", 20, 100, Weapon.IRON_REINFORCED_CLUB);
+		return new Enemy("Cave Orc", 20, 100, Weapon.IRON_REINFORCED_CLUB, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_ORC_KILLED;
+			}
+		});
 	}
-	
+
 	private static Enemy createSkeletonWarrior() {
-		return new Enemy("Skeleton Warrior", 25, 125, Weapon.WOODEN_CLUB);
+		return new Enemy("Skeleton Warrior", 25, 125, Weapon.IRON_SWORD, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.SKELETON_WARRIOR_KILLED;
+			}
+		});
 	}
 
 	private static Enemy createCaveTroll() {
-		return new Enemy("Cave Troll", 40, 200, Weapon.WOODEN_CLUB);
+		return new Enemy("Cave Troll", 40, 200, Weapon.WOODEN_CLUB, new DeathAction() {
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_TROLL_KILLED;
+			}
+		});
 	}
 
 	static void prepare() {

@@ -21,6 +21,7 @@ class Player extends Entity {
 		setExperience(0);
 		setHealth(100);
 		setLevel();
+		death();
 	}
 
 	Player(int weaponID, double health, double experience, double food, double drink, ArrayList<Item> inventory) {
@@ -31,6 +32,16 @@ class Player extends Entity {
 		setDrink(drink);
 		setFood(food);
 		setLevel();
+		death();
+	}
+
+	private void death() {
+		this.setDeath(new DeathAction() {	
+			@Override
+			public void death() {
+				QuestEvent.CURRENT_EVENT = QuestEvent.PLAYER_DEATH;
+			}
+		});
 	}
 
 	Level getLevel() {

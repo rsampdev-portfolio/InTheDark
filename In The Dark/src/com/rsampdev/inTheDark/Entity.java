@@ -6,6 +6,7 @@ abstract class Entity {
 	private Weapon weapon;
 	private double health;
 	private double experience;
+	private DeathAction death;
 
 	String getName() {
 		return name;
@@ -21,6 +22,10 @@ abstract class Entity {
 
 	void setHealth(double health) {
 		this.health = health;
+		
+		if (this.health <= 0) {
+			this.death.death();
+		}
 	}
 
 	double getExperience() {
@@ -41,6 +46,14 @@ abstract class Entity {
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+	}
+
+	DeathAction getDeath() {
+		return death;
+	}
+
+	void setDeath(DeathAction death) {
+		this.death = death;
 	}
 
 	abstract void attack(Entity entity);

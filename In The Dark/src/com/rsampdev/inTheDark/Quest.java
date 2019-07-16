@@ -48,6 +48,18 @@ class Quest {
 		return killOneSpiderQuest;
 	}
 
+	Quest getKillTwoSpidersQuest() {
+		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
+		Quest killOneSpiderQuest = new Quest("Kill 2 Spiders", eventsToComplete);
+		return killOneSpiderQuest;
+	}
+
+	Quest getKillThreeSpiderQuest() {
+		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
+		Quest killOneSpiderQuest = new Quest("Kill 3 Spiders", eventsToComplete);
+		return killOneSpiderQuest;
+	}
+
 }
 
 class QuestEventCompleter {

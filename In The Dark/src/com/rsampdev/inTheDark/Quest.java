@@ -54,7 +54,7 @@ class Quest {
 		return killOneSpiderQuest;
 	}
 
-	Quest getKillThreeSpiderQuest() {
+	Quest getKillThreeSpidersQuest() {
 		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
 		Quest killOneSpiderQuest = new Quest("Kill 3 Spiders", eventsToComplete);
 		return killOneSpiderQuest;

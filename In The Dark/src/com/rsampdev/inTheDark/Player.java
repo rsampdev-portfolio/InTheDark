@@ -10,6 +10,7 @@ class Player extends Entity {
 	private double drink = MAX_DRINK;
 	private double foodDeteriorationRate = 1.0;
 	private double drinkDeteriorationRate = 1.0;
+	private ArrayList<Quest> quests = new ArrayList<>();
 	private ArrayList<Item> inventory = new ArrayList<>();
 	private ArrayList<Effect> effects = new ArrayList<>();
 
@@ -92,6 +93,10 @@ class Player extends Entity {
 
 	ArrayList<Item> getInventoryList() {
 		return this.inventory;
+	}
+	
+	ArrayList<Quest> getQuests() {
+		return this.quests;
 	}
 
 	void eat(double food) {

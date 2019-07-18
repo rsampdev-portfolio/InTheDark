@@ -66,7 +66,7 @@ class Game {
 	}
 
 	private void explore(Scanner terminal) {
-		int roll = Tools.DICE.nextInt(7);
+		int roll = Tools.DICE.nextInt(8);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
@@ -77,8 +77,10 @@ class Game {
 		} else if (roll == 4) {
 			foundWeapon(terminal);
 		} else if (roll == 5) {
-			combat(terminal);
+			foundQuest(terminal);
 		} else if (roll == 6) {
+			combat(terminal);
+		} else if (roll == 7) {
 			ascend(terminal);
 		}
 	}
@@ -228,6 +230,10 @@ class Game {
 				}
 			}
 		}
+	}
+	
+	private void foundQuest(Scanner terminal) {
+		
 	}
 
 	private void combat(Scanner terminal) {

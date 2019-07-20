@@ -57,7 +57,7 @@ enum Weapon {
 	}
 
 	static Weapon getRandomWeapon() {
-		return WEAPONS.get(Tools.DICE.nextInt(WEAPONS_SIZE- 2) + 2);
+		return WEAPONS.get(Tools.DICE.nextInt(WEAPONS_SIZE - 2) + 2);
 	}
 
 	static Weapon getRandomBasicWeapon() {

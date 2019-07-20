@@ -9,18 +9,12 @@ class Effect {
 	private String name;
 	private Action effect;
 
-	static ArrayList<Effect> EFFECTS = new ArrayList<Effect>();
+	private static ArrayList<Effect> EFFECTS = new ArrayList<Effect>();
 
 	Effect(String name, int turns, Action effect) {
 		this.effect = effect;
 		this.turns = turns;
 		this.name = name;
-	}
-
-	Effect(Effect effect) {
-		this.effect = effect.effect;
-		this.turns = effect.turns;
-		this.name = effect.name;
 	}
 
 	int getTurns() {
@@ -91,7 +85,7 @@ class Effect {
 		Effect.EFFECTS.add(createUncookedFoodPoisoning());
 	}
 
-	static Effect getRandomEffect() {
+	static Effect getRandomEffect() throws Exception {
 		int number = Tools.DICE.nextInt(EFFECTS.size());
 		int index = 0;
 
@@ -99,7 +93,7 @@ class Effect {
 
 		for (Effect effect : EFFECTS) {
 			if (index == number) {
-				randomEffect = new Effect(effect);
+				randomEffect = (Effect) effect.clone();
 				break;
 			} else {
 				index++;

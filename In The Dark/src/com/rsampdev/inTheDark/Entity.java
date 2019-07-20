@@ -22,7 +22,7 @@ abstract class Entity {
 
 	void setHealth(double health) {
 		this.health = health;
-		
+
 		if (this.health <= 0) {
 			this.death.death();
 		}

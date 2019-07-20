@@ -1,10 +1,16 @@
 package com.rsampdev.inTheDark;
 
-class Quest {
+import java.util.ArrayList;
+import java.util.Comparator;
+
+class Quest implements Cloneable {
 
 	private String name;
 	private boolean completed;
 	private QuestEventCompleter[] eventsToComplete;
+
+	private static ArrayList<Quest> QUESTS = new ArrayList<Quest>();
+	private static int QUEST_SIZE = QUESTS.size();
 
 	Quest(String name, QuestEventCompleter[] eventsToComplete) {
 		this.eventsToComplete = eventsToComplete;
@@ -30,6 +36,7 @@ class Quest {
 		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
 			if (questEventCompleter.event.equals(event)) {
 				questEventCompleter.complete();
+				break;
 			}
 
 			if (questEventCompleter.completed == false) {
@@ -42,22 +49,57 @@ class Quest {
 		}
 	}
 
-	Quest getKillOneSpiderQuest() {
+	double getCompletionPercentage() {
+		double top = 0;
+
+		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
+			if (questEventCompleter.completed) {
+				top++;
+			}
+		}
+
+		double completionPercentage = (top / this.getEventsToComplete().length) * 100;
+
+		return completionPercentage;
+	}
+
+	static Quest getKillOneSpiderQuest() {
 		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
 		Quest killOneSpiderQuest = new Quest("Kill 1 Spider", eventsToComplete);
 		return killOneSpiderQuest;
 	}
 
-	Quest getKillTwoSpidersQuest() {
+	static Quest getKillTwoSpidersQuest() {
 		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
 		Quest killOneSpiderQuest = new Quest("Kill 2 Spiders", eventsToComplete);
 		return killOneSpiderQuest;
 	}
 
-	Quest getKillThreeSpidersQuest() {
-		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
+	static Quest getKillThreeSpidersQuest() {
+		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED),
+				new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
 		Quest killOneSpiderQuest = new Quest("Kill 3 Spiders", eventsToComplete);
 		return killOneSpiderQuest;
+	}
+
+	static void prepare() {
+		Quest.QUESTS.add(getKillOneSpiderQuest());
+		Quest.QUESTS.add(getKillTwoSpidersQuest());
+		Quest.QUESTS.add(getKillThreeSpidersQuest());
+		QUEST_SIZE = QUESTS.size();
+	}
+
+	static Quest getRandomQuest() throws Exception {
+		Quest quest = (Quest) QUESTS.get(Tools.DICE.nextInt(QUEST_SIZE)).clone();
+		return quest;
+	}
+
+	static class SortQuestsByName implements Comparator<Quest> {
+
+		public int compare(Quest a, Quest b) {
+			return a.getName().compareTo(b.getName());
+		}
+
 	}
 
 }

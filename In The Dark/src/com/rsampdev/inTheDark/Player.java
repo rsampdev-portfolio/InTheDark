@@ -37,7 +37,7 @@ class Player extends Entity {
 	}
 
 	private void death() {
-		this.setDeath(new DeathAction() {	
+		this.setDeath(new DeathAction() {
 			@Override
 			public void death() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.PLAYER_DEATH;
@@ -94,9 +94,13 @@ class Player extends Entity {
 	ArrayList<Item> getInventoryList() {
 		return this.inventory;
 	}
-	
+
 	ArrayList<Quest> getQuests() {
 		return this.quests;
+	}
+
+	void addQuest(Quest quest) {
+		this.quests.add(quest);
 	}
 
 	void eat(double food) {
@@ -242,6 +246,18 @@ class Player extends Entity {
 		return inventory.toString();
 	}
 
+	String getQuestsString() {
+		StringBuilder quests = new StringBuilder("\nQUESTS:");
+
+		Collections.sort(this.quests, new Quest.SortQuestsByName());
+
+		for (Quest quest : this.quests) {
+			quests.append("\n" + quest.getName() + ": " + quest.getCompletionPercentage() + "%");
+		}
+
+		return quests.toString();
+	}
+
 	void addEffect(Effect effect) {
 		boolean check = true;
 
@@ -279,6 +295,12 @@ class Player extends Entity {
 		this.setLevel();
 	}
 
+	private void updateQuests() {
+		for (Quest quest : quests) {
+			quest.checkForCompletion(QuestEvent.CURRENT_EVENT);
+		}
+	}
+
 	private void updateEffects() {
 		for (Effect effect : effects) {
 			effect.effect(this);
@@ -289,6 +311,7 @@ class Player extends Entity {
 		setDrink(getDrink() - drinkDeteriorationRate);
 		setFood(getFood() - foodDeteriorationRate);
 		updateEffects();
+		updateQuests();
 	}
 
 	void continuousUpdate() {

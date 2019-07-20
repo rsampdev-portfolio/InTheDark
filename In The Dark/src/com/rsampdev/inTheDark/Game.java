@@ -9,18 +9,11 @@ class Game {
 
 	Game(Player player) {
 		this.player = player;
-		prepare();
 	}
 
 	Game(int gameLevelID, Player player) {
 		this.gameLevel = GameLevel.getLevel(gameLevelID);
 		this.player = player;
-		prepare();
-	}
-
-	void prepare() {
-		Enemy.prepare();
-		Effect.prepare();
 	}
 
 	Player getPlayer() {
@@ -31,11 +24,11 @@ class Game {
 		return this.gameLevel;
 	}
 
-	String run(Scanner terminal) {
+	String run(Scanner terminal) throws Exception {
 		Tools.LISTENER = "";
 
 		System.out.println("\nWhat do you want to do?");
-		System.out.println("ENTER: explore, inventory, use, cook, stats, level, help, save or quit\n");
+		System.out.println("ENTER: explore, inventory, quests, use, cook, stats, level, help, save or quit\n");
 
 		Tools.LISTENER = Tools.getInputFrom(terminal);
 
@@ -43,6 +36,8 @@ class Game {
 			explore(terminal);
 		} else if (Tools.LISTENER.equals(Command.inventory.name())) {
 			inventory();
+		} else if (Tools.LISTENER.equals(Command.quests.name())) {
+			quests();
 		} else if (Tools.LISTENER.equals(Command.effects.name())) {
 			effects();
 		} else if (Tools.LISTENER.equals(Command.use.name())) {
@@ -65,7 +60,7 @@ class Game {
 		return Tools.LISTENER;
 	}
 
-	private void explore(Scanner terminal) {
+	private void explore(Scanner terminal) throws Exception {
 		int roll = Tools.DICE.nextInt(8);
 
 		if (roll <= 1) {
@@ -87,6 +82,10 @@ class Game {
 
 	private void inventory() {
 		System.out.println(this.player.getInventoryString());
+	}
+
+	private void quests() {
+		System.out.println(this.player.getQuestsString());
 	}
 
 	private void cookableInventory() {
@@ -183,7 +182,7 @@ class Game {
 		System.out.println("\n" + entity.getStats());
 	}
 
-	private void intersection(Scanner terminal) {
+	private void intersection(Scanner terminal) throws Exception {
 		while (!Tools.LISTENER.equals("left") && !Tools.LISTENER.equals("right")) {
 			System.out.println("\nYou have come to an intersection, do you go left of right?\n");
 			Tools.LISTENER = Tools.getInputFrom(terminal);
@@ -210,7 +209,7 @@ class Game {
 		}
 	}
 
-	private void foundWeapon(Scanner terminal) {
+	private void foundWeapon(Scanner terminal) throws Exception {
 		Weapon weapon = Weapon.getRandomWeapon();
 
 		if (player.getWeapon() == weapon) {
@@ -231,9 +230,34 @@ class Game {
 			}
 		}
 	}
-	
-	private void foundQuest(Scanner terminal) {
-		
+
+	private void foundQuest(Scanner terminal) throws Exception {
+		Quest quest = Quest.getRandomQuest();
+
+		boolean playerHasQuest = false;
+
+		for (Quest tempQuest : this.player.getQuests()) {
+			if (quest.getName().equals(tempQuest.getName())) {
+				playerHasQuest = true;
+			}
+		}
+
+		if (!playerHasQuest) {
+			System.out.println("\nYou have found a quest: " + quest.getName() + "\n");
+
+			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
+				System.out.println("Do you want to accept this quest: " + quest.getName() + "?\n");
+				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
+
+				Tools.LISTENER = Tools.getInputFrom(terminal);
+
+				if (Tools.LISTENER.equals(Command.yes.name())) {
+					this.player.addQuest(quest);
+				}
+			}
+		} else {
+			explore(terminal);
+		}
 	}
 
 	private void combat(Scanner terminal) {
@@ -345,7 +369,7 @@ class Game {
 		}
 	}
 
-	private void ascend(Scanner terminal) {
+	private void ascend(Scanner terminal) throws Exception {
 		if (this.gameLevel.ordinal() < GameLevel.GAME_LEVELS.get(GameLevel.GAME_LEVELS.size() - 1).ordinal()) {
 			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 				System.out.println("\n" + "You have found an entrance to a higher level");

@@ -2,7 +2,7 @@ package com.rsampdev.inTheDark;
 
 import java.util.ArrayList;
 
-class Enemy extends Entity {
+class Enemy extends Entity implements Cloneable {
 
 	private double damageMultiplier;
 
@@ -37,7 +37,7 @@ class Enemy extends Entity {
 		setDamageMultiplier(level.getDamageMultiplier());
 	}
 
-	private static Enemy createSpider() {
+	static Enemy createSpider() {
 		return new Enemy("Spider", 10, 50, Weapon.FIST, new DeathAction() {
 			@Override
 			public void death() {
@@ -46,7 +46,7 @@ class Enemy extends Entity {
 		});
 	}
 
-	private static Enemy createUndeadShambler() {
+	static Enemy createUndeadShambler() {
 		return new Enemy("Undead Shambler", 10, 50, Weapon.FIST, new DeathAction() {
 			@Override
 			public void death() {
@@ -55,7 +55,7 @@ class Enemy extends Entity {
 		});
 	}
 
-	private static Enemy createCaveGremlin() {
+	static Enemy createCaveGremlin() {
 		return new Enemy("Cave Gremlin", 15, 75, Weapon.STONE_SWORD, new DeathAction() {
 			@Override
 			public void death() {
@@ -64,7 +64,7 @@ class Enemy extends Entity {
 		});
 	}
 
-	private static Enemy createCaveOrc() {
+	static Enemy createCaveOrc() {
 		return new Enemy("Cave Orc", 20, 100, Weapon.IRON_REINFORCED_CLUB, new DeathAction() {
 			@Override
 			public void death() {
@@ -73,7 +73,7 @@ class Enemy extends Entity {
 		});
 	}
 
-	private static Enemy createSkeletonWarrior() {
+	static Enemy createSkeletonWarrior() {
 		return new Enemy("Skeleton Warrior", 25, 125, Weapon.IRON_SWORD, new DeathAction() {
 			@Override
 			public void death() {
@@ -82,7 +82,7 @@ class Enemy extends Entity {
 		});
 	}
 
-	private static Enemy createCaveTroll() {
+	static Enemy createCaveTroll() {
 		return new Enemy("Cave Troll", 40, 200, Weapon.WOODEN_CLUB, new DeathAction() {
 			@Override
 			public void death() {
@@ -91,13 +91,13 @@ class Enemy extends Entity {
 		});
 	}
 
-	static void prepare() {
-		Enemy.ENEMIES.add(Enemy.createSkeletonWarrior());
-		Enemy.ENEMIES.add(Enemy.createUndeadShambler());
-		Enemy.ENEMIES.add(Enemy.createCaveGremlin());
-		Enemy.ENEMIES.add(Enemy.createCaveTroll());
-		Enemy.ENEMIES.add(Enemy.createCaveOrc());
-		Enemy.ENEMIES.add(Enemy.createSpider());
+	static void prepare() throws Exception {
+		Enemy.ENEMIES.add((Enemy) Enemy.createSkeletonWarrior().clone());
+		Enemy.ENEMIES.add((Enemy) Enemy.createUndeadShambler().clone());
+		Enemy.ENEMIES.add((Enemy) Enemy.createCaveGremlin().clone());
+		Enemy.ENEMIES.add((Enemy) Enemy.createCaveTroll().clone());
+		Enemy.ENEMIES.add((Enemy) Enemy.createCaveOrc().clone());
+		Enemy.ENEMIES.add((Enemy) Enemy.createSpider().clone());
 	}
 
 	static Enemy getRandomEnemy() {

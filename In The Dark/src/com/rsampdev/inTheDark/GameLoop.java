@@ -5,6 +5,8 @@ import java.util.Scanner;
 class GameLoop {
 
 	public static void main(String[] args) throws Exception {
+		GameLoop.prepare();
+
 		Game game = SaveGame.load();
 
 		GameLoop.gameLoop(game);
@@ -37,9 +39,16 @@ class GameLoop {
 		System.out.println("cook: cook a food item");
 		System.out.println("stats: display your stats");
 		System.out.println("level: display leveling progress");
+		System.out.println("quests: display your quest progress");
 		System.out.println("explore: explore deeper into the cave");
 		System.out.println("effects: display the list of user effects");
 		System.out.println("inventory: display the items in your inventory");
+	}
+
+	static void prepare() throws Exception {
+		Enemy.prepare();
+		Quest.prepare();
+		Effect.prepare();
 	}
 
 	static boolean quit(Scanner terminal, Game game) throws Exception {

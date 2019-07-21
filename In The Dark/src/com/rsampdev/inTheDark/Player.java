@@ -297,7 +297,7 @@ class Player extends Entity {
 
 	private void updateQuests() {
 		for (Quest quest : quests) {
-			quest.checkForCompletion(QuestEvent.CURRENT_EVENT);
+			quest.checkForCompletion();
 		}
 	}
 

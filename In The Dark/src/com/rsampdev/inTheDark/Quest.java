@@ -30,11 +30,11 @@ class Quest implements Cloneable {
 		return eventsToComplete;
 	}
 
-	void checkForCompletion(QuestEvent event) {
+	void checkForCompletion() {
 		boolean check = true;
 
 		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
-			if (questEventCompleter.event.equals(event)) {
+			if (questEventCompleter.event.equals(QuestEvent.CURRENT_EVENT) && !questEventCompleter.completed) {
 				questEventCompleter.complete();
 				break;
 			}
@@ -47,9 +47,11 @@ class Quest implements Cloneable {
 		if (check) {
 			this.completed = true;
 		}
+
+		QuestEvent.CURRENT_EVENT = QuestEvent.NONE;
 	}
 
-	double getCompletionPercentage() {
+	String getCompletionPercentage() {
 		double top = 0;
 
 		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
@@ -60,7 +62,7 @@ class Quest implements Cloneable {
 
 		double completionPercentage = (top / this.getEventsToComplete().length) * 100;
 
-		return completionPercentage;
+		return String.format("%.2f", completionPercentage);
 	}
 
 	static Quest getKillOneSpiderQuest() {

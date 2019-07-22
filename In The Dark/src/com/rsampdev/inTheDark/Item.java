@@ -31,6 +31,16 @@ enum Item {
 		public void act(Player player) {
 			player.eat(10);
 		}
+	}), RAW_SPIDER_JERKY("Raw Spider Jerky", 1, true, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(5);
+		}
+	}), SPIDER_JERKY("Spider Jerky", 1, false, new Action() {
+		@Override
+		public void act(Player player) {
+			player.eat(10);
+		}
 	}), RAW_MUTTON_CHOP("Raw Mutton Chop", 1, true, new Action() {
 		@Override
 		public void act(Player player) {

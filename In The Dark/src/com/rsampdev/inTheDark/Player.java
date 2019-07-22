@@ -298,6 +298,10 @@ class Player extends Entity {
 	private void updateQuests() {
 		for (Quest quest : quests) {
 			quest.checkForCompletion();
+
+			if (quest.isCompleted()) {
+				quest.doleOutRewardsTo(this);
+			}
 		}
 	}
 

@@ -7,13 +7,23 @@ class Quest implements Cloneable {
 
 	private String name;
 	private boolean completed;
-	private QuestEventCompleter[] eventsToComplete;
+	private double experienceReward;
+	private ArrayList<Item> itemReward = new ArrayList<Item>();
+	private ArrayList<QuestEventCompleter> eventsToComplete = new ArrayList<QuestEventCompleter>();
 
 	private static ArrayList<Quest> QUESTS = new ArrayList<Quest>();
 	private static int QUEST_SIZE = QUESTS.size();
 
-	Quest(String name, QuestEventCompleter[] eventsToComplete) {
-		this.eventsToComplete = eventsToComplete;
+	Quest(String name, double experienceReward, QuestEvent[] eventsToComplete, Item[] itemReward) {
+		for (QuestEvent questEvent : eventsToComplete) {
+			this.eventsToComplete.add(new QuestEventCompleter(questEvent));
+		}
+
+		for (Item item : itemReward) {
+			this.itemReward.add(item);
+		}
+
+		this.experienceReward = experienceReward;
 		this.completed = false;
 		this.name = name;
 	}
@@ -22,11 +32,15 @@ class Quest implements Cloneable {
 		return name;
 	}
 
+	double getExperienceReward() {
+		return experienceReward;
+	}
+
 	boolean isCompleted() {
 		return completed;
 	}
 
-	QuestEventCompleter[] getEventsToComplete() {
+	ArrayList<QuestEventCompleter> getEventsToComplete() {
 		return eventsToComplete;
 	}
 
@@ -34,13 +48,13 @@ class Quest implements Cloneable {
 		boolean check = true;
 
 		for (QuestEventCompleter questEventCompleter : eventsToComplete) {
-			if (questEventCompleter.event.equals(QuestEvent.CURRENT_EVENT) && !questEventCompleter.completed) {
-				questEventCompleter.complete();
-				break;
-			}
-
-			if (questEventCompleter.completed == false) {
+			if (!questEventCompleter.completed) {
 				check = false;
+
+				if (questEventCompleter.event.equals(QuestEvent.CURRENT_EVENT)) {
+					questEventCompleter.complete();
+					break;
+				}
 			}
 		}
 
@@ -60,27 +74,36 @@ class Quest implements Cloneable {
 			}
 		}
 
-		double completionPercentage = (top / this.getEventsToComplete().length) * 100;
+		double completionPercentage = (top / this.getEventsToComplete().size()) * 100;
 
 		return String.format("%.2f", completionPercentage);
 	}
 
+	void doleOutRewardsTo(Player player) {
+		player.addExperience(experienceReward);
+		for (Item item : itemReward) {
+			player.addItem(item);
+		}
+	}
+
 	static Quest getKillOneSpiderQuest() {
-		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
-		Quest killOneSpiderQuest = new Quest("Kill 1 Spider", eventsToComplete);
+		QuestEvent[] eventsToComplete = { QuestEvent.SPIDER_KILLED };
+		Item[] itemReward = { Item.SPIDER_JERKY };
+		Quest killOneSpiderQuest = new Quest("Kill 1 Spider", 100, eventsToComplete, itemReward);
 		return killOneSpiderQuest;
 	}
 
 	static Quest getKillTwoSpidersQuest() {
-		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
-		Quest killOneSpiderQuest = new Quest("Kill 2 Spiders", eventsToComplete);
+		QuestEvent[] eventsToComplete = { QuestEvent.SPIDER_KILLED, QuestEvent.SPIDER_KILLED };
+		Item[] itemReward = { Item.SPIDER_JERKY, Item.SPIDER_JERKY };
+		Quest killOneSpiderQuest = new Quest("Kill 2 Spiders", 200, eventsToComplete, itemReward);
 		return killOneSpiderQuest;
 	}
 
 	static Quest getKillThreeSpidersQuest() {
-		QuestEventCompleter[] eventsToComplete = { new QuestEventCompleter(QuestEvent.SPIDER_KILLED), new QuestEventCompleter(QuestEvent.SPIDER_KILLED),
-				new QuestEventCompleter(QuestEvent.SPIDER_KILLED) };
-		Quest killOneSpiderQuest = new Quest("Kill 3 Spiders", eventsToComplete);
+		QuestEvent[] eventsToComplete = { QuestEvent.SPIDER_KILLED, QuestEvent.SPIDER_KILLED, QuestEvent.SPIDER_KILLED };
+		Item[] itemReward = { Item.SPIDER_JERKY, Item.SPIDER_JERKY, Item.SPIDER_JERKY };
+		Quest killOneSpiderQuest = new Quest("Kill 3 Spiders", 300, eventsToComplete, itemReward);
 		return killOneSpiderQuest;
 	}
 

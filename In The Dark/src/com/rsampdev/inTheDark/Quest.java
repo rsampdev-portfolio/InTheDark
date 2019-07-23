@@ -1,9 +1,12 @@
 package com.rsampdev.inTheDark;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class Quest implements Cloneable {
+class Quest implements Cloneable, Serializable {
+
+	private static final long serialVersionUID = 5446104460463308659L;
 
 	private String name;
 	private boolean completed;
@@ -129,7 +132,9 @@ class Quest implements Cloneable {
 
 }
 
-class QuestEventCompleter {
+class QuestEventCompleter implements Serializable {
+	private static final long serialVersionUID = -7963257072886120621L;
+
 	boolean completed = false;
 	QuestEvent event;
 

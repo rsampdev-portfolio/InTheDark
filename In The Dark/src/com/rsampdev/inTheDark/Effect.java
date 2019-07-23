@@ -1,13 +1,16 @@
 package com.rsampdev.inTheDark;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class Effect {
+class Effect implements Serializable {
+
+	private static final long serialVersionUID = 6312334522503877906L;
 
 	private int turns;
 	private String name;
-	private Action effect;
+	private transient Action effect;
 
 	private static ArrayList<Effect> EFFECTS = new ArrayList<Effect>();
 

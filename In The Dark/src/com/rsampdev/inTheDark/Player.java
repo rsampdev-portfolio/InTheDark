@@ -5,7 +5,9 @@ import java.util.Collections;
 
 class Player extends Entity {
 
-	private Level level;
+	private static final long serialVersionUID = 7576526609129823809L;
+
+	private transient Level level;
 	private double food = MAX_FOOD;
 	private double drink = MAX_DRINK;
 	private double foodDeteriorationRate = 1.0;

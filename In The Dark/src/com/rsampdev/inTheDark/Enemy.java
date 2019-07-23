@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 class Enemy extends Entity implements Cloneable {
 
+	private static final long serialVersionUID = -2659066575595252824L;
+
 	private double damageMultiplier;
 
 	static ArrayList<Enemy> ENEMIES = new ArrayList<Enemy>();

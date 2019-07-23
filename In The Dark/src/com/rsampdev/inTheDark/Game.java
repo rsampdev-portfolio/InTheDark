@@ -1,18 +1,16 @@
 package com.rsampdev.inTheDark;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-class Game {
+class Game implements Serializable {
+
+	private static final long serialVersionUID = 4288491091125862995L;
 
 	private Player player;
 	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
 
 	Game(Player player) {
-		this.player = player;
-	}
-
-	Game(int gameLevelID, Player player) {
-		this.gameLevel = GameLevel.getLevel(gameLevelID);
 		this.player = player;
 	}
 

@@ -1,12 +1,16 @@
 package com.rsampdev.inTheDark;
 
-abstract class Entity {
+import java.io.Serializable;
+
+abstract class Entity implements Serializable {
+
+	private static final long serialVersionUID = -5027268964715406888L;
 
 	private String name;
 	private Weapon weapon;
 	private double health;
 	private double experience;
-	private DeathAction death;
+	private transient DeathAction death;
 
 	String getName() {
 		return name;

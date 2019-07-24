@@ -39,9 +39,9 @@ class Player extends Entity {
 	}
 
 	private void death() {
-		this.setDeath(new DeathAction() {
+		this.setDeath(new Action() {
 			@Override
-			public void death() {
+			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.PLAYER_DEATH;
 			}
 		});
@@ -172,7 +172,7 @@ class Player extends Entity {
 		for (Item item : inventory) {
 			if (item.getName().equals(name)) {
 				tempItem = item;
-				item.use(this);
+				item.use();
 			}
 		}
 
@@ -309,7 +309,7 @@ class Player extends Entity {
 
 	private void updateEffects() {
 		for (Effect effect : effects) {
-			effect.effect(this);
+			effect.effect();
 		}
 	}
 

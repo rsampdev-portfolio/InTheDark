@@ -102,7 +102,7 @@ class Game implements Serializable {
 			for (Item item : PLAYER.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
 					Tools.LISTENER = Command.cancel.name();
-					item.use(PLAYER);
+					item.use();
 				}
 			}
 		}

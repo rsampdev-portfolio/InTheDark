@@ -36,9 +36,9 @@ class Effect implements Serializable {
 		this.turns -= by;
 	}
 
-	void effect(Player player) {
+	void effect() {
 		if (turns >= 1) {
-			effect.act(player);
+			effect.act();
 			decrement(1);
 		}
 	}
@@ -46,8 +46,8 @@ class Effect implements Serializable {
 	static Effect createCaveIllness() {
 		Action action = new Action() {
 			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() - 5);
+			public void act() {
+				Game.PLAYER.setHealth(Game.PLAYER.getHealth() - 5);
 			}
 		};
 
@@ -59,8 +59,8 @@ class Effect implements Serializable {
 	static Effect createUncookedFoodPoisoning() {
 		Action action = new Action() {
 			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() - (Tools.DICE.nextInt(2) + 1));
+			public void act() {
+				Game.PLAYER.setHealth(Game.PLAYER.getHealth() - (Tools.DICE.nextInt(2) + 1));
 			}
 		};
 
@@ -72,8 +72,8 @@ class Effect implements Serializable {
 	static Effect createHealthRegeneration() {
 		Action action = new Action() {
 			@Override
-			public void act(Player player) {
-				player.setHealth(player.getHealth() + 5);
+			public void act() {
+				Game.PLAYER.setHealth(Game.PLAYER.getHealth() + 5);
 			}
 		};
 

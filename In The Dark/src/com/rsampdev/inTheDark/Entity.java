@@ -10,7 +10,7 @@ abstract class Entity implements Serializable {
 	private Weapon weapon;
 	private double health;
 	private double experience;
-	private transient DeathAction death;
+	private transient Action death;
 
 	String getName() {
 		return name;
@@ -28,7 +28,7 @@ abstract class Entity implements Serializable {
 		this.health = health;
 
 		if (this.health <= 0) {
-			this.death.death();
+			this.death.act();
 		}
 	}
 
@@ -52,11 +52,11 @@ abstract class Entity implements Serializable {
 		this.weapon = weapon;
 	}
 
-	DeathAction getDeath() {
+	Action getDeath() {
 		return death;
 	}
 
-	void setDeath(DeathAction death) {
+	void setDeath(Action death) {
 		this.death = death;
 	}
 

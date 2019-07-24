@@ -11,68 +11,68 @@ enum Item {
 
 	EGG("Uncooked Egg", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(2.5);
-			player.addEffect(Effect.createUncookedFoodPoisoning());
+		public void act() {
+			Game.PLAYER.eat(2.5);
+			Game.PLAYER.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), BOILED_EGG("Boiled Egg", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(5);
+		public void act() {
+			Game.PLAYER.eat(5);
 		}
 	}), UNIDENTIFIED_MEAT("Can of Unidentified Uncooked Meat", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(5);
-			player.addEffect(Effect.createUncookedFoodPoisoning());
+		public void act() {
+			Game.PLAYER.eat(5);
+			Game.PLAYER.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), UNIDENTIFIED_COOKED_MEAT("Can of Unidentified Cooked Meat", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(10);
+		public void act() {
+			Game.PLAYER.eat(10);
 		}
 	}), RAW_SPIDER_JERKY("Raw Spider Jerky", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(5);
+		public void act() {
+			Game.PLAYER.eat(5);
 		}
 	}), SPIDER_JERKY("Spider Jerky", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(10);
+		public void act() {
+			Game.PLAYER.eat(10);
 		}
 	}), RAW_MUTTON_CHOP("Raw Mutton Chop", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(15);
-			player.addEffect(Effect.createUncookedFoodPoisoning());
+		public void act() {
+			Game.PLAYER.eat(15);
+			Game.PLAYER.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), MUTTON_CHOP("Mutton Chop", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(30);
+		public void act() {
+			Game.PLAYER.eat(30);
 		}
 	}), RAW_PORK_CHOP("Raw Pork Chop", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(20);
-			player.addEffect(Effect.createUncookedFoodPoisoning());
+		public void act() {
+			Game.PLAYER.eat(20);
+			Game.PLAYER.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), PORK_CHOP("Pork Chop", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(40);
+		public void act() {
+			Game.PLAYER.eat(40);
 		}
 	}), RAW_BEEF("Raw Beef", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(25);
-			player.addEffect(Effect.createUncookedFoodPoisoning());
+		public void act() {
+			Game.PLAYER.eat(25);
+			Game.PLAYER.addEffect(Effect.createUncookedFoodPoisoning());
 		}
 	}), STEAK("Steak", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.eat(50);
+		public void act() {
+			Game.PLAYER.eat(50);
 		}
 	}),
 
@@ -80,13 +80,13 @@ enum Item {
 
 	UNFILTERED_WATER("Jar of Unfiltered Water", 1, true, new Action() {
 		@Override
-		public void act(Player player) {
-			player.drink(5);
+		public void act() {
+			Game.PLAYER.drink(5);
 		}
 	}), CLEAN_WATER("Bottle of Clean Water", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.drink(15);
+		public void act() {
+			Game.PLAYER.drink(15);
 		}
 	}),
 
@@ -94,23 +94,23 @@ enum Item {
 
 	HEALTH_POTION("Health Potion", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.setHealth(player.getHealth() + 15);
+		public void act() {
+			Game.PLAYER.setHealth(Game.PLAYER.getHealth() + 15);
 		}
 	}), MEGA_HEALTH_POTION("Mega Health Potion", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.setHealth(player.getHealth() + 30);
+		public void act() {
+			Game.PLAYER.setHealth(Game.PLAYER.getHealth() + 30);
 		}
 	}), HEALTH_ELIXIR("Health Elixir", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.setHealth(player.getHealth() + 50);
+		public void act() {
+			Game.PLAYER.setHealth(Game.PLAYER.getHealth() + 50);
 		}
 	}), MEGA_HEALTH_ELIXIR("Mega Health Elixir", 1, false, new Action() {
 		@Override
-		public void act(Player player) {
-			player.setHealth(player.getHealth() + 100);
+		public void act() {
+			Game.PLAYER.setHealth(Game.PLAYER.getHealth() + 100);
 		};
 	});
 
@@ -148,9 +148,9 @@ enum Item {
 		this.stack -= by;
 	}
 
-	void use(Player player) {
+	void use() {
 		if (stack >= 1) {
-			usage.act(player);
+			usage.act();
 			decrement(1);
 		}
 	}

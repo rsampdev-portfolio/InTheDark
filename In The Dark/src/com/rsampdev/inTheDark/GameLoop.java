@@ -32,6 +32,12 @@ class GameLoop {
 		terminal.close();
 	}
 
+	static void prepare() throws Exception {
+		Enemy.prepare();
+		Quest.prepare();
+		Effect.prepare();
+	}
+
 	static void help() {
 		System.out.println("\nHELP:");
 		System.out.println("use: use an item");
@@ -43,12 +49,6 @@ class GameLoop {
 		System.out.println("explore: explore deeper into the cave");
 		System.out.println("effects: display the list of user effects");
 		System.out.println("inventory: display the items in your inventory");
-	}
-
-	static void prepare() throws Exception {
-		Enemy.prepare();
-		Quest.prepare();
-		Effect.prepare();
 	}
 
 	static boolean quit(Scanner terminal, Game game) throws Exception {

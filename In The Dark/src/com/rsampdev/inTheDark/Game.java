@@ -7,15 +7,12 @@ class Game implements Serializable {
 
 	private static final long serialVersionUID = 4288491091125862995L;
 
-	private Player player;
+	static Player PLAYER;
+
 	private GameLevel gameLevel = GameLevel.LEVEL_ZERO;
 
 	Game(Player player) {
-		this.player = player;
-	}
-
-	Player getPlayer() {
-		return this.player;
+		PLAYER = player;
 	}
 
 	GameLevel getGameLevel() {
@@ -45,14 +42,14 @@ class Game implements Serializable {
 		} else if (Tools.LISTENER.equals(Command.level.name())) {
 			level();
 		} else if (Tools.LISTENER.equals(Command.stats.name())) {
-			statsStartWithNewLine(player);
+			statsStartWithNewLine(PLAYER);
 		}
 
 		boolean update = !(Tools.LISTENER.equals(Command.inventory.name()) || Tools.LISTENER.equals(Command.use.name()) || Tools.LISTENER.equals(Command.cook.name())
 				|| Tools.LISTENER.equals(Command.level.name()) || Tools.LISTENER.equals(Command.stats.name()));
 
 		if (update) {
-			player.turnUpdate();
+			PLAYER.turnUpdate();
 		}
 
 		return Tools.LISTENER;
@@ -79,19 +76,19 @@ class Game implements Serializable {
 	}
 
 	private void inventory() {
-		System.out.println(this.player.getInventoryString());
+		System.out.println(PLAYER.getInventoryString());
 	}
 
 	private void quests() {
-		System.out.println(this.player.getQuestsString());
+		System.out.println(PLAYER.getQuestsString());
 	}
 
 	private void cookableInventory() {
-		System.out.println(this.player.getCookableInventoryString());
+		System.out.println(PLAYER.getCookableInventoryString());
 	}
 
 	private void effects() {
-		System.out.println(this.player.getEffectsString());
+		System.out.println(PLAYER.getEffectsString());
 	}
 
 	private void useItem(Scanner terminal) {
@@ -102,10 +99,10 @@ class Game implements Serializable {
 
 			Tools.LISTENER = Tools.getInputFrom(terminal);
 
-			for (Item item : player.getInventoryList()) {
+			for (Item item : PLAYER.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
 					Tools.LISTENER = Command.cancel.name();
-					item.use(player);
+					item.use(PLAYER);
 				}
 			}
 		}
@@ -122,7 +119,7 @@ class Game implements Serializable {
 			Item food = null;
 			Item itemToRemove = null;
 
-			for (Item tempItem : player.getInventoryList()) {
+			for (Item tempItem : PLAYER.getInventoryList()) {
 				if (tempItem.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
 					food = Item.Cooker.cook(tempItem);
 					itemToRemove = tempItem;
@@ -130,8 +127,8 @@ class Game implements Serializable {
 			}
 
 			if (food != null && itemToRemove != null) {
-				player.addItem(food);
-				player.removeItem(itemToRemove);
+				PLAYER.addItem(food);
+				PLAYER.removeItem(itemToRemove);
 
 				while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name()) && !Tools.LISTENER.equals(Command.cancel.name())) {
 
@@ -142,7 +139,7 @@ class Game implements Serializable {
 
 					if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
 						if (Tools.LISTENER.equals(Command.yes.name())) {
-							player.useItem(food.getName());
+							PLAYER.useItem(food.getName());
 						}
 
 						Tools.LISTENER = Command.cancel.name();
@@ -153,13 +150,13 @@ class Game implements Serializable {
 	}
 
 	private void level() {
-		int ordinal = this.player.getLevel().ordinal();
+		int ordinal = PLAYER.getLevel().ordinal();
 
-		String levelData = "You are Lvl. " + ordinal + ", with " + this.player.getExperience() + " XP";
+		String levelData = "You are Lvl. " + ordinal + ", with " + PLAYER.getExperience() + " XP";
 
 		if (ordinal < Level.NUMBER_OF_LEVELS - 1) {
 			Level nextLevel = Level.getLevelFromOrdinal(ordinal + 1);
-			double levelXPGap = nextLevel.getLowerExperienceBound() - player.getExperience();
+			double levelXPGap = nextLevel.getLowerExperienceBound() - PLAYER.getExperience();
 			levelData = levelData.concat(", and are " + levelXPGap + " XP from Lvl. " + nextLevel.ordinal());
 		} else {
 			levelData = levelData.concat(", and are max level");
@@ -191,7 +188,7 @@ class Game implements Serializable {
 
 	private void foundItem(Scanner terminal) {
 		Item item = Item.getRandomItem();
-		player.addItem(item);
+		PLAYER.addItem(item);
 
 		System.out.println("\nYou have found a(n) " + item.getName() + "\n");
 
@@ -202,7 +199,7 @@ class Game implements Serializable {
 			Tools.LISTENER = Tools.getInputFrom(terminal);
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
-				player.useItem(item.getName());
+				PLAYER.useItem(item.getName());
 			}
 		}
 	}
@@ -210,20 +207,20 @@ class Game implements Serializable {
 	private void foundWeapon(Scanner terminal) throws Exception {
 		Weapon weapon = Weapon.getRandomWeapon();
 
-		if (player.getWeapon() == weapon) {
+		if (PLAYER.getWeapon() == weapon) {
 			explore(terminal);
 		} else {
 			System.out.println("\nYou have found a(n) " + weapon.getStats() + "\n");
 
 			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
-				System.out.println("Your current weapon is a(n) " + player.getWeapon().getStats() + "\n");
+				System.out.println("Your current weapon is a(n) " + PLAYER.getWeapon().getStats() + "\n");
 				System.out.println("Do you want to pick up the " + weapon.getStats() + "\n");
 				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
 				Tools.LISTENER = Tools.getInputFrom(terminal);
 
 				if (Tools.LISTENER.equals(Command.yes.name())) {
-					player.setWeapon(weapon);
+					PLAYER.setWeapon(weapon);
 				}
 			}
 		}
@@ -232,15 +229,15 @@ class Game implements Serializable {
 	private void foundQuest(Scanner terminal) throws Exception {
 		Quest quest = Quest.getRandomQuest();
 
-		boolean playerHasQuest = false;
+		boolean PLAYERHasQuest = false;
 
-		for (Quest tempQuest : this.player.getQuests()) {
+		for (Quest tempQuest : PLAYER.getQuests()) {
 			if (quest.getName().equals(tempQuest.getName())) {
-				playerHasQuest = true;
+				PLAYERHasQuest = true;
 			}
 		}
 
-		if (!playerHasQuest) {
+		if (!PLAYERHasQuest) {
 			System.out.println("\nYou have found a quest: " + quest.getName() + "\n");
 
 			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
@@ -250,7 +247,7 @@ class Game implements Serializable {
 				Tools.LISTENER = Tools.getInputFrom(terminal);
 
 				if (Tools.LISTENER.equals(Command.yes.name())) {
-					this.player.addQuest(quest);
+					PLAYER.addQuest(quest);
 				}
 			}
 		} else {
@@ -296,49 +293,49 @@ class Game implements Serializable {
 			int roll = Tools.DICE.nextInt(2);
 
 			if (roll == 0) {
-				player.attack(enemy);
-				System.out.println("\n" + "You have dealt " + player.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
+				PLAYER.attack(enemy);
+				System.out.println("\n" + "You have dealt " + PLAYER.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
 
 				if (enemy.getHealth() <= 0) {
 					System.out.println("You have killed the " + enemy.getName() + "\n");
-					player.addExperience(enemy.getExperience());
+					PLAYER.addExperience(enemy.getExperience());
 					System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
-					stats(player);
+					stats(PLAYER);
 					continueFight = false;
 					break;
 				} else {
-					enemy.attack(player);
+					enemy.attack(PLAYER);
 					System.out.println("The " + enemy.getName() + " has dealt " + enemy.getAttackDamage() + " damage to you" + "\n");
 				}
 			} else if (roll == 1) {
-				enemy.attack(player);
+				enemy.attack(PLAYER);
 				System.out.println("\n" + "The " + enemy.getName() + " has dealt " + enemy.getAttackDamage() + " damage to you" + "\n");
 
-				if (player.getHealth() <= 0) {
+				if (PLAYER.getHealth() <= 0) {
 					System.out.println("You have died. Game Over.");
 					Tools.LISTENER = Command.quit.name();
 					continueFight = false;
 					break;
 				} else {
-					player.attack(enemy);
-					System.out.println("You have dealt " + player.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
+					PLAYER.attack(enemy);
+					System.out.println("You have dealt " + PLAYER.getAttackDamage() + " damage to the " + enemy.getName() + "\n");
 				}
 			}
 
-			player.continuousUpdate();
+			PLAYER.continuousUpdate();
 
-			statsEndWithNewLine(player);
+			statsEndWithNewLine(PLAYER);
 			statsEndWithNewLine(enemy);
 
 			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 				if (enemy.getHealth() <= 0) {
 					System.out.println("You have killed the " + enemy.getName() + "\n");
-					player.addExperience(enemy.getExperience());
+					PLAYER.addExperience(enemy.getExperience());
 					System.out.println("You have gained " + enemy.getExperience() + " XP from killing the " + enemy.getName() + "\n");
-					stats(player);
+					stats(PLAYER);
 					continueFight = false;
 					break;
-				} else if (player.getHealth() <= 0) {
+				} else if (PLAYER.getHealth() <= 0) {
 					System.out.println("You have died. Game Over.");
 					Tools.LISTENER = Command.quit.name();
 					continueFight = false;

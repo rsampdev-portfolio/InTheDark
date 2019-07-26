@@ -44,6 +44,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.SPIDER_KILLED;
+				Game.PLAYER.addItem(Item.RAW_SPIDER_JERKY);
 			}
 		});
 	}

@@ -54,6 +54,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.UNDEAD_SHAMBLER_KILLED;
+				Game.PLAYER.addItem(Item.UNIDENTIFIED_MEAT);
 			}
 		});
 	}
@@ -63,6 +64,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_GREMLIN_KILLED;
+				// Drop item
 			}
 		});
 	}
@@ -72,6 +74,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_ORC_KILLED;
+				Game.PLAYER.addItem(Item.RAW_ORC_CHOP);
 			}
 		});
 	}
@@ -81,6 +84,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.SKELETON_WARRIOR_KILLED;
+				// Drop item
 			}
 		});
 	}
@@ -90,6 +94,7 @@ class Enemy extends Entity implements Cloneable {
 			@Override
 			public void act() {
 				QuestEvent.CURRENT_EVENT = QuestEvent.CAVE_TROLL_KILLED;
+				// Drop item
 			}
 		});
 	}

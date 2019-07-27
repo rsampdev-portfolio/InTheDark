@@ -27,6 +27,20 @@ class GameLoop {
 			} else if (Tools.LISTENER.equals(Command.quit.name())) {
 				running = quit(terminal, game);
 			}
+
+			if (Tools.LISTENER.equals(Command.give.name())) {
+				Command.Operator.give();
+			} else if (Tools.LISTENER.equals(Command.resetGame.name())) {
+				Command.Operator.resetGame();
+			} else if (Tools.LISTENER.equals(Command.resetPlayer.name())) {
+				Command.Operator.resetPlayer();
+			} else if (Tools.LISTENER.equals(Command.clearQuests.name())) {
+				Command.Operator.clearQuests();
+			} else if (Tools.LISTENER.equals(Command.clearInventory.name())) {
+				Command.Operator.clearInventory();
+			} else if (Tools.LISTENER.equals(Command.resetPlayerAndGame.name())) {
+				Command.Operator.resetPlayerAndGame();
+			}
 		}
 
 		terminal.close();

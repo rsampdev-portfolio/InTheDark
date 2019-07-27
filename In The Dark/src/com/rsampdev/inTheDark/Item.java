@@ -74,6 +74,16 @@ enum Item {
 		public void act() {
 			Game.PLAYER.eat(50);
 		}
+	}), RAW_ORC_CHOP("Raw Orc Chop", 1, true, new Action() {
+		@Override
+		public void act() {
+			Game.PLAYER.eat(35);
+		}
+	}), ORC_CHOP("Orc Chop", 1, false, new Action() {
+		@Override
+		public void act() {
+			Game.PLAYER.eat(70);
+		}
 	}),
 
 	// Drinks
@@ -206,6 +216,9 @@ enum Item {
 					break;
 				case RAW_BEEF:
 					tempItem = Item.STEAK;
+					break;
+				case RAW_ORC_CHOP:
+					tempItem = Item.ORC_CHOP;
 					break;
 				default:
 					break;

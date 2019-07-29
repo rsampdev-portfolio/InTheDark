@@ -23,17 +23,10 @@ class Player extends Entity {
 		setWeapon(Weapon.FIST);
 		setExperience(0);
 		setHealth(100);
-		setLevel();
-		setDeath();
+		prepare();
 	}
 
-	Player(int weaponID, double health, double experience, double food, double drink, ArrayList<Item> inventory) {
-		setWeapon(Weapon.getWeapon(weaponID));
-		setInventoryList(inventory);
-		setExperience(experience);
-		setHealth(health);
-		setDrink(drink);
-		setFood(food);
+	void prepare() {
 		setLevel();
 		setDeath();
 	}
@@ -85,12 +78,6 @@ class Player extends Entity {
 
 	void setDrinkDeteriorationRate(double drinkDeteriorationRate) {
 		this.drinkDeteriorationRate = drinkDeteriorationRate;
-	}
-
-	private void setInventoryList(ArrayList<Item> inventory) {
-		for (Item item : inventory) {
-			this.addItem(item);
-		}
 	}
 
 	ArrayList<Item> getInventoryList() {
@@ -305,6 +292,8 @@ class Player extends Entity {
 				quest.doleOutRewardsTo(this);
 			}
 		}
+		
+		QuestEvent.CURRENT_EVENT = QuestEvent.NONE;
 	}
 
 	private void updateEffects() {

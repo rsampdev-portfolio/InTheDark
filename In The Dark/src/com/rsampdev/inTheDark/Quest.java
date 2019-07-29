@@ -64,8 +64,6 @@ class Quest implements Cloneable, Serializable {
 		if (check) {
 			this.completed = true;
 		}
-
-		QuestEvent.CURRENT_EVENT = QuestEvent.NONE;
 	}
 
 	String getCompletionPercentage() {

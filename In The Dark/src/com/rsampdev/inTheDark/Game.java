@@ -1,7 +1,6 @@
 package com.rsampdev.inTheDark;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 class Game implements Serializable {
 
@@ -19,16 +18,16 @@ class Game implements Serializable {
 		return this.gameLevel;
 	}
 
-	String run(Scanner terminal) throws Exception {
+	String run() throws Exception {
 		Tools.LISTENER = "";
 
 		System.out.println("\nWhat do you want to do?");
 		System.out.println("ENTER: explore, inventory, quests, use, cook, stats, level, help, save or quit\n");
 
-		Tools.LISTENER = Tools.getInputFrom(terminal);
+		Tools.LISTENER = Terminal.getInput();
 
 		if (Tools.LISTENER.equals(Command.explore.name())) {
-			explore(terminal);
+			explore();
 		} else if (Tools.LISTENER.equals(Command.inventory.name())) {
 			inventory();
 		} else if (Tools.LISTENER.equals(Command.quests.name())) {
@@ -36,9 +35,9 @@ class Game implements Serializable {
 		} else if (Tools.LISTENER.equals(Command.effects.name())) {
 			effects();
 		} else if (Tools.LISTENER.equals(Command.use.name())) {
-			useItem(terminal);
+			useItem();
 		} else if (Tools.LISTENER.equals(Command.cook.name())) {
-			cookItem(terminal);
+			cookItem();
 		} else if (Tools.LISTENER.equals(Command.level.name())) {
 			level();
 		} else if (Tools.LISTENER.equals(Command.stats.name())) {
@@ -55,23 +54,23 @@ class Game implements Serializable {
 		return Tools.LISTENER;
 	}
 
-	private void explore(Scanner terminal) throws Exception {
+	private void explore() throws Exception {
 		int roll = Tools.DICE.nextInt(8);
 
 		if (roll <= 1) {
 			System.out.println("\nYou have encountered nothing. But the tunnel continues onward...");
 		} else if (roll == 2) {
-			intersection(terminal);
+			intersection();
 		} else if (roll == 3) {
-			foundItem(terminal);
+			foundItem();
 		} else if (roll == 4) {
-			foundWeapon(terminal);
+			foundWeapon();
 		} else if (roll == 5) {
-			foundQuest(terminal);
+			foundQuest();
 		} else if (roll == 6) {
-			combat(terminal);
+			combat();
 		} else if (roll == 7) {
-			ascend(terminal);
+			ascend();
 		}
 	}
 
@@ -91,13 +90,13 @@ class Game implements Serializable {
 		System.out.println(PLAYER.getEffectsString());
 	}
 
-	private void useItem(Scanner terminal) {
+	private void useItem() {
 		while (!Tools.LISTENER.equals(Command.cancel.name())) {
 			System.out.println("\nENTER: the name of the item in your inventory you want to use or cancel");
 			inventory();
 			System.out.println();
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 
 			for (Item item : PLAYER.getInventoryList()) {
 				if (item.getName().toLowerCase().equals(Tools.LISTENER.toLowerCase())) {
@@ -108,13 +107,13 @@ class Game implements Serializable {
 		}
 	}
 
-	private void cookItem(Scanner terminal) {
+	private void cookItem() {
 		while (!Tools.LISTENER.equals(Command.cancel.name())) {
 			System.out.println("\nENTER: the name of the food item in your inventory you want to cook or cancel");
 			cookableInventory();
 			System.out.println();
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 
 			Item food = null;
 			Item itemToRemove = null;
@@ -135,7 +134,7 @@ class Game implements Serializable {
 					System.out.println("\nDo you want to eat the " + food.getName() + " now?");
 					System.out.println("ENTER: yes or no\n");
 
-					Tools.LISTENER = Tools.getInputFrom(terminal);
+					Tools.LISTENER = Terminal.getInput();
 
 					if (Tools.LISTENER.equals(Command.yes.name()) || Tools.LISTENER.equals(Command.no.name())) {
 						if (Tools.LISTENER.equals(Command.yes.name())) {
@@ -177,16 +176,16 @@ class Game implements Serializable {
 		System.out.println("\n" + entity.getStats());
 	}
 
-	private void intersection(Scanner terminal) throws Exception {
+	private void intersection() throws Exception {
 		while (!Tools.LISTENER.equals("left") && !Tools.LISTENER.equals("right")) {
 			System.out.println("\nYou have come to an intersection, do you go left of right?\n");
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 		}
 
-		explore(terminal);
+		explore();
 	}
 
-	private void foundItem(Scanner terminal) {
+	private void foundItem() {
 		Item item = Item.getRandomItem();
 		PLAYER.addItem(item);
 
@@ -196,7 +195,7 @@ class Game implements Serializable {
 			System.out.println("Do you want to use or eat the " + item.getName() + " now?\n");
 			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
 				PLAYER.useItem(item.getName());
@@ -204,11 +203,11 @@ class Game implements Serializable {
 		}
 	}
 
-	private void foundWeapon(Scanner terminal) throws Exception {
+	private void foundWeapon() throws Exception {
 		Weapon weapon = Weapon.getRandomWeapon();
 
 		if (PLAYER.getWeapon() == weapon) {
-			explore(terminal);
+			explore();
 		} else {
 			System.out.println("\nYou have found a(n) " + weapon.getStats() + "\n");
 
@@ -217,7 +216,7 @@ class Game implements Serializable {
 				System.out.println("Do you want to pick up the " + weapon.getStats() + "\n");
 				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-				Tools.LISTENER = Tools.getInputFrom(terminal);
+				Tools.LISTENER = Terminal.getInput();
 
 				if (Tools.LISTENER.equals(Command.yes.name())) {
 					PLAYER.setWeapon(weapon);
@@ -226,7 +225,7 @@ class Game implements Serializable {
 		}
 	}
 
-	private void foundQuest(Scanner terminal) throws Exception {
+	private void foundQuest() throws Exception {
 		Quest quest = Quest.getRandomQuest();
 
 		boolean PLAYERHasQuest = false;
@@ -244,18 +243,18 @@ class Game implements Serializable {
 				System.out.println("Do you want to accept this quest: " + quest.getName() + "?\n");
 				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-				Tools.LISTENER = Tools.getInputFrom(terminal);
+				Tools.LISTENER = Terminal.getInput();
 
 				if (Tools.LISTENER.equals(Command.yes.name())) {
 					PLAYER.addQuest(quest);
 				}
 			}
 		} else {
-			explore(terminal);
+			explore();
 		}
 	}
 
-	private void combat(Scanner terminal) {
+	private void combat() {
 		Enemy enemy = Enemy.getRandomEnemy();
 		enemy.modifyForGameLevel(gameLevel);
 
@@ -265,11 +264,11 @@ class Game implements Serializable {
 			System.out.println("Do you want to fight the " + enemy.getName() + "?");
 			System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 		}
 
 		if (Tools.LISTENER.equals(Command.yes.name())) {
-			startCombat(terminal, enemy);
+			startCombat(enemy);
 		} else if (Tools.LISTENER.equals(Command.no.name())) {
 			System.out.println("\n" + "You attempt to escape the " + enemy.getName());
 
@@ -279,12 +278,12 @@ class Game implements Serializable {
 				System.out.println("\n" + "You have successfully escaped from the " + enemy.getName());
 			} else if (roll == 3) {
 				System.out.println("\n" + "You have failed to escape from the " + enemy.getName());
-				startCombat(terminal, enemy);
+				startCombat(enemy);
 			}
 		}
 	}
 
-	private void startCombat(Scanner terminal, Enemy enemy) {
+	private void startCombat(Enemy enemy) {
 		boolean continueFight = true;
 
 		while (continueFight) {
@@ -345,7 +344,7 @@ class Game implements Serializable {
 				System.out.println("Do you want to continue the fight with the " + enemy.getName() + "?");
 				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-				Tools.LISTENER = Tools.getInputFrom(terminal);
+				Tools.LISTENER = Terminal.getInput();
 
 				if (Tools.LISTENER.equals(Command.no.name())) {
 					System.out.println("\n" + "You attempt to escape the " + enemy.getName());
@@ -357,21 +356,21 @@ class Game implements Serializable {
 						continueFight = false;
 					} else if (secondRoll == 3) {
 						System.out.println("\n" + "You have failed to escape from the " + enemy.getName());
-						startCombat(terminal, enemy);
+						startCombat(enemy);
 					}
 				}
 			}
 		}
 	}
 
-	private void ascend(Scanner terminal) throws Exception {
+	private void ascend() throws Exception {
 		if (this.gameLevel.ordinal() < GameLevel.GAME_LEVELS.get(GameLevel.GAME_LEVELS.size() - 1).ordinal()) {
 			while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 				System.out.println("\n" + "You have found an entrance to a higher level");
 				System.out.println("Do you ascend? Careful, the monsters will have more health and do more damage");
 				System.out.println("ENTER: " + Command.yes.name() + " or " + Command.no.name() + "\n");
 
-				Tools.LISTENER = Tools.getInputFrom(terminal);
+				Tools.LISTENER = Terminal.getInput();
 			}
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
@@ -382,7 +381,7 @@ class Game implements Serializable {
 				System.out.println("\n" + "You ignore the entrance, continuing on your way...");
 			}
 		} else {
-			explore(terminal);
+			explore();
 		}
 	}
 

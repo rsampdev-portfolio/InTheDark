@@ -1,31 +1,27 @@
 package com.rsampdev.inTheDark;
 
-import java.util.Scanner;
-
 class GameLoop {
 
 	public static void main(String[] args) throws Exception {
-		GameLoop.prepare();
-
 		Game game = SaveGame.load();
+
+		GameLoop.prepare();
 
 		GameLoop.gameLoop(game);
 	}
 
 	static void gameLoop(Game game) throws Exception {
-		Scanner terminal = new Scanner(System.in);
-
 		boolean running = true;
 
 		while (running) {
-			Tools.LISTENER = game.run(terminal);
+			Tools.LISTENER = game.run();
 
 			if (Tools.LISTENER.equals(Command.help.name())) {
 				help();
 			} else if (Tools.LISTENER.equals(Command.save.name())) {
 				SaveGame.save(game);
 			} else if (Tools.LISTENER.equals(Command.quit.name())) {
-				running = quit(terminal, game);
+				running = quit(game);
 			}
 
 			if (Tools.LISTENER.equals(Command.give.name())) {
@@ -43,13 +39,14 @@ class GameLoop {
 			}
 		}
 
-		terminal.close();
+		Terminal.close();
 	}
 
 	static void prepare() throws Exception {
+		Game.PLAYER.prepare();
+		Effect.prepare();
 		Enemy.prepare();
 		Quest.prepare();
-		Effect.prepare();
 	}
 
 	static void help() {
@@ -65,14 +62,14 @@ class GameLoop {
 		System.out.println("inventory: display the items in your inventory");
 	}
 
-	static boolean quit(Scanner terminal, Game game) throws Exception {
+	static boolean quit(Game game) throws Exception {
 		boolean doNotQuitGame = true;
 
 		while (!Tools.LISTENER.equals(Command.yes.name()) && !Tools.LISTENER.equals(Command.no.name())) {
 			System.out.println("\nDo you want to save your game before quitting?");
 			System.out.println("ENTER: yes or no\n");
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
 				SaveGame.save(game);
@@ -85,7 +82,7 @@ class GameLoop {
 			System.out.println("\nAre you sure you want to quit your game?");
 			System.out.println("ENTER: yes or no\n");
 
-			Tools.LISTENER = Tools.getInputFrom(terminal);
+			Tools.LISTENER = Terminal.getInput();
 
 			if (Tools.LISTENER.equals(Command.yes.name())) {
 				doNotQuitGame = false;
